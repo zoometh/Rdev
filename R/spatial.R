@@ -1,5 +1,5 @@
 #' @import RPostgreSQL
-
+#' @import DBI
 rdev.conn.pg <- function(){
   drv <- DBI::dbDriver("PostgreSQL")
   con <- RPostgreSQL::dbConnect(drv,
