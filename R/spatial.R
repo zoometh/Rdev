@@ -11,8 +11,8 @@ library(sp)
 library(plotly)
 
 rdev.conn.pg <- function(){
-  drv <- dbDriver("PostgreSQL")
-  con <- dbConnect(drv,
+  drv <- RPostgreSQL::dbDriver("PostgreSQL")
+  con <- RPostgreSQL::dbConnect(drv,
                    dbname="bego",
                    host="localhost",
                    port=5432,
@@ -22,6 +22,6 @@ rdev.conn.pg <- function(){
 
 rdev.reproj <- function(a.geom){
   # rdev.reproject
-  a.geom <- spTransform(a.geom, wgs84)
+  a.geom <- sp::spTransform(a.geom, wgs84)
   return(a.geom)
 }
