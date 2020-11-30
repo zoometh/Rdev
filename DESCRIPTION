@@ -23,5 +23,6 @@ Imports:
     rpostgis,
     rdrop2,
     sp,
-    plotly
+    plotly,
+    DBI
 VignetteBuilder: knitr
