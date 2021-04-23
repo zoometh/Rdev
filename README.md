@@ -14,9 +14,9 @@ A piece of rock-art from the Mont Bego archaeological site. This GitHub reposito
   + create a rotation view in a RGL window
   
   
-<center> 
-  
-![snapshot from the RGL window generated from the Python script](www/snapshot_roche_archer_2.png)
-  
-</center> 
+<p align="center">
+  <img alt="img-name" src="www/snapshot_roche_archer_2.png" width="500">
+  <br>
+    <em>snapshot from the RGL window generated from the Python script</em>
+</p>
   
