@@ -13,10 +13,10 @@ A piece of rock-art from the Mont Bego archaeological site. This GitHub reposito
   
   + create a rotation view in a RGL window
   
-
+  
 <center> 
-
+  
 ![snapshot from the RGL window generated from the Python script](www/snapshot_roche_archer_2.png)
-
+  
 </center> 
-
+  
