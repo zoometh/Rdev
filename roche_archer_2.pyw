@@ -34,7 +34,6 @@ def update(dt):
     global rotation
     rotation += 20.0 * dt
     if rotation > 240.0:
-    # if rotation > 720.0:
         rotation = 90
 
 pyglet.clock.schedule(update)
