@@ -5,17 +5,20 @@
 
 Low-resolution photogrammetric model of engraved rocks from the Mont Bego rock-art site (Alpes-Maritimes, France)
 
-**Objectives**: 
+**IT**: 
 
 * Python programming 
 
-* Use the [3DHOP framework](https://3dhop.net/)
+* [3DHOP framework](https://3dhop.net/)
 
-The [3DHOP repo](https://github.com/cnr-isti-vclab/3DHOP) has been forked. A .nxz file is created from .obj files with the Nexus functions [nxsbuild](https://github.com/cnr-isti-vclab/nexus/blob/master/doc/nxsbuild.md#nxsbuild) and [nxscompress](https://github.com/cnr-isti-vclab/nexus/blob/master/doc/nxscompress.md#nxscompress)
+I've forked the [3DHOP repo](https://github.com/cnr-isti-vclab/3DHOP) -> to [here](https://github.com/zoometh/3DHOP. A `.nxz` file is created from `.obj` files with [Nexus](http://vcg.isti.cnr.it/nexus/):
+
+* function [nxsbuild](https://github.com/cnr-isti-vclab/nexus/blob/master/doc/nxsbuild.md#nxsbuild): `.obj` -> `.nxs` 
+* function [nxscompress](https://github.com/cnr-isti-vclab/nexus/blob/master/doc/nxscompress.md#nxscompress): `.nxs` -> `.nxz`
 
 ### 3DHOP
 
-3D models stored on GitHub:
+3D models stored on GitHub, using 3DHOP fork:
 
 * [*Looped Skin Rock*](https://zoometh.github.io/3DHOP/minimal/ZXVIIGIIR59@c.html)
 
