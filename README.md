@@ -3,7 +3,7 @@
 
 ## 3D model management and viewers with open softwares
 
-Photogrammetric model of engraved rocks from the Mont Bego rock-art site (Alpes-Maritimes, France)
+Low-resolution photogrammetric model of engraved rocks from the Mont Bego rock-art site (Alpes-Maritimes, France)
 
 **Objectives**: 
 
