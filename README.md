@@ -20,9 +20,9 @@ I've forked the [3DHOP repo](https://github.com/cnr-isti-vclab/3DHOP) -> to [her
 
 3D models stored on GitHub, using 3DHOP fork:
 
-* [*Looped Skin Rock*](https://zoometh.github.io/3DHOP/minimal/ZXVIIGIIR59@c.html)
+* [*Looped Skin Rock*](https://zoometh.github.io/3DHOP/minimal/17_2_59@c.html)
 
-* [*Roche de l'archer*](https://zoometh.github.io/3DHOP/minimal/ZXVIIIGIR28@a.html)
+* [*Roche de l'archer*](https://zoometh.github.io/3DHOP/minimal/18_1_28@a.html)
 
 ### Python + pywavefront + pyglet
 
