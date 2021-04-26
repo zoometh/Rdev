@@ -11,7 +11,7 @@ Low-resolution photogrammetric model of engraved rocks from the Mont Bego rock-a
 
 * [3DHOP framework](https://3dhop.net/)
 
-I've forked the [3DHOP repo](https://github.com/cnr-isti-vclab/3DHOP) -> to [here](https://github.com/zoometh/3DHOP. A `.nxz` file is created from `.obj` files with [Nexus](http://vcg.isti.cnr.it/nexus/):
+I've forked the [3DHOP repo](https://github.com/cnr-isti-vclab/3DHOP) -> to [https://github.com/zoometh/3DHOP](https://github.com/zoometh/3DHOP). A `.nxz` file is created from `.obj` files with [Nexus](http://vcg.isti.cnr.it/nexus/):
 
 * function [nxsbuild](https://github.com/cnr-isti-vclab/nexus/blob/master/doc/nxsbuild.md#nxsbuild): `.obj` -> `.nxs` 
 * function [nxscompress](https://github.com/cnr-isti-vclab/nexus/blob/master/doc/nxscompress.md#nxscompress): `.nxs` -> `.nxz`
@@ -23,6 +23,8 @@ I've forked the [3DHOP repo](https://github.com/cnr-isti-vclab/3DHOP) -> to [her
 * [*Looped Skin Rock*](https://zoometh.github.io/3DHOP/minimal/17_2_59@c.html)
 
 * [*Roche de l'archer*](https://zoometh.github.io/3DHOP/minimal/18_1_28@a.html)
+
+See their location on my [rockart repo](https://zoometh.github.io/rockart/)
 
 ### Python + pywavefront + pyglet
 
