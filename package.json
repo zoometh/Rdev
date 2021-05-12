@@ -1,0 +1,25 @@
+{
+  "name": "rdev",
+  "version": "1.0.0",
+  "description": "A first npm try, to get Potree utilities",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zoometh/Rdev.git"
+  },
+  "keywords": [
+    "npm",
+    "Potree",
+    "JavaScript",
+    "3D"
+  ],
+  "author": "Thomas Huet",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zoometh/Rdev/issues"
+  },
+  "homepage": "https://github.com/zoometh/Rdev#readme"
+}
