@@ -35,7 +35,6 @@ monum.3D.icons <- icons(
 monum.3D$desc <- paste0(monum.3D$url, " : ", monum.3D$nom, '<br><a href=',
                         shQuote(paste0(url.3dhop, monum.3D$D3, ".html")),
                         "\ target=\"_blank\"",">","<b> modèle 3D </b>", "</a>")
-monum.3D$desc[monum.3D$KIU == 2610] <- paste0("crédit : ", monum.3D$desc, "(", monum.3D$credit3D, ")")
 monum.others$desc <- paste0(monum.others$url, " : ", monum.others$nom)
 carte <- leaflet() %>%
   addTiles(group = 'OSM') %>%
@@ -57,4 +56,6 @@ carte <- leaflet() %>%
   addScaleBar(position = "bottomleft")
 carte
 # save
-saveWidget(carte, file="Karnak.html")
+saveWidget(carte,
+           file="Karnak.html",
+           title = "Karnak")
