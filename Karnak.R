@@ -23,7 +23,6 @@ D3.models <- grep("minimal/.*html$", filelist, value = TRUE)
 D3.models <- gsub("minimal/", "", D3.models)
 D3.models <- sort(gsub(".html$", "", D3.models))
 nm.models <- locus[locus$url %in% D3.models, "D3"]
-# l.nm.models <- paste0(paste0("*", nm.models, "* (", D3.models,")"))
 nb.models <- length(nrow(nm.models))
 
 monum.3D <- locus[locus$D3 %in% D3.models, ]
@@ -36,8 +35,9 @@ monum.3D.icons <- icons(
 monum.3D$desc <- paste0(monum.3D$url, " : ", monum.3D$nom, '<br><a href=',
                         shQuote(paste0(url.3dhop, monum.3D$D3, ".html")),
                         "\ target=\"_blank\"",">","<b> modèle 3D </b>", "</a>")
+monum.3D$desc[monum.3D$KIU == 2610] <- paste0("crédit : ", monum.3D$desc, "(", monum.3D$credit3D, ")")
 monum.others$desc <- paste0(monum.others$url, " : ", monum.others$nom)
-carte <- leaflet(width = "900px", height = "900px") %>%
+carte <- leaflet() %>%
   addTiles(group = 'OSM') %>%
   addProviderTiles("Esri.WorldImagery", group = "Ortho") %>%
   addCircleMarkers(data = monum.others,
