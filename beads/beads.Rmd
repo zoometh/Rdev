@@ -17,7 +17,7 @@ distant.root <- "https://raw.github.com/zoometh/"
 
 # source the outlineR function (outlineR repo), folders input and output from Rdev repo
 # (from local or distant)
-local <- 1
+local <- F
 distant <- !local
 if(local){
   source(paste0(local.root, "outlineR/R/separate_single_artefacts_function.R"))
@@ -32,31 +32,86 @@ outpath <- paste0(inpath, "/out")
 
 ## Preparing data
 
-The dataset come from @Alarashi16
+The dataset come from @Alarashi16, original (left) and cleaned (right)
 
-![original contact sheet](https://raw.githubusercontent.com/zoometh/Rdev/master/img/butterfly_beads_afd.jpg)![cleaned contact sheet](https://raw.githubusercontent.com/zoometh/Rdev/master/img/gmm/butterfly_beads_clean_afd.jpg)
+![original contact sheet](https://raw.githubusercontent.com/zoometh/Rdev/master/img/butterfly_beads_afd.jpg){width=400px}![cleaned contact sheet](https://raw.githubusercontent.com/zoometh/Rdev/master/img/gmm/butterfly_beads_clean_afd.jpg){width=400px}
 
 ## Isolating objects
 
-The function `separate_single_artefacts()` from the [forked `outlineR` R package](https://github.com/zoometh/outlineR) allows to separate objects (ie *blobs*) from the cleaned contact sheet
+The function `separate_single_artefacts()` from the [forked `outlineR` R package](https://github.com/zoometh/outlineR) allows to separate objects (ie *blobs*) from the cleaned contact sheet and to save them in a new folder (`outpath`). Since some of the photographs beads show some light hues, the threshold has to be very high (`thres = "99%"`), we suppress all objects having an area below 10 pixel (`min.area = 10`)
 
 ```{r separateObjects}
-# the beads show some light hues, the threshold has to be very high (99%)
 separate_single_artefacts(inpath = inpath,
                           outpath = outpath,
                           thres = "99%",
                           min.area = 10)
+n.sample <- 3
 ```
 
-## Converting to "Out" "Coe" objects
+The output objects are saved into `r outpath`. Here, a sample of `r n.sample` of these images
 
-You can also embed plots, for example:
+```{r showseparateObjects, echo = F, out.width = "100%"}
+txt.size <- 120
+outputs.obj <- list.files(outpath, full.names = T)
+sample.outputs.obj <- sample(outputs.obj, n.sample)
+i1 <- image_read(sample.outputs.obj[1])
+i1 <- image_annotate(i1, 
+                     gsub("[^0-9]", "", sample.outputs.obj[1]),
+                     size = txt.size)
+i2 <- image_read(sample.outputs.obj[2])
+i2 <- image_annotate(i2, 
+                     gsub("[^0-9]", "", sample.outputs.obj[2]),
+                     size = txt.size)
+i3 <- image_read(sample.outputs.obj[3])
+i3 <- image_annotate(i3, 
+                     gsub("[^0-9]", "", sample.outputs.obj[3]),
+                     size = txt.size)
+I <- image_append(c(i1,i2,i3))
+plot(I)
+```
+    
 
-```{r toCoe}
+## Converting to "Out" "Coo" objects
+
+Convert to "Out" "Coo" objects with the R package [Momocs](https://momx.github.io/Momocs/)
+
+```{r toCoe, warning=FALSE}
 lf <- list.files(outpath, full.names=TRUE)
+idfs <- as.factor(gsub("[^0-9]", "", lf))
+fac <- data.frame(idf = idfs)
 coo <- import_jpg(lf)
-beads <- Out(coo)
+beads <- Out(coo,fac)
 class(beads)
+```
+
+## Shape analysis
+
+### Description
+
+```{r descr, message=FALSE}
+panel(beads, names = "idf", fac="idf")
+beads.centered <- coo_center(beads)
+stack(beads.centered, fac="idf", title = "beads centered")
+beads.centered.scaled <- coo_scale(beads.centered)
+stack(beads.centered.scaled, fac="idf", title = "beads centered and scaled")
+```
+
+## PCA
+
+```{r PCA, message=FALSE}
+beads.f <- efourier(beads)
+beads.p <- PCA(beads.f)
+plot(beads.p)
+```
+
+### Symmetry
+
+The symmetry index vary between 0 (no symetry) to 1 (perfectly symetric) [@Iwata98]
+
+```{r Sym, message=FALSE}
+beads.s <- symmetry(beads.f)
+sym.values <- as.factor(round(as.numeric(beads.s[, 'sym']), 2))
+panel(beads, names = sym.values, fac="idf")
 ```
 
 
