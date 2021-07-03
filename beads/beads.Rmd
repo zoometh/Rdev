@@ -1,0 +1,65 @@
+---
+title: "Beads standardization"
+author: "Thomas Huet"
+date: "7/3/2021"
+output: html_document
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(Momocs)
+library(magick)
+library(devtools)
+
+local.root <- "C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/"
+distant.root <- "https://raw.github.com/zoometh/"
+
+# source the outlineR function (outlineR repo), folders input and output from Rdev repo
+# (from local or distant)
+local <- 1
+distant <- !local
+if(local){
+  source(paste0(local.root, "outlineR/R/separate_single_artefacts_function.R"))
+  inpath <- paste0(local.root, "Rdev/img/gmm")
+} else {
+  source_url(paste0(distant.root, "outlineR/master/R/separate_single_artefacts_function.R"))
+  inpath <- paste0(distant.root, "Rdev/master/img/gmm")
+}
+
+outpath <- paste0(inpath, "/out")
+```
+
+## Preparing data
+
+The dataset come from @Alarashi16
+
+![original contact sheet](https://raw.githubusercontent.com/zoometh/Rdev/master/img/butterfly_beads_afd.jpg)![cleaned contact sheet](https://raw.githubusercontent.com/zoometh/Rdev/master/img/gmm/butterfly_beads_clean_afd.jpg)
+
+## Isolating objects
+
+The function `separate_single_artefacts()` from the [forked `outlineR` R package](https://github.com/zoometh/outlineR) allows to separate objects (ie *blobs*) from the cleaned contact sheet
+
+```{r separateObjects}
+# the beads show some light hues, the threshold has to be very high (99%)
+separate_single_artefacts(inpath = inpath,
+                          outpath = outpath,
+                          thres = "99%",
+                          min.area = 10)
+```
+
+## Converting to "Out" "Coe" objects
+
+You can also embed plots, for example:
+
+```{r toCoe}
+lf <- list.files(outpath, full.names=TRUE)
+coo <- import_jpg(lf)
+beads <- Out(coo)
+class(beads)
+```
+
+
+# References
+
+
