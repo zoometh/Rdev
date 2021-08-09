@@ -36,7 +36,7 @@ The dataset come from @Alarashi16, original (left) and cleaned (right)
 
 ![original contact sheet](https://raw.githubusercontent.com/zoometh/Rdev/master/img/butterfly_beads_afd.jpg){width=400px}![cleaned contact sheet](https://raw.githubusercontent.com/zoometh/Rdev/master/img/gmm/butterfly_beads_clean_afd.jpg){width=400px}
 
-## Isolating objects
+## Separate objects
 
 The function `separate_single_artefacts()` from the [forked `outlineR` R package](https://github.com/zoometh/outlineR) allows to separate objects (ie *blobs*) from the cleaned contact sheet and to save them in a new folder (`outpath`). Since some of the photographs beads show some light hues, the threshold has to be very high (`thres = "99%"`), we suppress all objects having an area below 10 pixel (`min.area = 10`)
 
