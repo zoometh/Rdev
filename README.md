@@ -1,11 +1,9 @@
 # Rdev
-> Test Files for R, Python and JavaScript
+> Test Files and Functions for R, Python and JavaScript
 
 ## 3D model management and viewers with open softwares
 
-Low-resolution photogrammetric model of engraved rocks from the Mont Bego rock-art site (Alpes-Maritimes, France)
-
-**IT**: 
+Low-resolution photogrammetric model of engraved rocks from the Mont Bego rock-art site (Alpes-Maritimes, France) with: 
 
 * Python programming 
 
@@ -47,3 +45,6 @@ Photogrammetric files of the *Roche de l'archer*, and Python code are stored on 
     <em>snapshot from the RGL window generated from the Python script</em>
 </p>
   
+## Miscellaneous of R functions
+
+* regressions
