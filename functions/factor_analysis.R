@@ -23,35 +23,25 @@ coords_ca <- rbind(coords_ind_ca, coords_var_ca)
 colnames(coords_ca)[1] <- 'CA1'
 colnames(coords_ca)[2] <- 'CA2'
 coords_ca$id <- row.names(coords_ca)
-
+# jointure données + coordonnées CA
 depots.m <- merge(depots, coords_ca, by="row.names", all.y = T)
 # assigne au types/variable un triangle noir
 depots.m$color[is.na(depots.m$color)] <- "black"
 depots.m$shape[is.na(depots.m$shape)] <- 17
-# dataset.ps$shape <- as.factor(dataset.ps$shape)
-# names(dataset.ps)[names(dataset.ps) == 'Row.names'] <- "num" # renomme la colonne
-# CAT_per_site <- CAT_per[ ,c("Site","num")]
-# ff <- merge(dataset.ps,CAT_per_site,by="num",all.x=T)# les types de sites
-# matches <- colnames(ca_all_tsite) # réordonne
-# ff <- ff[,match(matches, colnames(ff))]
-# ca_all_tsite <- rbind(ca_all_tsite,ff)
+# titre
+tit <- paste("AFC sur", nrow(depots.ca), "individus et", ncol(depots.ca), "variables")
+# graphique
 gca <- ggplot(depots.m, aes(CA1, CA2, color = color, shape = shape)) +
-  # gca <- ggplot(coords_ca, aes(CA1, CA2)) +
-  # sites
-  #subset(ca_all_tsite, Type.site != 'var')
-  geom_point(aes(CA1, CA2), # change to aes
-             colour = color,
-             fill = color,
-             stroke = .5,
-             pch = 17,
-             # pch = as.numeric(levels(ca_all_tsite$shape))[ca_all_tsite$shape]),
+  ggtitle(tit) +
+  geom_point(# fill = color, # pour les shape > 20
+             # stroke = .5, # pour les shape > 20
              size = 1.5) + # 1.5
-  geom_text_repel(aes(CA1, CA2, label = id),
+  geom_text_repel(aes(label = id),
                   cex=2,
                   segment.size = 0.1,
                   segment.alpha = 0.5)+
-  geom_hline(yintercept=0, linetype="dashed", size=0.2, alpha=0.3)+
-  geom_vline(xintercept=0, linetype="dashed",size=0.2, alpha=0.3)+
+  geom_hline(yintercept = 0, linetype = "dashed", size = 0.2, alpha = 0.3) +
+  geom_vline(xintercept = 0, linetype = "dashed",size = 0.2, alpha = 0.3) +
   geom_text(x = 0,
             y = -Inf,
             label = paste0(inertCA2,"%"),
@@ -65,25 +55,27 @@ gca <- ggplot(depots.m, aes(CA1, CA2, color = color, shape = shape)) +
             angle = 90,
             size = 2,
             alpha = 0.5) +
+  scale_color_identity() +
+  scale_shape_identity() +
+  theme(plot.title = element_text(size = 8, face = "bold")) +
   theme(axis.text=element_text(size = 5),
         axis.title.x=element_text(size = 8),
         axis.title.y=element_text(size = 8))+
   theme(axis.ticks = element_line(size = 0.2))+
   theme(legend.position = "none")+
   theme(strip.text.x = element_text(size = 8),
-        strip.text.y = element_blank())+
-  theme(panel.border = element_rect(colour = 'black', fill = NA, size = 0.2))+
-  theme(panel.background = element_rect(fill = 'transparent'))+
-  theme(panel.spacing.y = unit(0,"lines"))
-# scale_x_continuous(limits = c(-1, 2), expand = c(0, 0))+
-# scale_y_continuous(limits = c(-1, 1), expand = c(0, 0))+
-# scale_colour_identity()+
-# scale_shape_identity()+
-# scale_fill_identity()+
-# facet_grid(per ~ .)
+        strip.text.y = element_blank()) +
+  theme(panel.border = element_rect(colour = 'black', fill = NA, size = 0.2)) +
+  theme(panel.background = element_rect(fill = 'transparent')) +
+  theme(panel.spacing.y = unit(0, "lines"))
+# scale_x_continuous(limits = c(-1, 2), expand = c(0, 0)) + # par période ou régions
+# scale_y_continuous(limits = c(-1, 1), expand = c(0, 0)) +
+# scale_fill_identity() + # pour les shape > 20
+# facet_grid(per ~ .) # par période ou régions
 gca
 
 # sauver
-png("out/ca_depots.png")
+png("out/ca_depots.png", width = 7, height = 7, units = "cm", res = 300)
 gca
 dev.off()
+shell.exec(paste0(getwd(), "/out/ca_depots.png"))
