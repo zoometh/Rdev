@@ -44,7 +44,7 @@ gca <- ggplot(depots.m, aes(CA1, CA2, color = color, shape = shape)) +
   geom_vline(xintercept = 0, linetype = "dashed",size = 0.2, alpha = 0.3) +
   geom_text(x = 0,
             y = -Inf,
-            label = paste0(inertCA2,"%"),
+            label = paste0(inertCA1,"%"),
             vjust = -1,
             size = 2,
             alpha = 0.5) +
