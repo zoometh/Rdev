@@ -14,10 +14,12 @@ typeA_B <- lm(depots$nb_typeA ~ depots$nb_typeB) # linear model
 tit <- paste("la présence de '", colnames(depots)[1],
             "' explique", round(summary(typeA_B)$r.squared*100, 1),
             "% de \nla présence de '", colnames(depots)[2],
-            "' (coefficient de régression:", summary(typeA_B)$r.squared, ")")
+            "'\n(coefficient de régression:", summary(typeA_B)$r.squared, ")")
 
 # afficher
-greg <- ggplot(depots, aes(color = color, shape = shape))+
+greg <- ggplot(depots, aes(x = nb_typeA, y = nb_typeB, color = color, shape = shape))+
+  ggtitle(tit) +
+  # geom_smooth(method = "lm", se = FALSE) +
   geom_point(aes(nb_typeA, nb_typeB)) +
   geom_text_repel(aes(nb_typeA, nb_typeB, label = id)) +
   scale_color_identity() +
