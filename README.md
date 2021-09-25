@@ -1,9 +1,14 @@
 # Rdev
-> Test Files and Functions for R, Python and JavaScript
 
-## 3D model management and viewers with open softwares
+Miscellaneous of test files and functions for R, Python and JavaScript: 
 
-Low-resolution photogrammetric model of engraved rocks from the Mont Bego rock-art site (Alpes-Maritimes, France) with: 
+* [3D](#3d)
+
+* [statistics](#statistics)
+
+## 3D 
+
+3D model management and viewers with open softwares. Low-resolution photogrammetric model of engraved rocks from the Mont Bego rock-art site (Alpes-Maritimes, France) with: 
 
 * Python programming 
 
@@ -16,7 +21,7 @@ I've forked the [3DHOP repo](https://github.com/cnr-isti-vclab/3DHOP) -> to [htt
 
 ### 3DHOP
 
-3D models stored on GitHub, using 3DHOP fork. See their location on my [rockart repo](https://zoometh.github.io/rockart/)
+3D models stored on GitHub, using 3DHOP fork. See their location on the [rockart repo](https://zoometh.github.io/rockart/)
 
 ### Python + pywavefront + pyglet
 
@@ -37,9 +42,9 @@ Photogrammetric files of the *Roche de l'archer*, and Python code are stored on 
     <em>snapshot from the RGL window generated from the Python script</em>
 </p>
   
-## Miscellaneous of R functions
+## Statistics
 
-Set of statistical functions for uni-, bi-, and multi-variate dataframes, with data and outputs
+R statistical functions for uni-, bi-, and multi-variate dataframes, with data and outputs
 
 | statistics    | data          |code          |output          |
 | ------------- | ------------- |--------------|----------------|
@@ -47,5 +52,4 @@ Set of statistical functions for uni-, bi-, and multi-variate dataframes, with d
 | CA            | [data_factor_analysis.csv](https://github.com/zoometh/Rdev/blob/master/data/data_factor_analysis.csv) | [factor_analysis.R](https://github.com/zoometh/Rdev/blob/master/functions/factor_analysis.R) | [ca_depots.png](https://github.com/zoometh/Rdev/blob/master/out/ca_depots.png) |
 | LDA           | [data_factor_analysis.csv](https://github.com/zoometh/Rdev/blob/master/data/data_factor_analysis.csv) | [discriminant_analysis.R](https://github.com/zoometh/Rdev/blob/master/functions/discriminant_analysis.R) | [lda_depots.png](https://github.com/zoometh/Rdev/blob/master/out/lda_depots.png) |
 | CAH           | [data_factor_analysis.csv](https://github.com/zoometh/Rdev/blob/master/data/data_factor_analysis.csv) | [cluster_analysis.R](https://github.com/zoometh/Rdev/blob/master/functions/cluster_analysis.R) | [cah_depots.png](https://github.com/zoometh/Rdev/blob/master/out/cah_depots.png) |
-
 
