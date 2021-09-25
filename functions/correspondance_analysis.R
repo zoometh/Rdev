@@ -41,7 +41,7 @@ gca <- ggplot(depots.m, aes(CA1, CA2, color = color, shape = shape)) +
   geom_text_repel(aes(label = id),
                   cex=2,
                   segment.size = 0.1,
-                  segment.alpha = 0.5)+
+                  segment.alpha = 0.5) +
   geom_hline(yintercept = 0, linetype = "dashed", size = 0.2, alpha = 0.3) +
   geom_vline(xintercept = 0, linetype = "dashed",size = 0.2, alpha = 0.3) +
   geom_text(x = 0,
