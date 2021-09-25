@@ -3,12 +3,14 @@ library(ggplot2) # pour les graphiques
 library(ggrepel) # pour écarter les labels
 
 # data: n-columns
-depots <- read.table('https://raw.github.com/zoometh/Rdev/master/data/data_factor_analysis.csv',
+depots <- read.table('https://raw.github.com/zoometh/Rdev/master/data/data.csv',
                      header = T,
                      sep = ";",
                      row.names = 1)
 # depots$id <- row.names(depots) # names
-depots.ca <- depots[ , !(names(depots) %in% c("color", "shape"))]
+symbols.col <- c("shape", "color", "x", "y")
+depots.symbols <- depots[ , (names(depots) %in% symbols.col)]
+depots.ca <- depots[ , !(names(depots) %in% symbols.col)]
 ca <- CA(depots.ca, graph = FALSE)            # AFC
 inertCA1 <- round(as.numeric(ca$eig[,2][1]), 1)
 inertCA2 <- round(as.numeric(ca$eig[,2][2]), 1)

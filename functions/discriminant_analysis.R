@@ -3,13 +3,14 @@ library(ggplot2) # pour les graphiques
 library(ggrepel) # pour écarter les labels
 
 # data: n-columns
-depots <- read.table('https://raw.github.com/zoometh/Rdev/master/data/data_factor_analysis.csv',
+depots <- read.table('https://raw.github.com/zoometh/Rdev/master/data/data.csv',
                      header = T,
                      sep = ";",
                      row.names = 1)
 depots$group <- depots$color
-depots.symbols <- depots[ , (names(depots) %in% c("shape", "color"))]
-depots.ca <- depots[ , !(names(depots) %in% c("shape", "color"))]
+symbols.col <- c("shape", "color", "x", "y")
+depots.symbols <- depots[ , (names(depots) %in% symbols.col)]
+depots.ca <- depots[ , !(names(depots) %in% symbols.col)]
 r <- lda(formula = group  ~ ., data = depots.ca) # analyse discriminante
 prop.lda = r$svd^2/sum(r$svd^2) #
 inertLD1 <- round(as.numeric(prop.lda[1]*100), 1)
