@@ -32,8 +32,11 @@ if("LD2" %in% names(dflda)==F){
 flda <- merge(flda, depots.symbols, by = "row.names")
 rownames(flda) <- flda$Row.names
 flda$Row.names <- NULL
-
+# titre
+tit <- paste("LDA sur", nrow(depots.ca), "individus et", ncol(depots.ca), "variables")
+# graphique
 glda <- ggplot(flda, aes(LD1, LD2, color = color, shape = shape)) +
+  ggtitle(tit) +
   geom_hline(yintercept = 0, linetype = "dashed", size=0.2, alpha = 0.3) +
   geom_vline(xintercept = 0, linetype = "dashed", size=0.2, alpha = 0.3) +
   geom_point() + # 1.5
@@ -53,6 +56,7 @@ glda <- ggplot(flda, aes(LD1, LD2, color = color, shape = shape)) +
             angle = 90,
             size = 2,
             alpha = 0.5) +
+  theme(plot.title = element_text(size = 8, face = "bold")) +
   theme(axis.text=element_text(size=5),
         axis.title.x=element_text(size=8),
         axis.title.y=element_text(size=8)) +
@@ -68,7 +72,7 @@ glda <- ggplot(flda, aes(LD1, LD2, color = color, shape = shape)) +
 glda
 
 # sauver
-png("out/lda_depots.png", width = 9, height = 9, units = "cm", res = 300)
+png("out/lda_depots.png", width = 8, height = 8, units = "cm", res = 300)
 glda
 dev.off()
 shell.exec(paste0(getwd(), "/out/lda_depots.png"))

@@ -31,8 +31,8 @@ greg
 
 
 # sauver
-png("out/regression_depots.png", width = 12, height = 12, units = "cm", res = 300)
+png("out/reg_depots.png", width = 12, height = 12, units = "cm", res = 300)
 greg
 dev.off()
 getwd()
-shell.exec(paste0(getwd(), "/out/regression_depots.png"))
+shell.exec(paste0(getwd(), "/out/reg_depots.png"))
