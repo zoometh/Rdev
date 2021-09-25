@@ -2,14 +2,14 @@
 library(ggplot2) # pour les graphiques
 library(ggrepel) # pour écarter les labels
 
-# data: 2-columns
-depots <- read.table('https://raw.github.com/zoometh/Rdev/master/data/data_regression.csv',
+# data: n-columns
+depots <- read.table('https://raw.github.com/zoometh/Rdev/master/data/data_factor_analysis.csv',
                      header = T,
                      sep = ";",
                      row.names = 1)
 depots$id <- row.names(depots) # names
+# data: 2-columns
 typeA_B <- lm(depots$nb_typeA ~ depots$nb_typeB) # linear model
-
 # titre
 tit <- paste("la présence de '", colnames(depots)[1],
             "' explique", round(summary(typeA_B)$r.squared*100, 1),
