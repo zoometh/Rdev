@@ -48,8 +48,8 @@ R statistical functions for uni-, bi-, and multi-variate dataframes, with data a
 
 | statistics    | data          |code          |output          |
 | ------------- | ------------- |--------------|----------------|
-| regressions   | [data_factor_analysis.csv](https://github.com/zoometh/Rdev/blob/master/data/data_factor_analysis.csv)  | [regressions.R](https://github.com/zoometh/Rdev/blob/master/functions/regressions.R) | [reg_depots.png](https://github.com/zoometh/Rdev/blob/master/out/reg_depots.png)| 
-| CA            | [data_factor_analysis.csv](https://github.com/zoometh/Rdev/blob/master/data/data_factor_analysis.csv) | [factor_analysis.R](https://github.com/zoometh/Rdev/blob/master/functions/factor_analysis.R) | [ca_depots.png](https://github.com/zoometh/Rdev/blob/master/out/ca_depots.png) |
-| LDA           | [data_factor_analysis.csv](https://github.com/zoometh/Rdev/blob/master/data/data_factor_analysis.csv) | [discriminant_analysis.R](https://github.com/zoometh/Rdev/blob/master/functions/discriminant_analysis.R) | [lda_depots.png](https://github.com/zoometh/Rdev/blob/master/out/lda_depots.png) |
-| CAH           | [data_factor_analysis.csv](https://github.com/zoometh/Rdev/blob/master/data/data_factor_analysis.csv) | [cluster_analysis.R](https://github.com/zoometh/Rdev/blob/master/functions/cluster_analysis.R) | [cah_depots.png](https://github.com/zoometh/Rdev/blob/master/out/cah_depots.png) |
+| regressions   | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv)  | [regressions.R](https://github.com/zoometh/Rdev/blob/master/functions/regressions.R) | [reg_depots.png](https://github.com/zoometh/Rdev/blob/master/out/reg_depots.png)| 
+| CA            | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [factor_analysis.R](https://github.com/zoometh/Rdev/blob/master/functions/factor_analysis.R) | [ca_depots.png](https://github.com/zoometh/Rdev/blob/master/out/ca_depots.png) |
+| LDA           | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [discriminant_analysis.R](https://github.com/zoometh/Rdev/blob/master/functions/discriminant_analysis.R) | [lda_depots.png](https://github.com/zoometh/Rdev/blob/master/out/lda_depots.png) |
+| CAH           | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [cluster_analysis.R](https://github.com/zoometh/Rdev/blob/master/functions/cluster_analysis.R) | [cah_depots.png](https://github.com/zoometh/Rdev/blob/master/out/cah_depots.png) |
 
