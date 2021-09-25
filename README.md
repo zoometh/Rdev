@@ -16,15 +16,7 @@ I've forked the [3DHOP repo](https://github.com/cnr-isti-vclab/3DHOP) -> to [htt
 
 ### 3DHOP
 
-3D models stored on GitHub, using 3DHOP fork:
-
-* [*Stèle du Chef de Tribu*](https://zoometh.github.io/3DHOP/minimal/7_1_8.html)
-
-* [*Looped Skin Rock*](https://zoometh.github.io/3DHOP/minimal/17_2_59@c.html)
-
-* [*Roche de l'archer*](https://zoometh.github.io/3DHOP/minimal/18_1_28@a.html)
-
-See their location on my [rockart repo](https://zoometh.github.io/rockart/)
+3D models stored on GitHub, using 3DHOP fork. See their location on my [rockart repo](https://zoometh.github.io/rockart/)
 
 ### Python + pywavefront + pyglet
 
@@ -47,4 +39,13 @@ Photogrammetric files of the *Roche de l'archer*, and Python code are stored on 
   
 ## Miscellaneous of R functions
 
-* regressions
+Set of statistical functions for uni-, bi-, and multi-variate dataframes, with data and outputs
+
+| statistics    | data          |code          |output          |
+| ------------- | ------------- |--------------|----------------|
+| regressions   | [data_regression.csv](https://github.com/zoometh/Rdev/blob/master/data/data_regression.csv)  | [regressions.R](https://github.com/zoometh/Rdev/blob/master/functions/regressions.R) | [reg_depots.png](https://github.com/zoometh/Rdev/blob/master/out/reg_depots.png)| 
+| CA            | [data_factor_analysis.csv](https://github.com/zoometh/Rdev/blob/master/data/data_factor_analysis.csv) | [factor_analysis.R](https://github.com/zoometh/Rdev/blob/master/functions/factor_analysis.R) | [ca_depots.png](https://github.com/zoometh/Rdev/blob/master/out/ca_depots.png) |
+| LDA           | [data_factor_analysis.csv](https://github.com/zoometh/Rdev/blob/master/data/data_factor_analysis.csv) | [discriminant_analysis.R](https://github.com/zoometh/Rdev/blob/master/functions/discriminant_analysis.R) | [lda_depots.png](https://github.com/zoometh/Rdev/blob/master/out/lda_depots.png) |
+| CAH           | [data_factor_analysis.csv](https://github.com/zoometh/Rdev/blob/master/data/data_factor_analysis.csv) | [cluster_analysis.R](https://github.com/zoometh/Rdev/blob/master/functions/cluster_analysis.R) | [cah_depots.png](https://github.com/zoometh/Rdev/blob/master/out/cah_depots.png) |
+
+
