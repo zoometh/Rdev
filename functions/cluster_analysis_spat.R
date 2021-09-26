@@ -11,7 +11,6 @@ depots <- read.table('https://raw.github.com/zoometh/Rdev/master/data/data.csv',
 symbols.col <- c("shape", "color", "x", "y")
 depots.symbols <- depots[ , (names(depots) %in% symbols.col)]
 depots.ca <- depots[ , !(names(depots) %in% symbols.col)]
-symb_dd <- merge (depots.ca, depots.symbols, by = "row.names") # regroupe sur row.names
 # créer le dendrogramme
 dend1 <- depots.ca %>%
   dist %>% hclust(method = "complete")
@@ -28,10 +27,10 @@ lfiles <- unzip(temp, exdir = td) # tous les fichiers (.shp, .dbf, etc.)
 FRA <- st_read(dsn = td, layer = "FRA_adm0")
 # recoupe FRA sur l'emprise des depots +/- buffer
 buff <-  0.5
-xmax <- max(depots.group$x) + buff
 xmin <- min(depots.group$x) - buff
-ymax <- max(depots.group$y) + buff
+xmax <- max(depots.group$x) + buff
 ymin <- min(depots.group$y) - buff
+ymax <- max(depots.group$y) + buff
 m <- rbind(c(xmin,ymin), c(xmax,ymin), c(xmax,ymax), c(xmin,ymax), c(xmin,ymin))
 roi <- st_polygon(list(m))
 roi <- st_sfc(roi)
@@ -51,11 +50,11 @@ gcah.sp <- ggplot() +
                   segment.alpha = 0.5) +
   theme(plot.title = element_text(size = 8, face = "bold")) +
   theme_bw() +
-  theme(legend.position="bottom") +
+  theme(legend.position="bottom")
 gcah.sp
 
 # sauver
-png("out/cah_sp_depots.png", width = 12, height = 10, units = "cm", res = 300)
+png("out/cah_depots_spat.png", width = 12, height = 10, units = "cm", res = 300)
 gcah.sp
 dev.off()
-shell.exec(paste0(getwd(), "/out/cah_sp_depots.png"))
+shell.exec(paste0(getwd(), "/out/cah_depots_spat.png"))
