@@ -44,7 +44,7 @@ Photogrammetric files of the *Roche de l'archer*, and Python code are stored on 
   
 ## Statistics
 
-R statistical functions for uni-, bi-, and multi-variate dataframes, with data and outputs
+R statistical functions for uni-, bi-, and multi-variate dataframes, and point pattern analysis
 
 | statistics    | data          |code          |output          |
 | ------------- | ------------- |--------------|----------------|
@@ -52,5 +52,5 @@ R statistical functions for uni-, bi-, and multi-variate dataframes, with data a
 | CA            | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [factor_analysis.R](https://github.com/zoometh/Rdev/blob/master/functions/factor_analysis.R) | [ca_depots.png](https://github.com/zoometh/Rdev/blob/master/out/ca_depots.png) |
 | LDA           | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [discriminant_analysis.R](https://github.com/zoometh/Rdev/blob/master/functions/discriminant_analysis.R) | [lda_depots.png](https://github.com/zoometh/Rdev/blob/master/out/lda_depots.png) |
 | CAH           | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [cluster_analysis.R](https://github.com/zoometh/Rdev/blob/master/functions/cluster_analysis.R) | [cah_depots.png](https://github.com/zoometh/Rdev/blob/master/out/cah_depots.png) |
-| CAH + spat    | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [cluster_analysis_spat.R](https://github.com/zoometh/Rdev/blob/master/functions/cluster_analysis_spat.R) | [cah_sp_depots.png](https://github.com/zoometh/Rdev/blob/master/out/cah_sp_depots.png) |
-
+| CAH (spat)   | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [cluster_analysis_spat.R](https://github.com/zoometh/Rdev/blob/master/functions/cluster_analysis_spat.R) | [cah_depots_spat.png](https://github.com/zoometh/Rdev/blob/master/out/cah_depots_spat.png) |
+| PPA (spat)    | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [ppa_analysis_spat.R](https://github.com/zoometh/Rdev/blob/master/functions/ppa_analysis_spat.R) | [ppa_depots_spat.png](https://github.com/zoometh/Rdev/blob/master/out/ppa_depots_spat.png) |
