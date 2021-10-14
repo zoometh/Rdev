@@ -1,0 +1,52 @@
+---
+title: "R <-> GitLab"
+# author: "Thomas Huet"
+# date: "10/14/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE, echo=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+library(gitlabr)
+library(DT)
+```
+Objectif: connecter le GitLab de l'ANR Itineris depuis R
+
+## Connecter GitLab depuis R
+
+Etablit la connection avec le GitLab d'Huma-Num ([https://gitlab.huma-num.fr](https://gitlab.huma-num.fr)), récupère et affiche la première page
+
+```{r}
+set_gitlab_connection(
+  gitlab_url = "https://gitlab.huma-num.fr",
+  private_token = Sys.getenv("GITLAB_COM_TOKEN"))
+gl.prj <- gl_list_projects(max_page = 1) 
+datatable(gl.prj, 
+          options = list(pageLength = 3, scrollX = '400px'))
+```
+
+Affiche les fichiers et dossiers du projet GitLab [Site Hugo](https://gitlab.huma-num.fr/gt-notebook/site-hugo) (ID = 1534), le second de la liste ci-dessus.
+
+```{r}
+gl.prj.files <- gl_list_files(project = 1534)
+datatable(gl.prj.files, 
+          options = list(pageLength = 10, scrollX = '400px'))
+```
+
+## Problèmes
+
+Pourtant, je n'y arrive pas avec notre projet GitLab [Itineris](https://gitlab.huma-num.fr/thuet/itineris) (ID = 1529)
+
+
+```{r, error=TRUE}
+gl.prj.files <- gl_list_files(project = 1529)
+```
+
+Je ne comprends pas pourquoi j'ai une erreur '`Error in http_error_or_content(.) : Not Found (HTTP 404).`'
+
+## Documentation
+
+<https://stackoverflow.com/questions/59742203/get-file-or-directory-with-gitlabr>
+
+<https://www.r-bloggers.com/2021/08/gitlabr-v2-0-is-on-cran/>
+
