@@ -19,6 +19,10 @@ I've forked the [3DHOP repo](https://github.com/cnr-isti-vclab/3DHOP) -> to [htt
 * function [nxsbuild](https://github.com/cnr-isti-vclab/nexus/blob/master/doc/nxsbuild.md#nxsbuild): `.obj` -> `.nxs` 
 * function [nxscompress](https://github.com/cnr-isti-vclab/nexus/blob/master/doc/nxscompress.md#nxscompress): `.nxs` -> `.nxz`
 
+### STL in GitHub
+
+GitHub allows to directly render 3D `.stl` files (STereoLithography ou Standard Tessellation Language), like here: [https://github.com/zoometh/Rdev/blob/master/3d/Cube_3d_printing_sample.stl](https://github.com/zoometh/Rdev/blob/master/3d/Cube_3d_printing_sample.stl)
+
 ### 3DHOP
 
 3D models stored on GitHub, using 3DHOP fork. See their location on the [rockart repo](https://zoometh.github.io/rockart/)
