@@ -21,7 +21,7 @@ I've forked the [3DHOP repo](https://github.com/cnr-isti-vclab/3DHOP) -> to [htt
 
 ### STL in GitHub
 
-GitHub allows to directly render 3D `.stl` files (STereoLithography ou Standard Tessellation Language), like [here](https://github.com/zoometh/Rdev/blob/master/3d/Cube_3d_printing_sample.stl](https://github.com/zoometh/Rdev/blob/master/3d/Cube_3d_printing_sample.stl)
+GitHub allows to directly render 3D `.stl` files (STereoLithography ou Standard Tessellation Language), like [here](https://github.com/zoometh/Rdev/blob/master/3d/Cube_3d_printing_sample.stl)
 
 ### 3DHOP
 
