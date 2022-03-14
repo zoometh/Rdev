@@ -9,12 +9,14 @@ Miscellaneous of test files and functions for R, Python and JavaScript:
 * [statistics](#statistics)
 
 ## GMM
+> Geometry Morphometry with the Momocs package
 
-Geometry Morphometry with the Momocs package
+[gmm/](https://github.com/zoometh/Rdev/tree/master/gmm) folder 
 
 ## 3D 
+> 3D model management and viewers with open softwares 
 
-3D model management and viewers with open softwares. Low-resolution photogrammetric model of engraved rocks from the Mont Bego rock-art site (Alpes-Maritimes, France) with: 
+[3d/](https://github.com/zoometh/Rdev/tree/master/3d) folder 
 
 * Python programming 
 
@@ -49,14 +51,15 @@ Photogrammetric files of the *Roche de l'archer*, and Python code are stored on 
 </p>
   
 ## Statistics
+> R statistical functions for uni-, bi-, and multi-variate dataframes, and point pattern analysis
 
-R statistical functions for uni-, bi-, and multi-variate dataframes, and point pattern analysis
+[statistics/](https://github.com/zoometh/Rdev/tree/master/statistics) folder 
 
 | statistics    | data          |code          |output          |
 | ------------- | ------------- |--------------|----------------|
-| regressions   | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv)  | [regressions.R](https://github.com/zoometh/Rdev/blob/master/functions/regressions.R) | [reg_depots.png](https://github.com/zoometh/Rdev/blob/master/out/reg_depots.png)| 
-| CA            | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [factor_analysis.R](https://github.com/zoometh/Rdev/blob/master/functions/factor_analysis.R) | [ca_depots.png](https://github.com/zoometh/Rdev/blob/master/out/ca_depots.png) |
-| LDA           | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [discriminant_analysis.R](https://github.com/zoometh/Rdev/blob/master/functions/discriminant_analysis.R) | [lda_depots.png](https://github.com/zoometh/Rdev/blob/master/out/lda_depots.png) |
-| CAH           | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [cluster_analysis.R](https://github.com/zoometh/Rdev/blob/master/functions/cluster_analysis.R) | [cah_depots.png](https://github.com/zoometh/Rdev/blob/master/out/cah_depots.png) |
-| CAH (spat)   | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [cluster_analysis_spat.R](https://github.com/zoometh/Rdev/blob/master/functions/cluster_analysis_spat.R) | [cah_depots_spat.png](https://github.com/zoometh/Rdev/blob/master/out/cah_depots_spat.png) |
-| PPA (spat)    | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [ppa_analysis_spat.R](https://github.com/zoometh/Rdev/blob/master/functions/ppa_analysis_spat.R) | [ppa_depots_spat.png](https://github.com/zoometh/Rdev/blob/master/out/ppa_depots_spat.png) |
+| regressions   | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv)  | [regressions.R](https://github.com/zoometh/Rdev/blob/master/statistics/regressions.R) | [reg_depots.png](https://github.com/zoometh/Rdev/blob/master/out/reg_depots.png)| 
+| CA            | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [factor_analysis.R](https://github.com/zoometh/Rdev/blob/master/statistics/factor_analysis.R) | [ca_depots.png](https://github.com/zoometh/Rdev/blob/master/out/ca_depots.png) |
+| LDA           | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [discriminant_analysis.R](https://github.com/zoometh/Rdev/blob/master/statistics/discriminant_analysis.R) | [lda_depots.png](https://github.com/zoometh/Rdev/blob/master/out/lda_depots.png) |
+| CAH           | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [cluster_analysis.R](https://github.com/zoometh/Rdev/blob/master/statistics/cluster_analysis.R) | [cah_depots.png](https://github.com/zoometh/Rdev/blob/master/out/cah_depots.png) |
+| CAH (spat)   | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [cluster_analysis_spat.R](https://github.com/zoometh/Rdev/blob/master/statistics/cluster_analysis_spat.R) | [cah_depots_spat.png](https://github.com/zoometh/Rdev/blob/master/out/cah_depots_spat.png) |
+| PPA (spat)    | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [ppa_analysis_spat.R](https://github.com/zoometh/Rdev/blob/master/statistics/ppa_analysis_spat.R) | [ppa_depots_spat.png](https://github.com/zoometh/Rdev/blob/master/out/ppa_depots_spat.png) |
