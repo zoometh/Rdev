@@ -2,9 +2,15 @@
 
 Miscellaneous of test files and functions for R, Python and JavaScript: 
 
+* [GMM](#GMM)
+
 * [3D](#3d)
 
 * [statistics](#statistics)
+
+## GMM
+
+Geometry Morphometry with the Momocs package
 
 ## 3D 
 
@@ -18,10 +24,6 @@ I've forked the [3DHOP repo](https://github.com/cnr-isti-vclab/3DHOP) -> to [htt
 
 * function [nxsbuild](https://github.com/cnr-isti-vclab/nexus/blob/master/doc/nxsbuild.md#nxsbuild): `.obj` -> `.nxs` 
 * function [nxscompress](https://github.com/cnr-isti-vclab/nexus/blob/master/doc/nxscompress.md#nxscompress): `.nxs` -> `.nxz`
-
-### STL in GitHub
-
-GitHub allows to directly render 3D `.stl` files (STereoLithography ou Standard Tessellation Language), like: [3d/Cube_3d_printing_sample.st](https://github.com/zoometh/Rdev/blob/master/3d/Cube_3d_printing_sample.stl)
 
 ### 3DHOP
 
