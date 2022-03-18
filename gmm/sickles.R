@@ -88,7 +88,8 @@ dev.off()
 clus.out <- paste0(path.data, "/4_clust.jpg")
 jpeg(clus.out, height = 15, width = 17, units = "cm", res = 600)
 CLUST(sickles.f,
-      palette = pal_div_BrBG(5))
+      hclust_method = "ward.D2")
+# ?CLUST
 dev.off()
 
 # KMEANS
@@ -96,10 +97,18 @@ dev.off()
 nb.centers <- 5
 kmeans.out <- paste0(path.data, "/5_kmeans.jpg")
 jpeg(kmeans.out, height = 15, width = 17, units = "cm", res = 600)
+KMEANS(sickles.p,
+       centers = nb.centers)
 kmean <- KMEANS(sickles.p,
                 centers = nb.centers)
-kmean
+kmeans.centers <- as.data.frame(kmean$centers)
+for(i in 1:nrow(kmeans.centers)){
+  # points(kmeans.centers[i,1], kmeans.centers[i,2])
+  text(kmeans.centers[i,1], kmeans.centers[i,2], i)
+}
 dev.off()
+
+# points(24.28407, -19.84494)
 
 ## spatial
 df.member <- data.frame(names = names(kmean$cluster),
