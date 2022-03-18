@@ -3,13 +3,14 @@ library(stringr)
 library(openxlsx)
 library(ggplot2)
 library(sf)
+library(dplyr)
 # library(RColorBrewer)
 
 sampling <- T
 
-path.data <- "C:/Rprojects/_coll/SICKLES_SHAPES/" # root folder
-df.coords <- read.xlsx(paste0(path.data, "COORD.xlsx"))
-jpgs <- paste0(path.data, "img")  # img folder
+path.data <- "C:/Rprojects/_coll/SICKLES_SHAPES" # root folder
+df.coords <- read.xlsx(paste0(path.data, "/COORD.xlsx"))
+jpgs <- paste0(path.data, "/img")  # img folder
 lf <- list.files(jpgs, full.names=TRUE) # store to list
 if(sampling){
   lf.samp <- sample(1:length(lf), 20)
@@ -43,7 +44,7 @@ sickles$fac <- df.obj.col
 n.sites <- length(sites.uni)
 n.sickles <- length(sickles)
 # panel
-panel.out <- paste0(path.data, "1_panel.jpg")
+panel.out <- paste0(path.data, "/1_panel.jpg")
 jpeg(panel.out, height = 15, width = 17,units = "cm", res = 600)
 panel(sickles,
       names=TRUE,
@@ -61,7 +62,7 @@ dev.off()
 #       borders = sickles$fac$cols,
 #       meanshape = T)
 # standardized
-stack.out <- paste0(path.data, "2_stack.jpg")
+stack.out <- paste0(path.data, "/2_stack.jpg")
 jpeg(stack.out, height = 15, width = 17,units = "cm", res = 600)
 stacked <- sickles %>%
   coo_center %>% coo_scale %>%
@@ -74,7 +75,7 @@ dev.off()
 # PCA
 sickles.f <- efourier(sickles, norm = F, nb.h = 20)
 sickles.p <- PCA(sickles.f)
-pca.out <- paste0(path.data, "3_pca.jpg")
+pca.out <- paste0(path.data, "/3_pca.jpg")
 jpeg(pca.out, height = 15, width = 17, units = "cm", res = 600)
 plot(sickles.p,
      col = sickles.p$fac$cols,
@@ -84,7 +85,7 @@ dev.off()
 
 # cluster
 # TODO: colors
-clus.out <- paste0(path.data, "4_clust.jpg")
+clus.out <- paste0(path.data, "/4_clust.jpg")
 jpeg(clus.out, height = 15, width = 17, units = "cm", res = 600)
 CLUST(sickles.f,
       palette = pal_div_BrBG(5))
@@ -93,7 +94,7 @@ dev.off()
 # KMEANS
 # TODO: colors
 nb.centers <- 5
-kmeans.out <- paste0(path.data, "5_kmeans.jpg")
+kmeans.out <- paste0(path.data, "/5_kmeans.jpg")
 jpeg(kmeans.out, height = 15, width = 17, units = "cm", res = 600)
 kmean <- KMEANS(sickles.p,
                 centers = nb.centers)
@@ -103,21 +104,19 @@ dev.off()
 ## spatial
 df.member <- data.frame(names = names(kmean$cluster),
                         membership = as.integer(kmean$cluster))
-# head(df.obj.col)
-# head(df.nm.col.mbr)
-# head(df.coords)
 df.nm.col <- merge(df.names, df.obj.col, by = "num")
 df.nm.col.mbr <- merge(df.member, df.nm.col, by = "names")
 df.nm.col.mbr.spat <- merge(df.nm.col.mbr, df.coords, by = "code")
-
-
-
+# summing sickles by sites and cluster
+df.spat.grp <- df.nm.col.mbr.spat[ , c("code", "membership", "long", "lat")]
+df.spat.grp <- df.spat.grp %>%
+  count(code, membership, lat, long)
 # bbox
 buff <- .5
-xmin <- min(df.nm.col.mbr.spat$long) + buff
-ymin <- min(df.nm.col.mbr.spat$lat) - buff
-xmax <- max(df.nm.col.mbr.spat$long) + buff
-ymax <- max(df.nm.col.mbr.spat$lat) - buff
+xmin <- min(df.spat.grp$long) + buff
+ymin <- min(df.spat.grp$lat) - buff
+xmax <- max(df.spat.grp$long) + buff
+ymax <- max(df.spat.grp$lat) - buff
 m <- rbind(c(xmin,ymin), c(xmax,ymin), c(xmax,ymax), c(xmin,ymax), c(xmin,ymin))
 roi <- st_polygon(list(m))
 roi <- st_sfc(roi)
@@ -125,11 +124,11 @@ st_crs(roi) <- "+init=epsg:4326"
 bck_admin.shp <- st_read(dsn = path.data, layer = "admin_background")
 # TODO: intersects
 # bck_admin.roi <- st_intersects(bck_admin.shp, roi)
-spat.out <- paste0(path.data, "6_map.jpg")
-gg.out <- ggplot(df.nm.col.mbr.spat) +
+spat.out <- paste0(path.data, "/6_map.jpg")
+gg.out <- ggplot(df.spat.grp) +
   facet_grid(membership ~ .) +
   geom_sf(data = bck_admin.shp) +
-  geom_point(data = df.nm.col.mbr.spat, aes (x = long, y = lat), size = 2) +
+  geom_point(data = df.spat.grp, aes (x = long, y = lat, size = n)) +
   xlim(xmin - .5, xmax + .5) +
   ylim(ymin - .5, ymax + .5) +
   # geom_sf(data = ws_roi.shp, fill = 'red') +
