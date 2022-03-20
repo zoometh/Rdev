@@ -4,9 +4,10 @@ library(openxlsx)
 library(ggplot2)
 library(sf)
 library(dplyr)
+library(reshape2)
 # library(RColorBrewer)
 
-sampling <- T
+sampling <- F
 
 path.data <- "C:/Rprojects/_coll/SICKLES_SHAPES" # root folder
 df.coords <- read.xlsx(paste0(path.data, "/COORD.xlsx"))
@@ -43,6 +44,10 @@ df.obj.col <- merge(df.obj, df.colors, all.x = TRUE, by = "code" )
 sickles$fac <- df.obj.col
 n.sites <- length(sites.uni)
 n.sickles <- length(sickles)
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# item analysis
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # panel
 panel.out <- paste0(path.data, "/1_panel.jpg")
 jpeg(panel.out, height = 15, width = 17,units = "cm", res = 600)
@@ -57,11 +62,7 @@ panel(sickles,
 )
 dev.off()
 
-# # stack
-# stack(sickles,
-#       borders = sickles$fac$cols,
-#       meanshape = T)
-# standardized
+# standardized stack
 stack.out <- paste0(path.data, "/2_stack.jpg")
 jpeg(stack.out, height = 15, width = 17,units = "cm", res = 600)
 stacked <- sickles %>%
@@ -78,7 +79,7 @@ sickles.p <- PCA(sickles.f)
 pca.out <- paste0(path.data, "/3_pca.jpg")
 jpeg(pca.out, height = 15, width = 17, units = "cm", res = 600)
 plot(sickles.p,
-     col = sickles.p$fac$cols,
+     # col = sickles.p$fac$cols,
      labelspoints = T,
      cex = 1)
 dev.off()
@@ -103,13 +104,13 @@ kmean <- KMEANS(sickles.p,
                 centers = nb.centers)
 kmeans.centers <- as.data.frame(kmean$centers)
 for(i in 1:nrow(kmeans.centers)){
-  # points(kmeans.centers[i,1], kmeans.centers[i,2])
-  text(kmeans.centers[i,1], kmeans.centers[i,2], i)
+  text(kmeans.centers[i, 1], kmeans.centers[i, 2], i)
 }
 dev.off()
 
-# points(24.28407, -19.84494)
-
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# site analysis
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## spatial
 df.member <- data.frame(names = names(kmean$cluster),
                         membership = as.integer(kmean$cluster))
@@ -143,5 +144,24 @@ gg.out <- ggplot(df.spat.grp) +
   # geom_sf(data = ws_roi.shp, fill = 'red') +
   theme_bw()
 ggsave(spat.out, gg.out, width = 8, height = 21)
+
+# CA on sites
+df.melt <- df.nm.col.mbr.spat[ , c("code", "membership")]
+df.unmelt <- dcast(df.melt, code ~ membership)
+rownames(df.unmelt) <- df.unmelt$code
+df.unmelt$code <- NULL
+site.ca.out <- paste0(path.data, "/7_sites_ca.jpg")
+jpeg(site.ca.out, height = 15, width = 17, units = "cm", res = 600)
+res.sites.ca <- FactoMineR::CA(df.unmelt)
+dev.off()
+
+# HCLUST on sites
+site.hclust.out <- paste0(path.data, "/8_sites_hclust.jpg")
+jpeg(site.hclust.out, height = 15, width = 17, units = "cm", res = 600)
+df.unmelt %>%  scale %>%
+  dist %>% hclust %>% plot
+dev.off()
+
+
 
 
