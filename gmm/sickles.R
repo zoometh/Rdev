@@ -5,6 +5,7 @@ library(ggplot2)
 library(sf)
 library(dplyr)
 library(reshape2)
+library(NbClust)
 # library(RColorBrewer)
 
 sampling <- F
@@ -14,7 +15,7 @@ df.coords <- read.xlsx(paste0(path.data, "/COORD.xlsx"))
 jpgs <- paste0(path.data, "/img")  # img folder
 lf <- list.files(jpgs, full.names=TRUE) # store to list
 if(sampling){
-  lf.samp <- sample(1:length(lf), 20)
+  lf.samp <- sample(1:length(lf), 50)
   lf <- lf[lf.samp]
 }
 coo <- import_jpg(lf) # convert JPG to Coo
@@ -44,60 +45,84 @@ df.obj.col <- merge(df.obj, df.colors, all.x = TRUE, by = "code" )
 sickles$fac <- df.obj.col
 n.sites <- length(sites.uni)
 n.sickles <- length(sickles)
+sickle.legend <- paste0("shapes panel of ", n.sickles, " sickle inserts from ", n.sites, " sites")
+# sizes for the outputs
+fig.full.h <- 15 ; fig.full.w <- 17
+fig.half.h <- 07 ; fig.half.w <- 09
+k.max <- 15 # iterations
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # item analysis
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # panel
 panel.out <- paste0(path.data, "/1_panel.jpg")
-jpeg(panel.out, height = 15, width = 17,units = "cm", res = 600)
+jpeg(panel.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
 panel(sickles,
       names=TRUE,
       # names.col = sickles$fac$cols,
       cols = sickles$fac$cols,
       borders = sickles$fac$cols,
       cex.names = 0.5,
-      main = paste0("shapes panel of ", n.sickles, " sickle inserts of ", n.sites, " sites"),
+      main = sickle.legend,
       cex.main = 0.8
 )
 dev.off()
 
 # standardized stack
 stack.out <- paste0(path.data, "/2_stack.jpg")
-jpeg(stack.out, height = 15, width = 17,units = "cm", res = 600)
+jpeg(stack.out, height = fig.half.h, width = fig.half.w, units = "cm", res = 600)
 stacked <- sickles %>%
-  coo_center %>% coo_scale %>%
+  coo_center %>% # coo_scale %>%
   coo_alignxax() %>% coo_slidedirection("up")
 stack(stacked,
       borders = sickles$fac$cols,
-      main = paste0("shapes stack of ", n.sckins, " sickle inserts of ", n.sites, " sites"),)
+      title = sickle.legend
+)
 dev.off()
 
 # PCA
 sickles.f <- efourier(sickles, norm = F, nb.h = 20)
 sickles.p <- PCA(sickles.f)
 pca.out <- paste0(path.data, "/3_pca.jpg")
-jpeg(pca.out, height = 15, width = 17, units = "cm", res = 600)
+jpeg(pca.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
 plot(sickles.p,
      # col = sickles.p$fac$cols,
      labelspoints = T,
-     cex = 1)
+     cex = 1,
+     title = sickle.legend
+)
 dev.off()
 
-# cluster
+# clustering
 # TODO: colors
 clus.out <- paste0(path.data, "/4_clust.jpg")
-jpeg(clus.out, height = 15, width = 17, units = "cm", res = 600)
+jpeg(clus.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
 CLUST(sickles.f,
       hclust_method = "ward.D2")
-# ?CLUST
+dev.off()
+
+# optimal number of clusters - items
+nb.clust <- NbClust(data = sickles.p$x,
+                    distance = "euclidean",
+                    method = "ward.D2",
+                    index = c("gap", "silhouette"))
+nb.clust.opt <- nb.clust$Best.nc[1] # best nb of cluster
+wss <- sapply(1:k.max,
+              function(k){kmeans(sickles.p$x, k, nstart = 50, iter.max = 15)$tot.withinss})
+clus.best.out <- paste0(path.data, "/4_1_clust.jpg")
+jpeg(clus.best.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
+plot(1:k.max, wss,
+     type="b", pch = 19, frame = FALSE,
+     xlab="Number of clusters K (red line: best number)",
+     ylab="Total within-clusters sum of squares")
+abline(v = nb.clust.opt, col = "red", lwd = 2)
 dev.off()
 
 # KMEANS
 # TODO: colors
-nb.centers <- 5
+nb.centers <- nb.clust.opt
 kmeans.out <- paste0(path.data, "/5_kmeans.jpg")
-jpeg(kmeans.out, height = 15, width = 17, units = "cm", res = 600)
+jpeg(kmeans.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
 KMEANS(sickles.p,
        centers = nb.centers)
 kmean <- KMEANS(sickles.p,
@@ -151,13 +176,13 @@ df.unmelt <- dcast(df.melt, code ~ membership)
 rownames(df.unmelt) <- df.unmelt$code
 df.unmelt$code <- NULL
 site.ca.out <- paste0(path.data, "/7_sites_ca.jpg")
-jpeg(site.ca.out, height = 15, width = 17, units = "cm", res = 600)
+jpeg(site.ca.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
 res.sites.ca <- FactoMineR::CA(df.unmelt)
 dev.off()
 
 # HCLUST on sites
 site.hclust.out <- paste0(path.data, "/8_sites_hclust.jpg")
-jpeg(site.hclust.out, height = 15, width = 17, units = "cm", res = 600)
+jpeg(site.hclust.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
 df.unmelt %>%  scale %>%
   dist %>% hclust %>% plot
 dev.off()
