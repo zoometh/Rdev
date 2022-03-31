@@ -8,6 +8,8 @@ Miscellaneous of test files and functions for R, Python and JavaScript:
 
 * [statistics](#statistics)
 
+* [time series](#time-series)
+
 ## GMM
 > Geometry Morphometry with the Momocs package
 
@@ -63,3 +65,8 @@ Photogrammetric files of the *Roche de l'archer*, and Python code are stored on 
 | CAH           | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [cluster_analysis.R](https://github.com/zoometh/Rdev/blob/master/statistics/cluster_analysis.R) | [cah_depots.png](https://github.com/zoometh/Rdev/blob/master/out/cah_depots.png) |
 | CAH (spat)   | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [cluster_analysis_spat.R](https://github.com/zoometh/Rdev/blob/master/statistics/cluster_analysis_spat.R) | [cah_depots_spat.png](https://github.com/zoometh/Rdev/blob/master/out/cah_depots_spat.png) |
 | PPA (spat)    | [data.csv](https://github.com/zoometh/Rdev/blob/master/data/data.csv) | [ppa_analysis_spat.R](https://github.com/zoometh/Rdev/blob/master/statistics/ppa_analysis_spat.R) | [ppa_depots_spat.png](https://github.com/zoometh/Rdev/blob/master/out/ppa_depots_spat.png) |
+
+
+## Time series
+
+[test plotly](https://zoometh.github.io/Rdev/time/threats)
