@@ -45,6 +45,16 @@ for(i in 1:nrow(df.syria)){
 # export XLSX to TSV
 write.table(df.syria.out,  paste0(path.time, "df_syria_out.tsv"),
             quote = FALSE, sep='\t', col.names = TRUE)
+# plot
+df.syria.out$date <- as.Date(df.syria.out$date)
+df.syria.out <- df.syria.out %>%
+  group_by(date) %>%
+  summarise(density = sum(density))
+png(paste0(path.time, "df_syria_out.png"), width = 18, height = 12, res = 300, units = "cm")
+plot(density ~ date, df.syria.out, xaxt = "n", type = "l")
+axis(1, df.syria.out$date, format(df.syria.out$date, "%b %y"), cex.axis = .7)
+dev.off()
+
 
 if(plot_ly){
   p <- plot_ly(df, type = 'scatter', x = ~date, y = ~hp, color = ~threat,
