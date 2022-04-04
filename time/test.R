@@ -10,8 +10,7 @@ dates_comparison <- tibble::tribble(~Example, ~OriginalDate,
                                     "A clearly future date", "9999-12-31",
                                     "A not so clearly future date", "2599-12-31",
                                     "A range of dates", "2019-11-01:2020-01-01",
-                                    "An uncertain date", "2001-01-01?",
-                                    "A set of dates", "2021-5-26, 2021-6-10, 2021-11-19, 2021-12-4")
+                                    "An uncertain date", "2001-01-01?")
 dates_comparison %>% dplyr::mutate(base = as.Date(OriginalDate),
                                    lubridate = suppressWarnings(lubridate::as_date(OriginalDate)),
                                    messydates = messydates::as_messydate(OriginalDate)) %>%
@@ -69,19 +68,5 @@ md_intersect(as_messydate("2012-01-01..2012-01-20"),
 md_intersect(as_messydate("2004-01-01..2019-12-31"),
              as_messydate(df.syria[i, "date"]))
 
-# df.syria.out <- data.frame(region=)
-# limits <- "2004-01-01..2019-12-31"
-for(i in 1:nrow(df.syria)){
-  i <- 1
-  # time.span <- as_messydate(df.syria[i, "date"])
-  # intersect with the limits of the study
-  var.dates <- md_intersect(as_messydate("2004-01-01..2019-12-31"),
-                                      as_messydate(df.syria[i, "date"]))
-  n.dates <- length(var.dates)
-  var.region <- rep(df.syria[i, "region"], n.dates)
-  var.site <- rep(df.syria[i, "site"], n.dates)
-  var.cause <- rep(df.syria[i, "cause"], n.dates)
-  var.cause <- rep(df.syria[i, "type"], n.dates)
-  # a.date.ex <- expand(a.date)
-}
+
 
