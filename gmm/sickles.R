@@ -157,16 +157,12 @@ roi <- st_polygon(list(m))
 roi <- st_sfc(roi)
 st_crs(roi) <- "+init=epsg:4326"
 bck_admin.shp <- st_read(dsn = path.data, layer = "admin_background")
-# TODO: intersects
-# bck_admin.roi <- st_intersects(bck_admin.shp, roi)
+bck_admin.roi <- st_intersection(bck_admin.shp, roi)
 spat.out <- paste0(path.data, "/6_map.jpg")
 gg.out <- ggplot(df.spat.grp) +
   facet_grid(membership ~ .) +
-  geom_sf(data = bck_admin.shp) +
+  geom_sf(data = bck_admin.roi) +
   geom_point(data = df.spat.grp, aes (x = long, y = lat, size = n)) +
-  xlim(xmin - .5, xmax + .5) +
-  ylim(ymin - .5, ymax + .5) +
-  # geom_sf(data = ws_roi.shp, fill = 'red') +
   theme_bw()
 ggsave(spat.out, gg.out, width = 8, height = 21)
 
@@ -177,7 +173,8 @@ rownames(df.unmelt) <- df.unmelt$code
 df.unmelt$code <- NULL
 site.ca.out <- paste0(path.data, "/7_sites_ca.jpg")
 jpeg(site.ca.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
-res.sites.ca <- FactoMineR::CA(df.unmelt)
+res.sites.ca <- FactoMineR::CA(df.unmelt, graph = F)
+plot(res.sites.ca)
 dev.off()
 
 # HCLUST on sites
