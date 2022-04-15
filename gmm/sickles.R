@@ -40,7 +40,7 @@ names(sickles) <- 1:length(sickles)
 df.names <- data.frame(names = names(sickles),
                        num = sickles.names)
 # gather objects shapes, objects names, site names, colors in a single df
-df.obj.col <- merge(df.obj, df.colors, all.x = TRUE, by = "code" )
+df.obj.col <- merge(df.obj, df.colors, all.x = TRUE, by = "code")
 # store this df as a classifier
 sickles$fac <- df.obj.col
 n.sites <- length(sites.uni)
@@ -86,20 +86,13 @@ sickles.p <- PCA(sickles.f)
 pca.out <- paste0(path.data, "/3_pca.jpg")
 jpeg(pca.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
 plot(sickles.p,
-     # col = sickles.p$fac$cols,
+     # col = sickles.p$fac$cols, # colors
      labelspoints = T,
      cex = 1,
      title = sickle.legend
 )
 dev.off()
 
-# clustering
-# TODO: colors
-clus.out <- paste0(path.data, "/4_clust.jpg")
-jpeg(clus.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
-CLUST(sickles.f,
-      hclust_method = "ward.D2")
-dev.off()
 
 # optimal number of clusters - items
 nb.clust <- NbClust(data = sickles.p$x,
@@ -116,6 +109,21 @@ plot(1:k.max, wss,
      xlab="Number of clusters K (red line: best number)",
      ylab="Total within-clusters sum of squares")
 abline(v = nb.clust.opt, col = "red", lwd = 2)
+dev.off()
+
+# Blue, red, green, pink, orange, purple
+my.colors <- c("#0000ff", "#ff0000", "#00FF00", "#FFC0CB", "#FFA500", "#800080")
+my.colors.select <- my.colors[1:nb.clust.opt]
+my.color.ramp <- colorRampPalette(my.colors.select)
+
+# clustering
+# TODO: colors
+clus.out <- paste0(path.data, "/4_clust.jpg")
+jpeg(clus.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
+CLUST(sickles.f,
+      hclust_method = "ward.D2",
+      k = nb.clust.opt,
+      palette = my.color.ramp)
 dev.off()
 
 # KMEANS
@@ -157,6 +165,7 @@ roi <- st_polygon(list(m))
 roi <- st_sfc(roi)
 st_crs(roi) <- "+init=epsg:4326"
 bck_admin.shp <- st_read(dsn = path.data, layer = "admin_background")
+sf::sf_use_s2(FALSE)
 bck_admin.roi <- st_intersection(bck_admin.shp, roi)
 spat.out <- paste0(path.data, "/6_map.jpg")
 gg.out <- ggplot(df.spat.grp) +
