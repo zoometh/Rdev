@@ -155,7 +155,7 @@ df.spat.grp <- df.nm.col.mbr.spat[ , c("code", "membership", "long", "lat")]
 df.spat.grp <- df.spat.grp %>%
   count(code, membership, lat, long)
 # bbox
-buff <- .5
+buff <- 1
 xmin <- min(df.spat.grp$long) + buff
 ymin <- min(df.spat.grp$lat) - buff
 xmax <- max(df.spat.grp$long) + buff
