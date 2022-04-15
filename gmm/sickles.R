@@ -48,8 +48,9 @@ n.sickles <- length(sickles)
 sickle.legend <- paste0("shapes panel of ", n.sickles, " sickle inserts from ", n.sites, " sites")
 # sizes for the outputs
 fig.full.h <- 15 ; fig.full.w <- 17
-fig.half.h <- 07 ; fig.half.w <- 09
+fig.half.h <- 09 ; fig.half.w <- 12
 k.max <- 15 # iterations
+nb.clust.opt <- 6
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # item analysis
@@ -77,6 +78,7 @@ stacked <- sickles %>%
 stack(stacked,
       borders = sickles$fac$cols,
       title = sickle.legend
+      # TODO: size title
 )
 dev.off()
 
@@ -86,7 +88,7 @@ sickles.p <- PCA(sickles.f)
 pca.out <- paste0(path.data, "/3_pca.jpg")
 jpeg(pca.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
 plot(sickles.p,
-     # col = sickles.p$fac$cols, # colors
+     col = sickles.p$fac$cols, # colors
      labelspoints = T,
      cex = 1,
      title = sickle.legend
@@ -95,21 +97,25 @@ dev.off()
 
 
 # optimal number of clusters - items
-nb.clust <- NbClust(data = sickles.p$x,
-                    distance = "euclidean",
-                    method = "ward.D2",
-                    index = c("gap", "silhouette"))
-nb.clust.opt <- nb.clust$Best.nc[1] # best nb of cluster
-wss <- sapply(1:k.max,
-              function(k){kmeans(sickles.p$x, k, nstart = 50, iter.max = 15)$tot.withinss})
-clus.best.out <- paste0(path.data, "/4_1_clust.jpg")
-jpeg(clus.best.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
-plot(1:k.max, wss,
-     type="b", pch = 19, frame = FALSE,
-     xlab="Number of clusters K (red line: best number)",
-     ylab="Total within-clusters sum of squares")
-abline(v = nb.clust.opt, col = "red", lwd = 2)
-dev.off()
+if(elbow){
+  pc1.2 <- sickles.p$x[,c(1, 2)] # first dim
+  nb.clust <- NbClust(data = pc1.2,
+                      min.nc = 3,
+                      distance = "euclidian",
+                      method = "ward.D2",
+                      index = c("gap", "silhouette"))
+  nb.clust.opt <- nb.clust$Best.nc[1] # best nb of cluster
+  wss <- sapply(1:k.max,
+                function(k){kmeans(sickles.p$x, k, nstart = 50, iter.max = 15)$tot.withinss})
+  clus.best.out <- paste0(path.data, "/4_1_clust.jpg")
+  jpeg(clus.best.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
+  plot(1:k.max, wss,
+       type="b", pch = 19, frame = FALSE,
+       xlab="Number of clusters K (red line: best number)",
+       ylab="Total within-clusters sum of squares")
+  abline(v = nb.clust.opt, col = "red", lwd = 2)
+  dev.off()
+}
 
 # Blue, red, green, pink, orange, purple
 my.colors <- c("#0000ff", "#ff0000", "#00FF00", "#FFC0CB", "#FFA500", "#800080")
@@ -117,7 +123,6 @@ my.colors.select <- my.colors[1:nb.clust.opt]
 my.color.ramp <- colorRampPalette(my.colors.select)
 
 # clustering
-# TODO: colors
 clus.out <- paste0(path.data, "/4_clust.jpg")
 jpeg(clus.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
 CLUST(sickles.f,
@@ -155,11 +160,11 @@ df.spat.grp <- df.nm.col.mbr.spat[ , c("code", "membership", "long", "lat")]
 df.spat.grp <- df.spat.grp %>%
   count(code, membership, lat, long)
 # bbox
-buff <- 1
-xmin <- min(df.spat.grp$long) + buff
+buff <- .5
+xmin <- min(df.spat.grp$long) - buff
 ymin <- min(df.spat.grp$lat) - buff
 xmax <- max(df.spat.grp$long) + buff
-ymax <- max(df.spat.grp$lat) - buff
+ymax <- max(df.spat.grp$lat) + buff
 m <- rbind(c(xmin,ymin), c(xmax,ymin), c(xmax,ymax), c(xmin,ymax), c(xmin,ymin))
 roi <- st_polygon(list(m))
 roi <- st_sfc(roi)
@@ -189,8 +194,9 @@ dev.off()
 # HCLUST on sites
 site.hclust.out <- paste0(path.data, "/8_sites_hclust.jpg")
 jpeg(site.hclust.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
-df.unmelt %>%  scale %>%
-  dist %>% hclust %>% plot
+df.unmelt.perc <- df.unmelt/rowSums(df.unmelt)
+df.unmelt.perc %>%  scale %>%
+  dist %>% hclust %>% plot(hang = -1)
 dev.off()
 
 
