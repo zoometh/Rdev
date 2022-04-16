@@ -14,11 +14,13 @@
 <p align="center">
   <img alt="img-name" src="../www/IMG_0901.JPG" width="300">
 </p>
+
 <p align="center">
 :arrow_down:
 </p>
+
 <p align="center">
-  <img alt="img-name" src="../www/IMG_0901_shape.JPG" width="300">
+  <img alt="img-name" src="../www/IMG_0901_shape.jpg" width="300">
 </p>
 
 Use [ImageMagick](https://imagemagick.org/) processes, in a Python loop, to extract flints from standardized photographs:
