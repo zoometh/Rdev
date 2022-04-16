@@ -14,6 +14,7 @@ for index, row in df.iterrows():
     fold = "c:\\\\Rprojects\\\\Rdev\\\\gmm\\\\" + row['carpeta']
     imgin = row['objecto']
     imgout = re.sub(".JPG", "", row['objecto']) + "_shape.png"
+    imgfin = re.sub(".JPG", "", row['objecto']) + "_shape.jpg"
     os.chdir(fold)
     # colors
     cmd_colors = "magick %s -color-threshold sRGB(20,20,20)-sRGB(255,255,255) %s" % (imgin, imgout) 
@@ -36,6 +37,6 @@ for index, row in df.iterrows():
     os.system(cmd_bw)
     print("      ... to black and white done")
     # invert b/w
-    cmd_inv = "magick %s -negate %s" % (imgout, imgout)
+    cmd_inv = "magick %s -negate %s" % (imgout, imgfin)
     os.system(cmd_inv)
     print("      ... inverted done")
