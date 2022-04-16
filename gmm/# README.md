@@ -1,6 +1,12 @@
 # GMM
 > Geometry Morphometry with the Momocs package
 
+<p align="center">
+  <img alt="img-name" src="www/5_kmeans.jpg" width="500">
+  <br>
+    <em>snapshot from the RGL window generated from the Python script</em>
+</p>
+
 ---
 
 ## Extract lithics from photographs
