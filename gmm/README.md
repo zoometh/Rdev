@@ -4,7 +4,7 @@
 <p align="center">
   <img alt="img-name" src="../www/5_kmeans.jpg" width="500">
   <br>
-    <em>Kmeans on 255 sickles, with 6 centers (ie, clusters)</em>
+    <em>Kmeans on 225 sickles, with 6 centers (ie, clusters)</em>
 </p>
 
 ---
