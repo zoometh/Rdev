@@ -11,6 +11,14 @@
 
 ## Extract lithics from photographs
 
+<p align="center">
+  <img alt="img-name" src="../www/IMG_0901.JPG" width="300">
+</p>
+:arrow_down:
+<p align="center">
+  <img alt="img-name" src="../www/IMG_0901_shape.JPG" width="300">
+</p>
+
 Use [ImageMagick](https://imagemagick.org/) processes in a Python loop to extract flints from standardized photographs:
 
 1. Read a XLSX file to recover folder names and photographs filenames
