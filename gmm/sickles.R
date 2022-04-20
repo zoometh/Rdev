@@ -2,13 +2,20 @@ library(Momocs)
 library(stringr)
 library(openxlsx)
 library(ggplot2)
+library(ggrepel)
 library(sf)
 library(dplyr)
 library(reshape2)
 library(NbClust)
+
 # library(RColorBrewer)
 
-sampling <- F
+sf::sf_use_s2(FALSE)
+
+sampling <- T
+elbow.sickles <- F
+nbclust.sickles.opt <- 6
+nbclust.sites.opt <- 4
 
 path.data <- "C:/Rprojects/_coll/SICKLES_SHAPES" # root folder
 df.coords <- read.xlsx(paste0(path.data, "/COORD.xlsx"))
@@ -50,7 +57,36 @@ sickle.legend <- paste0("shapes panel of ", n.sickles, " sickle inserts from ", 
 fig.full.h <- 15 ; fig.full.w <- 17
 fig.half.h <- 09 ; fig.half.w <- 12
 k.max <- 15 # iterations
-nb.clust.opt <- 6
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# functions
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#
+spat.mbr <- function(df, name.out){
+  # create a map facetted with menberships
+  # df <- df.sites.mbr.spat ; name.out <- "/9_map_sites.jpg"
+  # bbox
+  buff <- .5
+  xmin <- min(df$long) - buff
+  ymin <- min(df$lat) - buff
+  xmax <- max(df$long) + buff
+  ymax <- max(df$lat) + buff
+  m <- rbind(c(xmin,ymin), c(xmax,ymin), c(xmax,ymax), c(xmin,ymax), c(xmin,ymin))
+  roi <- st_polygon(list(m))
+  roi <- st_sfc(roi)
+  st_crs(roi) <- "+init=epsg:4326"
+  bck_admin.shp <- st_read(dsn = path.data, layer = "admin_background")
+  bck_admin.roi <- st_intersection(bck_admin.shp, roi)
+  spat.out <- paste0(path.data, name.out)
+  gg.out <- ggplot(df) +
+    facet_grid(membership ~ .) +
+    geom_sf(data = bck_admin.roi) +
+    geom_point(data = df, aes (x = long, y = lat, size = n)) +
+    geom_text_repel(data = df, aes(x = long, y = lat, label = code)) +
+    theme_bw()
+  ggsave(spat.out, gg.out, width = 8, height = 21)
+}
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # item analysis
@@ -88,7 +124,7 @@ sickles.p <- PCA(sickles.f)
 pca.out <- paste0(path.data, "/3_pca.jpg")
 jpeg(pca.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
 plot(sickles.p,
-     col = sickles.p$fac$cols, # colors
+     # col = sickles.p$fac$cols, # colors
      labelspoints = T,
      cex = 1,
      title = sickle.legend
@@ -97,14 +133,14 @@ dev.off()
 
 
 # optimal number of clusters - items
-if(elbow){
+if(elbow.sickles){
   pc1.2 <- sickles.p$x[,c(1, 2)] # first dim
   nb.clust <- NbClust(data = pc1.2,
                       min.nc = 3,
                       distance = "euclidian",
                       method = "ward.D2",
                       index = c("gap", "silhouette"))
-  nb.clust.opt <- nb.clust$Best.nc[1] # best nb of cluster
+  nbclust.sickles.opt <- nb.clust$Best.nc[1] # best nb of cluster
   wss <- sapply(1:k.max,
                 function(k){kmeans(sickles.p$x, k, nstart = 50, iter.max = 15)$tot.withinss})
   clus.best.out <- paste0(path.data, "/4_1_clust.jpg")
@@ -113,13 +149,13 @@ if(elbow){
        type="b", pch = 19, frame = FALSE,
        xlab="Number of clusters K (red line: best number)",
        ylab="Total within-clusters sum of squares")
-  abline(v = nb.clust.opt, col = "red", lwd = 2)
+  abline(v = nbclust.sickles.opt, col = "red", lwd = 2)
   dev.off()
 }
 
 # Blue, red, green, pink, orange, purple
 my.colors <- c("#0000ff", "#ff0000", "#00FF00", "#FFC0CB", "#FFA500", "#800080")
-my.colors.select <- my.colors[1:nb.clust.opt]
+my.colors.select <- my.colors[1:nbclust.sickles.opt]
 my.color.ramp <- colorRampPalette(my.colors.select)
 
 # clustering
@@ -127,13 +163,13 @@ clus.out <- paste0(path.data, "/4_clust.jpg")
 jpeg(clus.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
 CLUST(sickles.f,
       hclust_method = "ward.D2",
-      k = nb.clust.opt,
+      k = nbclust.sickles.opt,
       palette = my.color.ramp)
 dev.off()
 
 # KMEANS
 # TODO: colors
-nb.centers <- nb.clust.opt
+nb.centers <- nbclust.sickles.opt
 kmeans.out <- paste0(path.data, "/5_kmeans.jpg")
 jpeg(kmeans.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
 KMEANS(sickles.p,
@@ -146,42 +182,26 @@ for(i in 1:nrow(kmeans.centers)){
 }
 dev.off()
 
+## spatial
+df.member.sickles <- data.frame(names = names(kmean$cluster),
+                                membership = as.integer(kmean$cluster))
+df.nm.col <- merge(df.names, df.obj.col, by = "num")
+df.nm.col.mbr <- merge(df.member.sickles, df.nm.col, by = "names")
+df.sickles.mbr.spat <- merge(df.nm.col.mbr, df.coords, by = "code")
+# summing sickles by sites and cluster/membership
+df.sickles.spat.grp <- df.sickles.mbr.spat[ , c("code", "membership", "long", "lat")]
+df.sickles.spat.grp <- df.sickles.spat.grp %>%
+  count(code, membership, lat, long)
+# call map function
+spat.mbr(df.sickles.spat.grp, "/6_map_sickles.jpg")
+
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # site analysis
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-## spatial
-df.member <- data.frame(names = names(kmean$cluster),
-                        membership = as.integer(kmean$cluster))
-df.nm.col <- merge(df.names, df.obj.col, by = "num")
-df.nm.col.mbr <- merge(df.member, df.nm.col, by = "names")
-df.nm.col.mbr.spat <- merge(df.nm.col.mbr, df.coords, by = "code")
-# summing sickles by sites and cluster
-df.spat.grp <- df.nm.col.mbr.spat[ , c("code", "membership", "long", "lat")]
-df.spat.grp <- df.spat.grp %>%
-  count(code, membership, lat, long)
-# bbox
-buff <- .5
-xmin <- min(df.spat.grp$long) - buff
-ymin <- min(df.spat.grp$lat) - buff
-xmax <- max(df.spat.grp$long) + buff
-ymax <- max(df.spat.grp$lat) + buff
-m <- rbind(c(xmin,ymin), c(xmax,ymin), c(xmax,ymax), c(xmin,ymax), c(xmin,ymin))
-roi <- st_polygon(list(m))
-roi <- st_sfc(roi)
-st_crs(roi) <- "+init=epsg:4326"
-bck_admin.shp <- st_read(dsn = path.data, layer = "admin_background")
-sf::sf_use_s2(FALSE)
-bck_admin.roi <- st_intersection(bck_admin.shp, roi)
-spat.out <- paste0(path.data, "/6_map.jpg")
-gg.out <- ggplot(df.spat.grp) +
-  facet_grid(membership ~ .) +
-  geom_sf(data = bck_admin.roi) +
-  geom_point(data = df.spat.grp, aes (x = long, y = lat, size = n)) +
-  theme_bw()
-ggsave(spat.out, gg.out, width = 8, height = 21)
 
 # CA on sites
-df.melt <- df.nm.col.mbr.spat[ , c("code", "membership")]
+df.melt <- df.sickles.mbr.spat[ , c("code", "membership")]
 df.unmelt <- dcast(df.melt, code ~ membership)
 rownames(df.unmelt) <- df.unmelt$code
 df.unmelt$code <- NULL
@@ -195,10 +215,19 @@ dev.off()
 site.hclust.out <- paste0(path.data, "/8_sites_hclust.jpg")
 jpeg(site.hclust.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
 df.unmelt.perc <- df.unmelt/rowSums(df.unmelt)
-df.unmelt.perc %>%  scale %>%
-  dist %>% hclust %>% plot(hang = -1)
+res.sites.hclust <- df.unmelt.perc %>%  scale %>%
+  dist %>% hclust
+plot(res.sites.hclust,
+     hang = -1)
 dev.off()
 
+## spatial - sites
+menber.sites <- cutree(res.sites.hclust, nbclust.sites.opt)
+df.sites.mbr <- data.frame(code = names(menber.sites),
+                              membership = as.integer(menber.sites))
+df.sites.mbr.spat <- merge(df.sites.mbr, df.coords, by = "code")
+# call map function
+spat.mbr(df.sites.mbr.spat, "/9_map_sites.jpg")
 
 
 
