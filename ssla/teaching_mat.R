@@ -12,9 +12,6 @@ xl.tags.list <- str_split(xl$tags, ",")
 tags <- str_to_title(trimws(unlist(xl.tags.list)))
 df.tags <- data.frame(table(tags))
 df.tags <- df.tags[order(df.tags$Freq, decreasing = TRUE),]
-# rownames(df.tags) <- 1:nrow(df.tags)
-# rownames(df.tags) <- df.tags$tags
-# df.tags$tags <- NULL
 jpeg(paste0(getwd(), '/tags_occur.jpg'), width = 25, height = 17,
      res = 300, unit='cm')
 ggplot(df.tags, aes(x = tags, y = Freq)) +
@@ -27,10 +24,3 @@ ggplot(df.tags, aes(x = tags, y = Freq)) +
         legend.text = element_text(size = 7),
         legend.key.size = unit(.7, "line"))
 dev.off()
-
-
-barplot(prop.table(table(xl.tags)))
-
-# counts
- +
-  geom_text(aes(y = Freq, label=tags), vjust=0)
