@@ -1,2 +1,6 @@
-<style>p{color:red;}</style>
-*foo*
+
+<pre>
+    <code>
+        <style>p{color:red;}</style>*foo*
+    </code>
+</pre>
