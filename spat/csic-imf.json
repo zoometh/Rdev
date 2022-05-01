@@ -1,0 +1,10 @@
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [41.38101043266759,2.1690042841463435]
+  },
+  "properties": {
+    "name": "CSIC-IMF"
+  }
+}
