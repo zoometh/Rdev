@@ -1,7 +1,7 @@
 # 3D
 
 ## Web3D and multiscalar 
-> 3D model management and viewers with open softwares with GitHub, using 3DHOP and R
+> 3D model management and viewers with GitHub, using 3DHOP and R
 
 * reveal.js HTML presentation: [https://zoometh.github.io/reveal.js](https://zoometh.github.io/reveal.js)
 

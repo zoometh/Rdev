@@ -16,11 +16,15 @@ jpeg(paste0(getwd(), '/tags_occur.jpg'), width = 25, height = 17,
      res = 300, unit='cm')
 ggplot(df.tags, aes(x = tags, y = Freq)) +
   geom_bar(aes(fill = tags), stat = "identity", position ="dodge") +
-  geom_text_repel(aes(label = tags), max.overlaps = 40, size = 3) +
-  theme(axis.title.x = element_blank(),
-        axis.text.x = element_blank(),
-        legend.position = "bottom",
-        legend.title = element_blank(),
-        legend.text = element_text(size = 7),
-        legend.key.size = unit(.7, "line"))
+  # geom_text_repel(aes(label = tags), max.overlaps = 40, size = 3) +
+  theme(axis.title.x = element_blank()#,
+        #  axis.text.x = element_blank()#,
+        #        legend.position = "bottom",
+        #  legend.title = element_blank(),
+        #legend.text = element_text(size = 7),
+        #  legend.key.size = unit(.7, "line")
+  )+
+  scale_fill_discrete(guide = "none")+
+  coord_flip()
 dev.off()
+
