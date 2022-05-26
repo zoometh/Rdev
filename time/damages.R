@@ -69,10 +69,17 @@ plot(density ~ date, df.syria.out, xaxt = "n", type = "l")
 axis(1, df.syria.out$date, format(df.syria.out$date, "%b %y"), cex.axis = .7)
 dev.off()
 
+if(plot_ly){
+  p <- plot_ly(df.syria.out, type = 'scatter', x = ~date, y = ~density,
+               mode = 'line')
+  p
+  saveWidget(as_widget(p), paste0(getwd(),"/time/threats.html"))
+}
 
 if(plot_ly){
   p <- plot_ly(df, type = 'scatter', x = ~date, y = ~hp, color = ~threat,
                mode = 'line', stackgroup='one')
   p
-  saveWidget(as_widget(p), paste0(getwd(),"/time/threats.html"))
+  saveWidget(as_widget(p), paste0(getwd(),"/time/threats_stacked.html"))
+  #
 }
