@@ -14,7 +14,7 @@ df.tags <- data.frame(table(tags))
 df.tags <- df.tags[order(df.tags$Freq, decreasing = TRUE),]
 jpeg(paste0(getwd(), '/tags_occur.jpg'), width = 25, height = 17,
      res = 300, unit='cm')
-ggplot(df.tags, aes(x = tags, y = Freq)) +
+gteach <- ggplot(df.tags, aes(x = tags, y = Freq)) +
   geom_bar(aes(fill = tags), stat = "identity", position ="dodge") +
   # geom_text_repel(aes(label = tags), max.overlaps = 40, size = 3) +
   theme(axis.title.x = element_blank()#,
@@ -26,5 +26,7 @@ ggplot(df.tags, aes(x = tags, y = Freq)) +
   )+
   scale_fill_discrete(guide = "none")+
   coord_flip()
+gteach
 dev.off()
+gteach
 

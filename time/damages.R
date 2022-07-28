@@ -70,7 +70,7 @@ axis(1, df.syria.out$date, format(df.syria.out$date, "%b %y"), cex.axis = .7)
 dev.off()
 
 if(plot_ly){
-  p <- plot_ly(df.syria.out, type = 'scatter', x = ~date, y = ~density,
+  p <- plot_ly(df.syria.out, type = 'scatter', x = ~date, y = ~round(density, 4),
                mode = 'line')
   p
   saveWidget(as_widget(p), paste0(getwd(),"/time/threats.html"))
