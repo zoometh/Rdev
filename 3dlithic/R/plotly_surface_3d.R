@@ -15,6 +15,7 @@ library(htmlwidgets)
 #'
 #' @examples
 #'
+#' plotly_surface_3d(xyz, export.plot = FALSE)
 #'
 #' @export
 
