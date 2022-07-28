@@ -1,20 +1,48 @@
 library(geodiv)
 library(dplyr)
 
-# xyz <- read.table("confoc_3d.xyz", header = FALSE, sep = "")
-xyz.mat <- as.matrix(xyz)
+#' Create a 3D surface with Plotly
+#' @name plotly_surface_3d
+#' @description 3D interface or save HTML widgets
+#'
+#' @param xyz a dataframe with X, Y, and Z columns for the surface
+#' @param scale the scale of the axis (mm, cm, etc.)
+#' @param marker a dataframe with X, Y, and Z columns of additional points. NA by default
+#' @param export.plot if TRUE export, if FALSE display
+#'
+#' @return A dataframe
+#'
+#' @examples
+#'
+#' xyz <- read_dat()
+#' df <- geodiv_surface_analysis(xyz)
+#'
+#'
+#' @export
+geodiv_surface_analysis <- function(xyz = NA,
+                                    indices = c("sq", "sa", "sku", "ssk")){
 
-sq.var <- sq(xyz.mat)
-sa.var <- sa(xyz.mat)
-sku.var <- sku(xyz.mat)
-ssk.var <- ssk(xyz.mat)
+  # xyz <- read.table("confoc_3d.xyz", header = FALSE, sep = "")
+  xyz <- as.matrix(xyz)
 
-df.var <- data.frame(abbrev = c('Sq', 'Sa', 'Sku', 'Ssk'),
-                     descr = c('Root mean square height', 'Average roughness', 'Kurtosis', 'Skewness'),
-                     val = c(sq.var, sa.var, sku.var, ssk.var))
-df.var
-# abbrev                   descr         val
-# 1     Sq Root mean square height 774.3146686
-# 2     Sa       Average roughness 677.9315813
-# 3    Sku                Kurtosis  -0.8874419
-# 4    Ssk                Skewness   0.6288069
+  if("sq" %in% indices){
+    df <- data.frame(sq = geodiv::sq(xyz))
+    df[nrow(df) + 1, ] <- 'Root mean square height'
+    }
+  if("sa" %in% indices){
+    df1 <- data.frame(sa = geodiv::sa(xyz))
+    df1[nrow(df1) + 1, ] <- 'Average roughness'
+    df <- cbind(df, df1)
+  }
+  if("sku" %in% indices){
+    df1 <- data.frame(sku = geodiv::sku(xyz))
+    df1[nrow(df1) + 1, ] <- 'Kurtosis'
+    df <- cbind(df, df1)
+    }
+  if("ssk" %in% indices){
+    df1 <- data.frame(ssk = geodiv::ssk(xyz))
+    df1[nrow(df1) + 1, ] <- 'Skewness'
+    df <- cbind(df, df1)
+  }
+  return(df)
+}
