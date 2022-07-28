@@ -6,6 +6,7 @@ Uses Plotly and geodiv packages to visualize and compute surface analysis on a C
 
 ```
 library(devtools)
+
 source_url("https://raw.githubusercontent.com/zoometh/Rdev/master/3dlithic/R/read_dat.R")
 source_url("https://raw.githubusercontent.com/zoometh/Rdev/master/3dlithic/R/geodiv_surface_analyse.R")
 source_url("https://raw.githubusercontent.com/zoometh/Rdev/master/3dlithic/R/plotly_surface_3d.R")
@@ -21,5 +22,5 @@ plotly_surface_3d(xyz, export.plot = FALSE)
 Will open an interactive 3D Plotly viewer
 
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/zoometh/rockart/main/www/use-wear-plotly.png" width="500">
+  <img alt="img-name" src="https://raw.githubusercontent.com/zoometh/rockart/main/www/use-wear-plotly.png" width="700">
 </p>
