@@ -1,0 +1,76 @@
+---
+title: "Untitled"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(archdata)
+library(plotly)
+
+data("Mesolithic")
+```
+
+With the `archdata` dataset: 'Mesolithic'. This R Markdown document is made interactive using Shiny and Plotly.
+
+## Random
+
+```{r eruptions, echo=FALSE}
+inputPanel(
+  selectInput("n_breaks", label = "Number of bins:",
+              choices = c(10, 20, 35, 50), selected = 20),
+  
+  sliderInput("bw_adjust", label = "Bandwidth adjustment:",
+              min = 0.2, max = 2, value = 1, step = 0.2)
+)
+
+renderPlot({
+  hist(faithful$eruptions, probability = TRUE, breaks = as.numeric(input$n_breaks),
+       xlab = "Duration (minutes)", main = "Geyser eruption duration")
+  
+  dens <- density(faithful$eruptions, adjust = input$bw_adjust)
+  lines(dens, col = "blue")
+})
+```
+
+## Archaeological
+
+
+
+```{r dd, echo=FALSE}
+ui <- fluidPage(
+  tags$style('.container-fluid {
+                             background-color: #000000;
+              }'),
+  selectInput("choice", "", choices = colnames(Mesolithic), selected = "Microliths"),
+  plotlyOutput("graph")
+)
+
+server <- function(input, output, session){
+  output$graph <- renderPlotly({
+    plot_ly(Mesolithic,
+            x = ~get(input$choice),
+            y = 0,
+            type = 'scatter',
+            mode = 'markers') %>%
+      layout(plot_bgcolor='#000000',
+             xaxis = list(
+               title = input$choice,
+               gridcolor = '#000000'),
+             yaxis = list(
+               title = '',
+               showticklabels = FALSE,
+               zerolinecolor = '#ffff',
+               gridcolor = '#000000')
+      )
+  })
+}
+
+shinyApp(ui, server)
+```
+
+
+
+
+
