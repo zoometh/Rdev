@@ -35,3 +35,10 @@ R Script for the shape analysis and classification of sickles blades
     <em>Kmeans on 225 sickles, with 6 centers (ie, clusters)</em>
 </p>
 
+---
+
+## Arrowheads
+
+R Script for a demo showing the shape analysis and classification of arrowheads. The original dataset and part of the code comes from: 
+ - Matzig, D. N., Hussain, S. T., & Riede, F. (**2021**). "Design Space Constraints and the Cultural Taxonomy of European Final Palaeolithic Large Tanged Points: A Comparison of Typological, Landmark-Based and Whole-Outline Geometric Morphometric Approaches". *Journal of Paleolithic Archaeology*, 4(4), 1-39, doi: https://doi.org/10.5281/zenodo.4560743
+
