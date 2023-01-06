@@ -49,6 +49,13 @@ R Script for a demo showing the shape analysis and classification of arrowheads.
  ## Beads
 > R tutorial for butterfly beads. 
 
+<p align="center">
+  <img alt="img-name" src="../gmm/butterfly_beads_afd.jpg" width="500">
+  <br>
+    <em>Alarashi, 2016, Butterfly beads in the Neolithic Near East: evolution, technology and socio-cultural implications, Cambridge Archaeological Journal</em>
+</p>
+
+
 Download the content of the https://github.com/zoometh/Rdev/tree/master/gmm/out folder with https://download-directory.github.io/ and run:
  
 ```
