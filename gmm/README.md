@@ -47,8 +47,9 @@ R Script for a demo showing the shape analysis and classification of arrowheads.
  ---
    
  ## Beads
- 
- R script for butterfly beads. Download the content of the https://github.com/zoometh/Rdev/tree/master/gmm/out folder with https://download-directory.github.io/ and run:
+> R tutorial for butterfly beads. 
+
+Download the content of the https://github.com/zoometh/Rdev/tree/master/gmm/out folder with https://download-directory.github.io/ and run:
  
 ```
 library(Momocs)
@@ -74,7 +75,7 @@ beads %>%
 ```
 
 <p align="center">
-  <img alt="img-name" src="../gmm/www/panel.png" width="500">
+  <img alt="img-name" src="../gmm/results/panel.png" width="500">
   <br>
     <em>Panel</em>
 </p>
@@ -91,7 +92,7 @@ beads %>%
 ```
 
 <p align="center">
-  <img alt="img-name" src="../gmm/www/stack.png" width="500">
+  <img alt="img-name" src="../gmm/results/stack.png" width="500">
   <br>
     <em>Stack (centered-scaled)</em>
 </p>
@@ -105,7 +106,7 @@ plot(beads.p)
 ```
 
 <p align="center">
-  <img alt="img-name" src="../gmm/www/cluster.png" width="500">
+  <img alt="img-name" src="../gmm/results/cluster.png" width="500">
   <br>
     <em>Clustering</em>
 </p>
@@ -119,7 +120,7 @@ KMEANS(beads.p, centers = 4)
 ```
 
 <p align="center">
-  <img alt="img-name" src="../gmm/www/kmeans.png" width="500">
+  <img alt="img-name" src="../gmm/results/kmeans.png" width="500">
   <br>
     <em>Kmeans</em>
 </p>
