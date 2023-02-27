@@ -1,0 +1,110 @@
+# plot from DB "mailhac" with Stamen backgrounds
+
+
+library(RPostgreSQL)
+library(sf)
+library(ggmap)
+library(ggplot2)
+
+
+# convert to Mercador
+items <- function(sqll, con = con){
+  sqll.wkt <- "SELECT site, ST_AsText(geom) as wkt FROM objets WHERE "
+  sqll <- paste0 (sqll.wkt, sqll)
+  drv <- dbDriver("PostgreSQL")
+  con <- dbConnect(drv,
+                   dbname="mailhac_9",
+                   host="localhost",
+                   port=5432,
+                   user="postgres",
+                   password="postgres")
+  data.df <- dbGetQuery(con, sqll)
+  dbDisconnect(con)
+  data.sf <- st_as_sf(data.df, wkt = "wkt")
+  print(nrow(data.sf))
+  st_crs(data.sf) <- 4326
+  data.merc <- st_transform(data.sf, 3857)[1]
+  return(data.merc)
+}
+
+spat <- function(bck = NA,
+                 inds = NA,
+                 buff = 3,
+                 zoom = 6,
+                 maptype = "terrain-background",
+                 bck.cex = 1,
+                 bck.pch = 16,
+                 bck.col = "black",
+                 inds.cex = 2,
+                 inds.pch = 16
+){
+  roi.extent.merc <- append(inds, list(bck))
+  xy <- inds[[1]]
+  for(i in seq(1, length(roi.extent.merc))){
+    indi <- roi.extent.merc[[i]]
+    xy <- st_union(xy, indi, by_feature = FALSE)
+  }
+  roi.extent.merc.comb <- st_combine(xy)
+  roi.extent.wgs <- st_transform(roi.extent.merc.comb, crs = 4326)
+  roi <- as.numeric(st_bbox(roi.extent.wgs))
+  bbox <- c(left = roi[1] - buff,
+            bottom = roi[2] - buff,
+            right = roi[3] + buff,
+            top = roi[4] + buff)
+  stamenbck <- get_stamenmap(bbox,
+                             zoom = zoom,
+                             maptype = maptype)
+  plot(bck,
+       cex = bck.cex,
+       pch = bck.pch,
+       col = bck.col,
+       bgMap = stamenbck,
+       xlim = st_bbox(roi.extent.merc.comb)[c(1, 3)],
+       ylim = st_bbox(roi.extent.merc.comb)[c(2, 4)],
+       reset = FALSE)
+  for(i in seq(1, length(inds))){
+    colors <- c("red", "blue", "green", "pink", "purple", "brown")
+    indi <- inds[[i]]
+    plot(indi,
+         cex = inds.cex,
+         pch = inds.pch,
+         col = colors[i],
+         add = TRUE)
+    text(x = sf::st_coordinates(indi)[, 1],
+         y = sf::st_coordinates(indi)[, 2],
+         col = colors[i],
+         labels = indi$site,
+         pos = 3)
+  }
+  print("lkhlkh")
+}
+
+
+
+steles.bouclier <- items("famille LIKE 'stele bouclier'")
+baracal <- items("site LIKE 'Baracal' LIMIT 1")
+carneril <- items("site LIKE '%Carneril%' LIMIT 1")
+cespedes <- items("site LIKE 'Granja de Cespedes' LIMIT 1")
+foios <- items("site LIKE 'Foios' LIMIT 1")
+brozas <- items("site LIKE 'Brozas' LIMIT 1")
+huelva <- items("site LIKE 'Huelva' LIMIT 1")
+cloonbrin <- items("site LIKE 'Cloonbrin' LIMIT 1")
+bangor <- items("site LIKE 'Bangor' LIMIT 1")
+delphes <- items("site LIKE 'Delphes' LIMIT 1")
+froslunda <- items("site LIKE 'Froslunda' LIMIT 1")
+ategua <- items("site LIKE 'Ategua' LIMIT 1")
+kville <- items("site LIKE 'Kville' LIMIT 1")
+capote <- items("site LIKE 'Capote' LIMIT 1")
+cabeza.4 <- items("numero LIKE 'Cabeza De%4%'")
+valpalmas <- items("site LIKE 'Valpalmas'")
+# vilamayor <- items("site LIKE 'Vila Maior' LIMIT 1")
+# - - - - - - - - - - - - - - - - - -
+a.classer <- items("famille LIKE '%classe%'")
+penatu <- items("site LIKE 'Pena Tu' LIMIT 1")
+tabuyo <- items("site LIKE 'Tabuyo%' LIMIT 1")
+
+inds <- list(tabuyo, penatu)
+spat(bck = a.classer,
+     inds = list(tabuyo, penatu),
+     buff = 10)
+
