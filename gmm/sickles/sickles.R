@@ -67,7 +67,7 @@ k.max <- 15 # iterations
 #
 spat.mbr <- function(df, name.out){
   # create a map facetted with menberships
-  # df <- df.sites.mbr.spat ; name.out <- "/9_map_sites.jpg"
+  # df <- df.sickles.spat.grp ; name.out <- "/9_map_sites.jpg"
   # bbox
   buff <- .5
   xmin <- min(df$long) - buff
@@ -108,7 +108,7 @@ panel(sickles,
 dev.off()
 
 # standardized stack
-stack.out <- paste0(path.data, "/2_stack.jpg")
+stack.out <- paste0(path.data, "/out/2_stack.jpg")
 jpeg(stack.out, height = fig.half.h, width = fig.half.w, units = "cm", res = 600)
 stacked <- sickles %>%
   coo_center %>% # coo_scale %>%
@@ -123,7 +123,7 @@ dev.off()
 # PCA
 sickles.f <- efourier(sickles, norm = F, nb.h = 20)
 sickles.p <- PCA(sickles.f)
-pca.out <- paste0(path.data, "/3_pca.jpg")
+pca.out <- paste0(path.data, "/out/3_pca.jpg")
 jpeg(pca.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
 plot(sickles.p,
      # col = sickles.p$fac$cols, # colors
@@ -136,7 +136,7 @@ dev.off()
 
 # optimal number of clusters - items
 if(elbow.sickles){
-  pc1.2 <- sickles.p$x[,c(1, 2)] # first dim
+  pc1.2 <- sickles.p$x[ , c(1, 2)] # first dim
   nb.clust <- NbClust(data = pc1.2,
                       min.nc = 3,
                       distance = "euclidian",
@@ -145,7 +145,7 @@ if(elbow.sickles){
   nbclust.sickles.opt <- nb.clust$Best.nc[1] # best nb of cluster
   wss <- sapply(1:k.max,
                 function(k){kmeans(sickles.p$x, k, nstart = 50, iter.max = 15)$tot.withinss})
-  clus.best.out <- paste0(path.data, "/4_1_clust.jpg")
+  clus.best.out <- paste0(path.data, "/out/4_1_clust.jpg")
   jpeg(clus.best.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
   plot(1:k.max, wss,
        type="b", pch = 19, frame = FALSE,
@@ -161,7 +161,7 @@ my.colors.select <- my.colors[1:nbclust.sickles.opt]
 my.color.ramp <- colorRampPalette(my.colors.select)
 
 # clustering
-clus.out <- paste0(path.data, "/4_clust.jpg")
+clus.out <- paste0(path.data, "/out/4_clust.jpg")
 jpeg(clus.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
 CLUST(sickles.f,
       hclust_method = "ward.D2",
@@ -172,7 +172,7 @@ dev.off()
 # KMEANS
 # TODO: colors
 nb.centers <- nbclust.sickles.opt
-kmeans.out <- paste0(path.data, "/5_kmeans.jpg")
+kmeans.out <- paste0(path.data, "/out/5_kmeans.jpg")
 jpeg(kmeans.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
 KMEANS(sickles.p,
        centers = nb.centers)
@@ -195,7 +195,7 @@ df.sickles.spat.grp <- df.sickles.mbr.spat[ , c("code", "membership", "long", "l
 df.sickles.spat.grp <- df.sickles.spat.grp %>%
   count(code, membership, lat, long)
 # call map function
-spat.mbr(df.sickles.spat.grp, "/6_map_sickles.jpg")
+spat.mbr(df.sickles.spat.grp, "/out/6_map_sickles.jpg")
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -207,14 +207,14 @@ df.melt <- df.sickles.mbr.spat[ , c("code", "membership")]
 df.unmelt <- dcast(df.melt, code ~ membership)
 rownames(df.unmelt) <- df.unmelt$code
 df.unmelt$code <- NULL
-site.ca.out <- paste0(path.data, "/7_sites_ca.jpg")
+site.ca.out <- paste0(path.data, "/out/7_sites_ca.jpg")
 jpeg(site.ca.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
 res.sites.ca <- FactoMineR::CA(df.unmelt, graph = F)
 plot(res.sites.ca)
 dev.off()
 
 # HCLUST on sites
-site.hclust.out <- paste0(path.data, "/8_sites_hclust.jpg")
+site.hclust.out <- paste0(path.data, "/out/8_sites_hclust.jpg")
 jpeg(site.hclust.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
 df.unmelt.perc <- df.unmelt/rowSums(df.unmelt)
 res.sites.hclust <- df.unmelt.perc %>%  scale %>%
