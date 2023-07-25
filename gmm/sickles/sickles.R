@@ -217,8 +217,10 @@ dev.off()
 site.hclust.out <- paste0(path.data, "/out/8_sites_hclust.jpg")
 jpeg(site.hclust.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
 df.unmelt.perc <- df.unmelt/rowSums(df.unmelt)
-res.sites.hclust <- df.unmelt.perc %>%  scale %>%
-  dist %>% hclust
+res.sites.hclust <- df.unmelt.perc %>%
+  scale %>%
+  dist %>%
+  hclust
 plot(res.sites.hclust,
      hang = -1)
 dev.off()
@@ -226,10 +228,10 @@ dev.off()
 ## spatial - sites
 menber.sites <- cutree(res.sites.hclust, nbclust.sites.opt)
 df.sites.mbr <- data.frame(code = names(menber.sites),
-                              membership = as.integer(menber.sites))
+                           membership = as.integer(menber.sites))
 df.sites.mbr.spat <- merge(df.sites.mbr, df.coords, by = "code")
 # call map function
-spat.mbr(df.sites.mbr.spat, "/9_map_sites.jpg")
+spat.mbr(df.sites.mbr.spat, "/out/9_map_sites.jpg")
 
 
 

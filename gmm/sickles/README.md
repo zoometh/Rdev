@@ -15,65 +15,72 @@
 </p>
 
 
-## Panel
+## Lithics
+
+On individual lithics
+
+### Panel
 
 <p align="center">
   <img alt="img-name" src="./out/1_panel.jpg" width="800"><br>
-  <em>Panel</em>
+  <em>Panel on lithics</em>
 </p>
 
-## Stack
+### Stack
 
 <p align="center">
   <img alt="img-name" src="./out/2_stack.jpg" width="800"><br>
-  <em>Panel</em>
+  <em>Stack on lithics</em>
 </p>
 
-## PCA
+### PCA
 
 <p align="center">
   <img alt="img-name" src="./out/3_pca.jpg" width="800"><br>
-  <em>Panel</em>
+  <em>PCA on lithics</em>
 </p>
 
-## HC
+### HC
 
 <p align="center">
   <img alt="img-name" src="./out/4_clust.jpg" width="800"><br>
-  <em>Panel</em>
+  <em>HC on lithics</em>
 </p>
 
-## Kmeans
+### Kmeans
 
 <p align="center">
   <img alt="img-name" src="./out/5_kmeans.jpg" width="800"><br>
-  <em>Panel</em>
+  <em>Kmeans on lithics</em>
 </p>
 
-## Spatial
+### Spatial
 
 <p align="center">
   <img alt="img-name" src="./out/6_map_sickles.jpg" width="800"><br>
-  <em>Panel</em>
+  <em>Map of lithics</em>
 </p>
 
-## CA on sites
+## Sites
+
+On grouped lithics by sites
+### CA on sites
 
 <p align="center">
   <img alt="img-name" src="./out/7_sites_ca.jpg" width="800"><br>
-  <em>Panel</em>
+  <em>CA on sites</em>
 </p>
 
-## HC on sites
+### HC on sites
 
 <p align="center">
   <img alt="img-name" src="./out/8_sites_hclust.jpg" width="800"><br>
-  <em>Panel</em>
+  <em>HC on sites</em>
 </p>
 
-## Map (again)
+### Map of clustered sites
 
 <p align="center">
   <img alt="img-name" src="./out/9_map_sites.jpg" width="800"><br>
-  <em>Panel</em>
+  <em>HC map</em>
 </p>
