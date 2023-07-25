@@ -10,6 +10,7 @@ diroot = "c:\\Rprojects\\_coll\\LaMarmotta\\01_Geometricos_Marmotta\\"
 os.chdir(diroot)
 df = pd.read_excel(open('inventary.xlsx','rb'), sheet_name = 2)
 df = df.reset_index()  # make sure indexes pair with number of rows
+df = df.head() # limit
 for index, row in df.iterrows():
     print("read carpeta: " + row['carpeta'])
     fold = diroot + row['carpeta']

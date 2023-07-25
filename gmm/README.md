@@ -1,9 +1,9 @@
 # GMM
 > Geometry Morphometry with the Momocs package
 
-## Extract lithics from photographs
+## Extract La Marmotta geometrics from photographs
 
-Use [ImageMagick](https://imagemagick.org/) processes, in a [Python script](https://github.com/zoometh/Rdev/blob/master/gmm/extract_lithics_4.py), to extract flints from standardized photographs:
+Use [ImageMagick](https://imagemagick.org/) processes, in a [Python script](https://github.com/zoometh/Rdev/blob/master/gmm/marmotta/extract/extract_lithics_4.py), to extract flints from standardized photographs:
 
 
 <p align="center">
@@ -19,7 +19,7 @@ Use [ImageMagick](https://imagemagick.org/) processes, in a [Python script](http
 </p>
 
 
-1. Read a XLSX file ([download](https://github.com/zoometh/Rdev/raw/master/gmm/inventary.xlsx)) to recover folder names and photographs filenames
+1. Read a XLSX file ([download](https://github.com/zoometh/Rdev/raw/master/gmm/marmotta/extract/inventary.xlsx)) to recover folder names and photographs filenames
 2. Compute several ImageMagick operations (thresholds, connected-components, etc.)
 3. Write a black and white image of the lithic with the same filename of the original photo + suffix '`_shape`'
 

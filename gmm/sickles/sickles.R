@@ -12,15 +12,17 @@ library(NbClust)
 
 sf::sf_use_s2(FALSE)
 
-sampling <- T
+sampling <- F
 elbow.sickles <- F
 nbclust.sickles.opt <- 6
 nbclust.sites.opt <- 4
 
-path.data <- "C:/Rprojects/_coll/SICKLES_SHAPES" # root folder
+# path.data <- "C:/Rprojects/_coll/SICKLES_SHAPES" # root folder for all
+path.data <- "C:/Rprojects/Rdev/gmm/sickles" # folder of 50 bladlets
 df.coords <- read.xlsx(paste0(path.data, "/COORD.xlsx"))
 jpgs <- paste0(path.data, "/img")  # img folder
 lf <- list.files(jpgs, full.names=TRUE) # store to list
+set.seed(NULL)
 if(sampling){
   lf.samp <- sample(1:length(lf), 50)
   lf <- lf[lf.samp]
@@ -92,7 +94,7 @@ spat.mbr <- function(df, name.out){
 # item analysis
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # panel
-panel.out <- paste0(path.data, "/1_panel.jpg")
+panel.out <- paste0(path.data, "/out/1_panel.jpg")
 jpeg(panel.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
 panel(sickles,
       names=TRUE,
