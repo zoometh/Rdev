@@ -29,13 +29,8 @@ The black and white JPG image is ready to be used for GMM processes
 
 ## Sickles
 
-R Script for the shape analysis and classification of sickles blades
+[R Script for the shape analysis and classification of sickles blades](https://github.com/zoometh/Rdev/tree/master/gmm/sickles)
 
-<p align="center">
-  <img alt="img-name" src="../www/5_kmeans.jpg" width="300">
-  <br>
-    <em>Kmeans on 225 sickles, with 6 centers (ie, clusters)</em>
-</p>
 
 ---
 
