@@ -1,0 +1,76 @@
+@article{Guilaine79,
+  title={L'abri Jean Cros},
+  author={Guilaine, Jean and Gasc{\'o}, J and Vaquer, J and Barbaza, M and others},
+  journal={Essai sur un groupe humain du N{\'e}olithique ancien dans son environnement. L'{\'E}cole des hautes {\'e}tudes en sciences sociales, Centre d'anthropologie des soci{\'e}t{\'e}s rurales. Toulouse},
+  year={1979}
+}
+
+@article{Roudil79,
+  title={La grotte de l'Aigle {\`a} M{\'e}jannes-le-Clap (Gard) et le N{\'e}olithique ancien du Languedoc oriental},
+  author={ROUDIL, J-L and Roudil, Odile and Soulier, Marcel and Erroux, Jean and POULAIN, T},
+  journal={M{\'e}moires de la Soci{\'e}t{\'e} Languedocienne de Pr{\'e}histoire Montpellier},
+  volume={1},
+  year={1979}
+}
+
+@article{Manen01,
+  title={L'Aspre del Paradis {\`a} Corneilla-del-Vercol (Pyr{\'e}n{\'e}es-Orientales): contribution {\`a} l'{\'e}tude du N{\'e}olithique ancien et final roussillonnais},
+  author={Manen, Claire and Vigne, Jean-Denis and Loirat, Denis and Bouby, Laurent},
+  journal={Bulletin de la Soci{\'e}t{\'e} pr{\'e}historique fran{\c{c}}aise},
+  pages={505--528},
+  year={2001},
+  publisher={JSTOR}
+}
+
+@article{Vaquer09,
+  title={La grotte de l’Abeurador F{\'e}lines-Minervois (H{\'e}rault): occupations humaines et environnement du Tardiglaciaire {\`a} l’Holoc{\`e}ne},
+  author={Vaquer, Jean and Ruas, Marie-Pierre},
+  journal={De M{\'e}diterran{\'e}e et d’ailleurs…, M{\'e}langes offerts a Jean Guilaine. Archives d’Ecologie Pr{\'e}historique, Toulouse},
+  pages={761--792},
+  year={2009}
+}
+
+@article{Courtin1976,
+  title={la Baume Fontbr{\'e}goua (salernes, var)},
+  author={Courtin, J},
+  journal={Livret-guide de l’excursion B},
+  volume={2},
+  pages={21--9},
+  year={1976}
+}
+
+@article{Saintot97,
+  title={La maison chass{\'e}enne du site de Blagnat {\`a} Montmeyran (Dr{\^o}me)},
+  author={Saintot, Sylvie},
+  journal={Bulletin de la soci{\'e}t{\'e} pr{\'e}historique fran{\c{c}}aise},
+  volume={94},
+  number={2},
+  pages={148--150},
+  year={1997},
+  publisher={Pers{\'e}e-Portail des revues scientifiques en SHS}
+}
+
+@article{Perrin21,
+    doi = {10.1371/journal.pone.0246964}
+    author = {Perrin, Thomas AND Manen, Claire}
+    journal = {PLOS ONE}
+    publisher = {Public Library of Science}
+    title = {Potential interactions between Mesolithic hunter-gatherers and Neolithic farmers in the Western Mediterranean: The geochronological data revisited}
+    year = {2021}
+    month = {03}
+    volume = {16}
+    url = {https://doi.org/10.1371/journal.pone.0246964}
+    pages = {1-21}
+    abstract = {In the Western Mediterranean, the Neolithic mainly developed and expanded during the sixth millennium BCE. In these early phases, it generally spread through the displacement of human groups, sometimes over long distances, as shown, for example, by the Impressa sites documented on the northern shores. These groups then settled new territories which they gradually appropriated and exploited. The question of their potential interaction with groups of Late Mesolithic hunter-gatherers living in the area prior to their arrival is therefore crucial. Were their encounters based on conflict and resistance or, on the contrary, on exchange and reciprocity? Many hypotheses have been put forward on this matter and many papers written. Before we can consider these potential interactions however, we must first ascertain that these different human groups really did meet—an implicit assumption in all these studies, which is, in reality, much less certain than one might think. The population density of the Late Mesolithic groups varied greatly throughout the Mediterranean, and it is possible that some areas were relatively devoid of human presence. Before any Neolithization scenarios can be considered, we must therefore first determine exactly which human groups were present in a given territory at a given time. The precise mapping of sites and the chronological modeling of their occupation enriches our understanding of the Neolithization process by allowing high-resolution regional models to be developed, which alone can determine the timing of potential interactions between Mesolithic and Neolithic groups. Various international research programs have recently produced several hundred new radiocarbon dates, based on selected samples from controlled contexts. The geochronological modelling of these data at the scale of the Western Mediterranean shows contrasting situations, probably related to different social and environmental processes. These results suggest that we should consider a varied range of Neolithization mechanisms, rather than uniform or even binary models.}
+    number = {3}
+
+}
+
+@inproceedings{Perrin09,
+  title={Le second M{\'e}solithique d'Europe occidentale: origines et gradient chronologique},
+  author={Perrin, Thomas and Marchand, Gr{\'e}gor and Allard, Pierre and Binder, Didier and Collina, Carmine and Puchol, Oreto Garcia and Valdeyron, Nicolas},
+  booktitle={Annales de la Fondation Fyssen},
+  volume={24},
+  pages={160--176},
+  year={2009}
+}

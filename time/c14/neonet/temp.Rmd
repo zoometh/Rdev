@@ -1,0 +1,163 @@
+---
+title: "**NeoNet app**, mapping radiocarbon dating online"
+author: "Thomas Huet, Niccolo Mazzucco"
+# date: "11/12/2020"
+header-includes:
+  - \usepackage{float}
+  - \floatplacement{figure}{H}  #make every figure with capti
+# output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_float: 
+      collapsed: false
+      smooth_scroll: false
+---
+
+```{r setup, include=FALSE}
+# knitr::opts_chunk$set(echo = FALSE, fig.width = 19, fig.height = 14)
+knitr::opts_chunk$set(echo = FALSE, fig.width = 19, fig.height = 14, fig.align = TRUE)
+library(kableExtra)
+library(dplyr)
+library(knitr)
+library(magick)
+# GHimgs <- "https://github.com/zoometh/C14/tree/main/docs/imgs/"
+## sizes
+# map
+path.img <- paste0(dirname(getwd()),"/docs/imgs/") # parent dir
+# panel.map <- image_read("../docs/imgs/panel_map.png")
+panel.map <- paste0(path.img, "panel_map.png")
+panel.map.coords <- paste0(path.img, "panel_map_coords.png")
+panel.map.select <- paste0(path.img, "panel_map_select.png")
+panel.map.shape <- paste0(path.img, "panel_map_shape.png")
+panel.calib <- paste0(path.img, "panel_calib.png")
+panel.map.idx <- paste0(path.img, "panel_map_idx.png")
+panel.calib.idx <- paste0(path.img, "panel_calib_idx.png")
+panel.data.idx <- paste0(path.img, "panel_data_idx.png")
+panel.calib.example <-  paste0(path.img, "neonet_calib_example.png")
+panel.infos.idx <- paste0(path.img, "panel_infos_idx.png")
+app.neonet.db.c14 <- paste0(path.img, "app_neonet_db_c14.png")
+# panel.map.coords <- image_read("../docs/imgs/panel_map_coords.png")
+# panel.map.select <- image_read("../docs/imgs/panel_map_select.png")
+# panel.map.shape <- image_read("../docs/imgs/panel_map_shape.png")
+# https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_map.png
+# ratio.panel.map.coords <- image_info(panel.map.coords)$height/image_info(panel.map.coords)$width
+# # panel.map <- image_read("https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_map.png")
+# ratio.panel.map <- image_info(panel.map)$height/image_info(panel.map)$width
+# calib
+# panel.calib <- image_read("../docs/imgs/panel_calib.png")
+# panel.calib <- image_read("https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_calib.png")
+# ratio.panel.calib <- image_info(panel.calib)$height/image_info(panel.calib)$width
+```
+
+# Presentation
+
+The **NeoNet app** allows the selection of radiocarbon dating by location, chronology and material life duration by subsetting a radiocarbon dataset according to: 
+
+* a geographical region of interest (ROI)
+* a time span between a *tpq* and a *taq* in cal BC
+* some periods
+* some type of material life duration (short like, long life or others)
+* a maximum accepted standard deviation threshold (SD)
+
+<p style="text-align: center;"> <font size="5"> the [**NeoNet app**](https://neolithic.shinyapps.io/neonet/) </font><br>
+[![](`r panel.map`){width=50%}](https://neolithic.shinyapps.io/neonet/)
+</p>  
+
+We will see how to use the [**NeoNet app**](#app), what is the [**NeoNet database**](#bd) and how to [**participate**](#particip) to the developments of these tools
+
+# Use **NeoNet** {#app}
+
+The apps are [RShiny](https://shiny.rstudio.com/) have the same functionalities. The app is divided into 4 panels:
+
+* [**map** panel](#panel.map): ROI with selection menus
+* [**calib** panel](#panel.calib): calibration of the selected dates
+* [**data** panel](#panel.data): the whole dataset
+* [**infos** panel](#panel.infos): handbook and credits
+
+The two main panels are **map** and **calib**
+
+
+## **map** panel {#panel.map}
+![](`r panel.map.idx`){width=20%}
+
+The panel **map** is used for selection of radiocarbon dates [by location](#panel.map.select.loc), [by chronology](#panel.map.select.chr), [by quality of dates](#panel.map.select.quali) 
+
+```{r panel.map1,echo=FALSE,message=FALSE,fig.fullwidth=TRUE}
+par(mar = c(0, 0, 0, 0))
+lwd <- 5
+map.group.c14 <- image_draw(image_read(panel.map))
+# xleft, ybottom, xright, ytop (en partant du haut)
+# Group button
+rect(90, 90, 200, 130,
+     border = "red", lty = "dashed", lwd = lwd)
+# select by shape button
+rect(40, 130, 70, 250,
+     border = "black", lty = "dashed", lwd = lwd)
+# dynamic periods
+rect(20, 750, 130, 600,
+     border = "orange", lty = "dashed", lwd = lwd)
+# slider
+rect(150, 720, 800, 650,
+     border = "blue", lty = "dashed", lwd = lwd)
+# count
+rect(400, 780, 600, 740,
+     border = "darkgrey", lty = "dashed", lwd = lwd)
+# dynamic table
+rect(20, 886, 1650, 770,
+     border = "green", lty = "dashed", lwd = lwd)
+# SDs
+rect(1300, 720, 1650, 600,
+     border = "purple", lty = "dashed", lwd = lwd)
+# button periods
+rect(1450, 30, 1650, 550,
+     border = "brown", lty = "dashed", lwd = lwd)
+invisible(dev.off())
+plot(map.group.c14)
+```
+  
+  
+The top-left button (<span style="color:red"><u>red</u></span> box), allows to cluster dates by spatial proximities (see [Marker Clusters](http://rstudio.github.io/leaflet/markers.html)). The count of selected dates and sites is dynamically calculated below the [tpq/taq slider](#panel.map.tapq) and above the table of the selected dates (<span style="color:darkgrey"><u>grey</u></span> box). The bottom table (<span style="color:green"><u>green</u></span> box) is a reactive a datatable ([DT package](https://cran.r-project.org/web/packages/DT/index.html)) listing all the dates within the map extent (ROI) and the selection menus (tpq/taq, material life duration, maximum SD, periods).
+  
+To calibrate one or various dates in the [**calib** panel](#panel.calib), a date has to be clicked in this panel
+
+![Click on a date to calibrate a group of dates](`r panel.map.select`){width=250px}
+
+This date will be shown **bolded** on the output figure
+
+### select by location {#panel.map.select.loc}
+
+The apps offer a geographical window provided by the [Leaflet](https://rstudio.github.io/leaflet/) package. By default, only the data within the window extent (ROI) will be selected but a spatial intersection, inside this ROI with selection shapes, can be done by drawing shapes 
+
+![Selection shape, here a single polygon](`r panel.map.shape`){width=250px}
+
+Selection shapes can be ***polygons*** and ***rectanges***. These shapes can be removed with the trash button (<span style="color:black"><u>black</u></span> box). All the dates inside the ROI and selected with the others filters will be visible on the map, but only those inside the selections shapes will be calibrated.
+
+#### retrieve coordinates from the map
+
+One of the basemaps of the app is [OpenStreetMap](https://www.openstreetmap.org/#map=6/37.753/14.524) (OSM). OSM offers a well documented basemap where archaeological sites are sometimes already located, like the Ligurian site of [Grotta della Pollera](https://www.openstreetmap.org/#map=19/44.20058/8.31466). Clicking on the NeoNet app map show the lat/long coordinates of the current point (<span style="color:red"><u>red</u></span> box under the tpq/tap slider). These coordinates can then be copied and used to modify the NeoNet database. 
+
+![Get coordinates](`r panel.map.coords`){width=250px}
+
+### select by chronology {#panel.map.select.chr}
+
+#### periods *filter*
+
+<!-- Top-right checkboxes (<span style="color:brown"><u>brown</u></span> box) allow to select datations by periods. A hyperlink on the title of the checkboxes open the [correspondance table](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/period_abrev.html) between abrevations and period full names. Bottom-left legend **periods** (<span style="color:orange"><u>orange</u></span> box) is a dynamic list of periods which exist in the selected periods (see **periods** checkboxes) -->
+
+<!-- #### tpq/taq *filter* {#panel.map.tapq} -->
+
+<!-- bottom-left slider (<span style="color:blue"><u>blue</u></span> box) allows to subset a range of accepted dates between a *tpq* and a *taq* (in cal BC)  -->
+
+<!-- ### select by dates quality {#panel.map.select.quali} -->
+
+<!-- The bottom-right checkboxes and slider (<span style="color:purple">purple</span> box) form a group of menus for selection on the material life duration and max accepted SD: -->
+
+<!-- * relatively to the duration of their material (short to long-life material). An hyperlink open the [correspondance table](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/docs/material_life.html) between the classes of the material life duration (short, long, etc.) and their material (wood, shell, etc.) categories   -->
+
+<!-- * below a maximum accepted threshold for the standard deviations (SD) for the dates -->
+
+<!-- ## **calib** panel {#panel.calib} -->
+<!-- ![](`r panel.calib.idx`){width=20%} -->
+
+<!-- The panel **calib** is used for dates on-the-fly calibration with the R packages [Bchron](https://cran.r-project.org/web/packages/Bchron/index.html) and [rcarbon](https://cran.r-project.org/web/packages/rcarbon/index.html). Calibrations are done on the whole dataset of dates displayed in the [table of the **map panel**](#panel.map). If the dates are numerous (eg > 100) the computing time could take times. -->

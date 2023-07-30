@@ -1,0 +1,424 @@
+---
+title: | 
+  | **NeoNet app** 
+  | mapping radiocarbon dating online
+author: "Thomas Huet, Niccolo Mazzucco"
+# date: "11/12/2020"
+header-includes:
+  - \usepackage{float}
+  - \floatplacement{figure}{H}  #make every figure with capti
+# output: html_document
+output: 
+  bookdown::html_document2:
+    number_sections: false
+    keep_md: true
+  # html_document:
+    toc: true
+    toc_float: 
+      collapsed: false
+      smooth_scroll: false
+---
+
+```{r setup, include=FALSE}
+# knitr::opts_chunk$set(echo = FALSE, fig.width = 19, fig.height = 14)
+knitr::opts_chunk$set(echo = FALSE, fig.width = 19, fig.height = 14, fig.align = TRUE)
+library(kableExtra)
+library(dplyr)
+library(knitr)
+library(magick)
+# GHimgs <- "https://github.com/zoometh/C14/tree/main/docs/imgs/"
+## sizes
+# map
+path.img <- paste0(dirname(getwd()),"/docs/imgs/") # parent dir
+# panel.map <- image_read("../docs/imgs/panel_map.png")
+ws.roi <- paste0(path.img, "ws_roi.png")
+panel.map <- paste0(path.img, "panel_map.png")
+panel.map.coords <- paste0(path.img, "panel_map_coords.png")
+panel.map.select <- paste0(path.img, "panel_map_select.png")
+panel.map.shape <- paste0(path.img, "panel_map_shape.png")
+panel.calib <- paste0(path.img, "panel_calib.png")
+panel.map.idx <- paste0(path.img, "panel_map_idx.png")
+panel.calib.idx <- paste0(path.img, "panel_calib_idx.png")
+panel.data.idx <- paste0(path.img, "panel_data_idx.png")
+panel.calib.example <-  paste0(path.img, "neonet_calib_example.png")
+panel.infos.idx <- paste0(path.img, "panel_infos_idx.png")
+panel.biblio.idx <- paste0(path.img, "panel_biblio_idx.png")
+app.neonet.db.c14 <- paste0(path.img, "app_neonet_db_c14.png")
+# panel.map.coords <- image_read("../docs/imgs/panel_map_coords.png")
+# panel.map.select <- image_read("../docs/imgs/panel_map_select.png")
+# panel.map.shape <- image_read("../docs/imgs/panel_map_shape.png")
+# https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_map.png
+# ratio.panel.map.coords <- image_info(panel.map.coords)$height/image_info(panel.map.coords)$width
+# # panel.map <- image_read("https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_map.png")
+# ratio.panel.map <- image_info(panel.map)$height/image_info(panel.map)$width
+# calib
+# panel.calib <- image_read("../docs/imgs/panel_calib.png")
+# panel.calib <- image_read("https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_calib.png")
+# ratio.panel.calib <- image_info(panel.calib)$height/image_info(panel.calib)$width
+```
+
+<p style="text-align: center;"> <font size="5">
+[![](`r panel.map`){width=50%}](https://neolithic.shinyapps.io/neonet/)<br>
+the [**NeoNet app**](https://neolithic.shinyapps.io/neonet/)</font>
+</p>  
+
+
+# **Presentation**
+
+The **NeoNet app** allows the selection of radiocarbon dating by location, chronology and material life duration by subsetting a radiocarbon dataset according to: 
+
+* a geographical region of interest (ROI) and a selection shape
+* a time span between a *tpq* and a *taq* in cal BC
+* some periods
+* some type of material life duration (short like, long life or others)
+* a maximum accepted standard deviation threshold (SD)
+
+The chronological span covers the Late Mesolithic and the Early Neolithic. The region of interest is the Central and Western Mediterranean and more precisely the Mediterranean watersheds of this area
+
+<p style="text-align: center;">
+![](`r ws.roi`){width=35%}
+</p>
+
+We will see how to use the [**NeoNet app**](#app), what is the [**NeoNet database**](#bd) and our [**Objectives**](#particip)
+
+# **NeoNet app** {#app}
+
+The app is a [RShiny](https://shiny.rstudio.com/) hosted on the [**shinyapps.io**](https://www.shinyapps.io/) server. The app is divided into five (5) panels:
+
+1. [**map** panel](#panel.map): ROI with selection menus
+2. [**calib** panel](#panel.calib): calibration of the selected dates
+3. [**data** panel](#panel.data): the whole dataset
+4. [**biblio** panel](#panel.biblio): bibliographical references
+5. [**infos** panel](#panel.infos): credits and link to the webpage handbook of the app
+
+The two main panels are **map** for selection, **calib** for calibration, and **data**: the dataset
+
+
+## 1. **map** panel {#panel.map}
+![](`r panel.map.idx`){width=20%}
+  
+ 
+The panel **map** is a geographical window provided by the [Leaflet](https://rstudio.github.io/leaflet/) package. This panel is used for selection of radiocarbon dates [by location](#panel.map.select.loc), [by chronology](#panel.map.select.chr), [by quality of dates](#panel.map.select.quali) 
+
+```{r panel-map1,echo=FALSE,message=FALSE,fig.align="center", fig.fullwidth=TRUE, fig.cap="The different menus of the map panel"}
+par(mar = c(0, 0, 0, 0))
+lwd <- 5
+map.group.c14 <- image_draw(image_read(panel.map))
+# xleft, ybottom, xright, ytop (en partant du haut)
+# Group button
+rect(90, 90, 200, 130,
+     border = "red", lty = "dashed", lwd = lwd)
+# select by shape button
+rect(40, 130, 70, 250,
+     border = "black", lty = "dashed", lwd = lwd)
+# dynamic periods
+rect(20, 750, 130, 600,
+     border = "orange", lty = "dashed", lwd = lwd)
+# slider
+rect(150, 720, 800, 650,
+     border = "blue", lty = "dashed", lwd = lwd)
+# count
+rect(400, 780, 600, 740,
+     border = "darkgrey", lty = "dashed", lwd = lwd)
+# dynamic table
+rect(20, 886, 1650, 770,
+     border = "green", lty = "dashed", lwd = lwd)
+# SDs
+rect(1300, 720, 1650, 600,
+     border = "purple", lty = "dashed", lwd = lwd)
+# basemaps
+rect(1550, 40, 1650, 110,
+     border = "pink", lty = "dashed", lwd = lwd)
+# button periods
+rect(1500, 115, 1600, 550,
+     border = "brown", lty = "dashed", lwd = lwd)
+invisible(dev.off())
+plot(map.group.c14)
+```
+  
+  
+The top-left button ***group C14 on map*** (Fig. \@ref(fig:panel-map1), <span style="color:red"><u>red</u></span> box), allows to cluster dates by spatial proximities (see [Marker Clusters](http://rstudio.github.io/leaflet/markers.html)). The top-right layer button (Fig. \@ref(fig:panel-map1), <span style="color:pink"><u>pink</u></span> box), allows to change the basemap. By default, the basemap is **OSM**, an [OpenStreetMap general basemap](https://leaflet-extras.github.io/leaflet-providers/preview/#filter=OpenStreetMap.Mapnik) , but it can be switch to **Topo**, an [ESRI topographical basemap](https://leaflet-extras.github.io/leaflet-providers/preview/#filter=Esri.WorldImagery).
+
+The count of selected dates and sites (Fig. \@ref(fig:panel-map1), <span style="color:darkgrey"><u>grey</u></span> box) is dynamically calculated below the [tpq/taq slider](#panel.map.tapq) and above the bottom table of the selected dates. This table (Fig. \@ref(fig:panel-map1), <span style="color:green"><u>green</u></span> box) is a reactive a datatable (see [DT package](https://cran.r-project.org/web/packages/DT/index.html)) listing all the dates within the map extent (ROI) and the optional selection menus (tpq/taq, material life duration, maximum SD, periods, selection shapes).
+  
+To calibrate one or various dates in the [**calib** panel](#panel.calib), a date has to be clicked in this panel
+
+<center>
+
+![a click on a date to calibrate a selected group of dates](`r panel.map.select`){width=250px}
+
+</center>
+
+This date will be shown **bolded** on the [**calib** panel](#panel.calib) output figure
+
+### select by location {#panel.map.select.loc}
+
+By default only the data within the window extent (ROI) will be selected. But selection shapes can be drawn inside this ROI to have a spatial intersection 
+
+<center>
+
+![selection inside a shape, here a single polygon](`r panel.map.shape`){width=600px}
+
+</center>
+
+Selection shapes can be ***polygons*** and ***rectanges***. These shapes *freeze* the date selection inside a given ROI. They can be removed with the trash button (Fig. \@ref(fig:panel-map1), <span style="color:black"><u>black</u></span> box). All the dates inside the ROI and selected with the others filters will be visible on the map, but only those inside the selections shapes will be calibrated.
+
+#### retrieve coordinates from the map
+
+The default basemap of the app is OSM. It offers a well documented basemap where archaeological sites are sometimes already located, like the Ligurian site of [Grotta della Pollera](https://www.openstreetmap.org/#map=19/44.20058/8.31466). Clicking on the NeoNet app map show the lat/long coordinates of the current point (under the tpq/tap slider). These coordinates can then be copied and used to modify the NeoNet database
+
+<center>
+
+![get coordinates by clicking on the map](`r panel.map.coords`){width=350px}
+
+</center>
+
+### select by chronology {#panel.map.select.chr}
+
+#### periods *filter*
+
+Top-right checkboxes (Fig. \@ref(fig:panel-map1), <span style="color:brown"><u>brown</u></span> box) allow to select datations by periods. A hyperlink on the title of the checkboxes open the [correspondance table](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/docs/period_abrev.html) between abrevations and period full names. Bottom-left legend **periods** (Fig. \@ref(fig:panel-map1), <span style="color:orange"><u>orange</u></span> box) is a dynamic list of periods which exist in the selected periods (see **periods** checkboxes)
+
+#### tpq/taq *filter* {#panel.map.tapq}
+
+bottom-left slider (Fig. \@ref(fig:panel-map1), <span style="color:blue"><u>blue</u></span> box) allows to subset a range of accepted dates between a *tpq* and a *taq* (in cal BC) 
+
+### select by dates quality {#panel.map.select.quali}
+
+The bottom-right checkboxes and slider (Fig. \@ref(fig:panel-map1), <span style="color:purple">purple</span> box) form a group of menus for selection on the material life duration and max accepted SD:
+
+* relatively to the duration of their material (short to long-life material). An hyperlink open the [correspondance table](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/docs/material_life.html) between the classes of the material life duration (short, long, etc.) and their material (wood, shell, etc.) categories  
+
+* below a maximum accepted threshold for the standard deviations (SD) for the dates
+
+## 2. **calib** panel {#panel.calib}
+![](`r panel.calib.idx`){width=20%}
+
+
+The panel **calib** is used for dates on-the-fly calibration with the R packages [Bchron](https://cran.r-project.org/web/packages/Bchron/index.html) and [rcarbon](https://cran.r-project.org/web/packages/rcarbon/index.html). Calibrations are done on the whole dataset of dates displayed in the [table of the **map panel**](#panel.map). If the dates are numerous (eg > 100) the computing time could take times.
+
+### c14 group by *filter* {#panel.calib.group}
+
+The only selection which can be done is on the top-center radio button  (Fig. \@ref(fig:panel-calib), <span style="color:red"><u>red</u></span> box). The **c14 group by** filter allows to plot dates and to sum their probability densities depending on different levels of grouping:
+
+* **by date**: each date is plot separately (by default)
+
+* **by site and layer**: dates from the same site, having the same archaeological unit (layer, structure, etc.), are summed. See the [PhaseCode](#mf.phasecode) field.
+
+* **by site and period**: dates from the same site, having the same period are summed
+
+* **by period**: dates having the same period are summed  
+
+* **all C14**: all dates are summed 
+
+```{r panel-calib, echo=FALSE, message=FALSE, fig.align="center", fig.fullwidth=TRUE, fig.cap="The different menus of the calib panel"}
+# par(mar = c(0, 0, 0, 0)) # not working
+calib.group.c14 <- image_draw(image_read(panel.calib))
+# # xleft, ybottom, xright, ytop
+# Group button
+rect(1400, 0, 1500, 70,
+     border = "green", lty = "dashed", lwd = 4)
+# download
+rect(700, 0, 1300, 70,
+     border = "red", lty = "dashed", lwd = 4)
+# dynamic periods
+rect(20, 80, 1400, 700,
+     border = "orange", lty = "dashed", lwd = 4)
+invisible(dev.off())
+plot(calib.group.c14)
+```
+
+### plot area *output*
+
+The plot area (Fig. \@ref(fig:panel-calib), <span style="color:orange"><u>orange</u></span> box) shows dynamically the SPD of the cabibrated dates seriated on their weighted means. The top-right  button **Download** (Fig. \@ref(fig:panel-calib), <span style="color:green"><u>green</u></span> box) allows to export the last plot in a PNG image
+
+<p style="text-align: center;">
+![](`r panel.calib.example`){width=80%}
+</p>
+
+## 3. **data** panel {#panel.data}
+![](`r panel.data.idx`){width=20%}
+
+The complete database from the GitHub  [c14data.tsv](https://github.com/zoometh/C14/blob/main/neonet/c14data.tsv) file. The first rows are:
+
+```{r panel-data, echo=FALSE, message=FALSE, fig.align="center", fig.fullwidth=TRUE, fig.cap="First rows of the radiocarbon dataset"}
+c14data.url <- 'https://raw.github.com/zoometh/C14/master/neonet/c14data.tsv'
+C14data <- read.csv(c14data.url, sep = "\t")
+kable(head(C14data),"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
+```
+
+As data came from various publications, an homogenization the different values (material, cultures, bibliographical references, etc.) must be done. The database **mandatory fields** are:
+
+* **SiteName**: the site name
+* **Longitude**: in decimal degrees (ex: `1.045`)
+* **Latitude**: in decimal degrees (ex: `43.921`)
+* **Period**: a value from the [**period.abrev**](#bd.period) spreadsheet
+* [**PhaseCode**](#mf.phasecode): a code for the dating stratigaphical unit and/or structure
+* **C14Age**: a numerical radiocarbon dating in BP
+* **C14SD**: the standard deviation (SD) of the radiocarbon dating
+* [**LabCode**](#mf.labcode): the unique identifier of the radiocarbon dating
+* **Material**: a value from the [**material.life**](#bd.material) spreadsheet 
+* **tpq**: the *terminus post quem* of the radiocarbon dating in cal BC
+* **taq**: the *terminus ante quem* of the radiocarbon dating in cal BC
+* [bibliographical references (two fields)](#mf.bib_all)
+  + [**bib**](#mf.bib): a short plain text bibliographical reference
+  + [**bib_url**](#mf.bib_url): a DOI or a BibTex key bibliographical reference
+
+The **recommended** fields are:
+
+* **MaterialSpecies**: a specification of the field **Material**
+* **Culture**: a specification of the field **Period**
+
+The others fields (if there's any) only concern the **[EUROEVOL_R app](https://zoometh.github.io/C14)** 
+
+#### mandatory fields
+
+Here we explain more precisely some of the mandatory fields
+
+##### **PhaseCode** {#mf.phasecode}
+
+The PhaseCode field provide a more precise archaeological context than the site name. It is useful for [**layer/structure C14 grouping**](#panel.calib.group). Most of the time, it correspond to an archaeological layer or structure
+
+```{r PhaseCode, echo=FALSE}
+# knitr::include_url("../docs/material_life.html", height = "400px")
+# knitr::include_url("https://raw.githubusercontent.com/zoometh/C14/main/docs/material_life.html", height = "200px")
+# htmltools::includeHTML()
+ex.phasecode <- c("C5", "C7-8", "foyer 7", "niv. II","...")
+df.ex.phasecode <- data.frame(PhaseCode = ex.phasecode,
+                              stringsAsFactors = F)
+kable(df.ex.phasecode,"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
+```
+
+This values of this field needs to be homogeneized (for example: `C.5` -> `C5`), at first for the same sites, then for the whole dataset 
+
+##### **LabCode** {#mf.labcode}
+
+The conventional syntax for a laboratory code (**LabCode**) is '*AbrevLab*-*number*', respecting the case letters (upper case and lower case) For example:
+
+```{r LabCode, echo=FALSE}
+# knitr::include_url("../docs/material_life.html", height = "400px")
+# knitr::include_url("https://raw.githubusercontent.com/zoometh/C14/main/docs/material_life.html", height = "200px")
+# htmltools::includeHTML()
+ex.labcode <- c("Beta-103487", "CSIC-1133", "ETH-15984", "Gif-1855", "GrN-6706", "KIA-21356",
+                "LTL-13440A", "Ly-11338", "MC-2145", "OxA-9217","Poz-18393","...")
+df.ex.labcode <- data.frame(LabCode = ex.labcode,
+                         stringsAsFactors = F)
+kable(df.ex.labcode,"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
+```
+
+##### **bib** and **bib_url** {#mf.bib_all}
+
+Every radiocarbon date should be referenced with a bibliographical reference with a plain text in the [**bib**](#mf.bib) field and and a DOI or a BibTex key in the [**bib_url**](#mf.bib_url) field. We favor the earliest mention of the radiocarbon date
+
+###### **bib** {#mf.bib}
+
+The plain text that will be plot for each radiocarbon date under the bibliographical reference section. Basically the name of the author(s) and the year of the publcation, for example `Guilaine et al. 1993`, `Binder 2018` or `Manen et Sabatier 2013`
+
+###### **bib_url** {#mf.bib_url}
+
+We favor the DOI as a unique bibliographical reference. For example: 
+
+```{r bib_url, echo=FALSE}
+df.bib <- data.frame(tpq = c("-6086","..."),
+                     taq = c("-5923","..."),
+                     select = c("VRAI","..."),
+                     RedNeo = c("1","..."),
+                     bib = c("Binder et al. 2018",
+                             "..."),
+                     bib_url = c("<b>https://doi.org/10.4312/dp.44.4</b>","..."),
+                     stringsAsFactors = F)
+kable(df.bib,"html",escape = F) %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
+```
+
+When the DOI is lacking, the bibliographical reference should be include into the BibTex document [references.bib](https://raw.githubusercontent.com/zoometh/C14/master/neonet/references_france.bib) with the name of the first author and the two last digits of the year:
+
+```{r test_label, wrapper=TRUE, eval=FALSE, echo=TRUE}
+@book{Guilaine93,
+  title={Dourgne: derniers chasseurs-collecteurs et premiers {\'e}leveurs de la Haute-Vall{\'e}e de l'Aude},
+  author={Guilaine, Jean and Barbaza, Michel},
+  year={1993},
+  publisher={Centre d'anthropologie des soci{\'e}t{\'e}s rurales; Arch{\'e}ologie en Terre d'Aude}
+}
+```
+
+The key of this reference is added to the **bib_url** field. For example, the key value **Guilaine93** from the c14 spreadsheet will match this complete reference. 
+
+```{r bib_url2, echo=FALSE}
+df.bib <- data.frame(tpq = c("-3330","..."),
+                     taq = c("-2492","..."),
+                     select = c("FAUX","..."),
+                     RedNeo = c("1","..."),
+                     bib = c("Guilaine et al. 1993",
+                             "..."),
+                     bib_url = c("<b>Guilaine93</b>","..."),
+                     stringsAsFactors = F)
+kable(df.bib,"html",escape = F) %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
+```
+
+### correspondance tables
+
+The NeoNet app makes joins to two tables in order to retrieve information and to provide a handy user interface
+
+#### material.life {#bd.material}
+
+Material life duration are read from the GitHub  [c14_material_life.tsv](https://github.com/zoometh/C14/blob/main/neonet/c14_material_life.tsv) file. The two fields show the material type (column 1) and the material life duration (column 2), for example: 
+
+```{r material.life, echo=FALSE, message=FALSE, fig.align="center", fig.fullwidth=TRUE, fig.cap="First rows of the material life duration equivalences"}
+c14mater.url <- 'https://raw.github.com/zoometh/C14/master/neonet/c14_material_life.tsv'
+c14mater <- read.csv(c14mater.url, sep = "\t")
+kable(head(c14mater),"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
+```
+
+#### period.abrev {#bd.period}
+
+Periods and periods abbreviations are read from the GitHub  [c14_period_abrev.tsv](https://raw.githubusercontent.com/zoometh/C14/master/neonet/c14_period_abrev.tsv) file. The two fields show the period abbreviation (column 1) and the period full label (column 2), for example:
+
+```{r period.abrev, echo=FALSE, message=FALSE, fig.align="center", fig.fullwidth=TRUE, fig.cap="First rows of the period equivalences"}
+c14period.url <- 'https://raw.github.com/zoometh/C14/master/neonet/c14_period_abrev.tsv'
+c14period <- read.csv(c14period.url, sep = "\t")
+kable(head(c14period),"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
+```
+
+
+In the NeoNet app, this database is rendered with the ([DT package](https://cran.r-project.org/web/packages/DT/index.html)) allowing sorting and filtering tools
+
+## 4. **biblio** panel {#panel.biblio}
+![](`r panel.biblio.idx`){width=20%}
+
+Bibliographical references from the GitHub [c14refs.tsv](https://github.com/zoometh/C14/blob/main/neonet/c14refs.tsv) file. The first rows are:
+
+```{r panel-biblio, echo=FALSE, message=FALSE, fig.align="center", fig.fullwidth=TRUE, fig.cap="First rows of the radiocarbon bibliographical references"}
+c14refs.url <- 'https://raw.github.com/zoometh/C14/master/neonet/c14refs.tsv'
+c14refs <- read.csv(c14refs.url, sep = "\t")
+kable(head(c14refs),"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
+```
+
+In the NeoNet app, these bibliographical references are rendered in APA citation format (field `long.ref`) 
+
+## 5. **infos** panel {#panel.infos}
+![](`r panel.infos.idx`){width=20%}
+
+Infos, credits and link to this webpage (https://zoometh.github.io/C14/neonet)
+
+# **Objectives** {#particip}
+
+Today, the **NeoNet app** release is online. At the short-term, and in the frame of [**FAIR** Open Science principles](https://www.go-fair.org/fair-principles/) (*Findable*, *Accessible*, *Interoperable* & *Reusable*), our publication plan is:
+
+1. publish the **NeoNet database** in a Open Data repository (ex: [Zenodo](https://zenodo.org/))
+2. reference the **NeoNet database**  in a data paper (ex: [JOAD](https://openarchaeologydata.metajnl.com/))
+3. publish the RShiny **NeoNet app** source code in a Open digital humanities paper (ex: [JOSS](https://joss.theoj.org/))
+  
+Thanks to the facilities offer by the app, and in the frame of the **[NeoNet project](https://redneonet.com)**, conducted by [Juan Gibaja](https://orcid.org/0000-0002-0830-3570) and [Miriam Cubas](https://orcid.org/0000-0002-2386-8473), we expect to conduct collaborative spatio-temporal analysis for the origin, the spread and the consolidation of the farming way-of-life in Mediterranean. Beside the database and the app publications, we will also:
+
+* publish the archaeological result(s) in scientific paper(s) (*journal to be defined*)
+* present the results and the app in conferences, seminars, etc.
+
+Contact <nicco.mazzucco@gmail.com> for database and data integration, and <thomashuet7@gmail.com> for app updates and IT integration

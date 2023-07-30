@@ -1,0 +1,13 @@
+name: NeoNet3
+title:
+username:
+account: neolithic
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4448977
+bundleId: 4901497
+url: https://neolithic.shinyapps.io/NeoNet3/
+when: 1628450605.41401
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: c14_dataset_essai.tsv|euroevol_R.png|references_OK_5.bib|references_OK_6.bib|references_OK_6.bib.bak|references_OK_7.bib.bak

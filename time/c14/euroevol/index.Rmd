@@ -1,0 +1,183 @@
+---
+title: "**EUROEVOL_R app**, mapping EUROEVOL database radiocarbon datings"
+author: "Thomas Huet"
+# date: "11/12/2020"
+header-includes:
+  - \usepackage{float}
+  - \floatplacement{figure}{H}  #make every figure with capti
+# output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_float: 
+      collapsed: false
+      smooth_scroll: false
+
+references:
+- id: Manning16
+  title: The cultural evolution of Neolithic Europe. EUROEVOL dataset Sites, phases and radiocarbon data
+  author:
+  - family: Manning
+    given: Katie
+  - family: Colledge
+    given: Sue
+  - family: Crema
+    given: Enrico
+  - family: Shennan
+    given: Stephen
+  - family: Timpson
+    given: Adrian
+  container-title: Journal of Open Archaeology Data, 5
+  # publisher: Archaeopress
+  # page: 311-324
+  type: article-journal
+  URL: 'https://openarchaeologydata.metajnl.com/article/10.5334/joad.40/'
+  issued:
+    year: 2016
+---
+
+```{r setup, include=FALSE}
+# knitr::opts_chunk$set(echo = FALSE, fig.width = 19, fig.height = 14)
+knitr::opts_chunk$set(echo = FALSE, fig.width = 19, fig.height = 14, fig.align = TRUE)
+library(kableExtra)
+library(dplyr)
+library(knitr)
+library(magick)
+GHimgs <- "https://github.com/zoometh/C14/tree/main/docs/imgs/"
+## sizes
+# map
+panel.map <- image_read("../docs/imgs/panels_map.png")
+panel.map.coords <- image_read("../docs/imgs/panel_map_coords.png")
+ratio.panel.map.coords <- image_info(panel.map.coords)$height/image_info(panel.map.coords)$width
+# panel.map <- image_read("https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_map.png")
+ratio.panel.map <- image_info(panel.map)$height/image_info(panel.map)$width
+# calib
+panel.calib <- image_read("../docs/imgs/panels_calib.png")
+# panel.calib <- image_read("https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_calib.png")
+ratio.panel.calib <- image_info(panel.calib)$height/image_info(panel.calib)$width
+```
+
+# Presentation
+
+The [**EUROEVOL_R app**](https://neolithic.shinyapps.io/Euroevol_R/) is a [RShiny](https://shiny.rstudio.com/) interactive web application which allows the selection of radiocarbon dating by location, chronology and material life duration by subsetting **EUROEVOL database** radiocarbon dataset according to: 
+
+* a geographical region of interest (ROI)
+* a time span between a *tpq* and a *taq* in cal BC
+* some periods (Late Mesolithic, Early Neolithic, etc.)
+* some type of material life duration (short like, long life or others)
+* a maximum accepted standard deviation threshold (SD)
+
+We will see how to [**use the app**](https://zoometh.github.io/C14/#app), and how the app works with [**EUROEVOL database**](#db) 
+
+<p style="text-align: center;"> <font size="5"> the [**EUROEVOL_R app**](https://neolithic.shinyapps.io/Euroevol_R/) </font>
+[![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_euroevol_thumbnail.png){width=50%}](https://neolithic.shinyapps.io/Euroevol_R/)
+</p>  
+
+# The **EUROEVOL database** {#db}
+
+The **[EUROEVOL database](http://discovery.ucl.ac.uk/1469811/)** is an impressive open source database covering the Central, Western and Northern Europe from Paleolithic times to the end of Bronze Age (ca. 17,000 - 500 BC). For these periods, the **EUROEVOL database** gather one of the most complete datasets for archaeobotany, archaeozoology and radiocarbon datings. This latter register scores more than 14,000 radiocarbon datations [@Manning16].  
+
+Below, we present how these data can be read with R and adapted to serve the [**EUROEVOL_R app**](https://neolithic.shinyapps.io/Euroevol_R/)
+
+### Data structure
+
+The EUROEVOL database are recorded into different online `.csv` files as the result of a MySQL database export [@Manning16].
+
+```{r df.csv, echo=TRUE, warning=F}
+library(dplyr)
+library(knitr)
+library(kableExtra)
+EUROEVOL.url <- "https://discovery.ucl.ac.uk/id/eprint/1469811/" # main EUREVOL DB URL
+C14.url <- paste0(EUROEVOL.url, "7/EUROEVOL09-07-201516-34_C14Samples.csv")
+ChrPh.url <- paste0(EUROEVOL.url, "8/EUROEVOL09-07-201516-34_CommonPhases.csv")
+SitCom.url <- paste0(EUROEVOL.url, "9/EUROEVOL09-07-201516-34_CommonSites.csv")
+c14.db.url <- c(C14.url,ChrPh.url,SitCom.url)
+c14.db.names <- c("C14","CommonPhases","CommonSites")
+c14.db.df <- data.frame(csv.names=c14.db.names,
+                        csv.url=c14.db.url,
+                        stringsAsFactors = F)
+kable(c14.db.df,"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
+```
+
+
+### Data reading and clean-up
+
+The content of these `.csv` files that can be easily read by R, the different tables can be joined on id fields (`SiteID`, `PhaseCode`, etc.) and some changes must be done on the types of data
+
+```{r dat.db, echo=TRUE, warning=FALSE, fig.cap="Ten first rows of the EUROEVOL data selection"}
+S.Com <- read.csv(url(SitCom.url), stringsAsFactors = F)
+ChrPh <- read.csv(url(ChrPh.url), stringsAsFactors = F) 
+C14 <- read.csv(url(C14.url), stringsAsFactors = F)
+ChrPh <- subset(ChrPh,select=c("Culture","PhaseCode")) # only interesting colnames
+# joins
+df.C14 <- merge(S.Com,C14,by="SiteID",all.x=T) # C14
+df.C14 <- merge(df.C14,ChrPh,by="PhaseCode",all.x=T) # culture names
+# type
+df.C14$Latitude <- as.numeric(as.character(df.C14$Latitude))
+df.C14$Longitude <- as.numeric(as.character(df.C14$Longitude))
+Encoding(df.C14$SiteName) <- "UTF-8"
+df.C14[df.C14 == "NULL"] <- NA # to NA
+df.C14 <- df.C14[!is.na(df.C14$C14ID),]# rm C14 is NA
+df.C14$Period[is.na(df.C14$Period)] <- "NoPeriod"
+# show
+kable(head(df.C14, 11),"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=11)
+```
+
+### Radiocarbon calibration
+
+R offers different package for radiocarbon calibrations, like the [Bchron package](https://cran.r-project.org/web/packages/Bchron/vignettes/Bchron.html). Because the calibration process of such a large dataset could be long, so we will only select a sample of 10 datings in this example.
+
+```{r dat.calib.BP, echo=TRUE, warning = F, fig.cap="Ten first radiocarbon dating calibration (cal BP)"}
+library(Bchron)
+df.C14.sample <- df.C14[sample(1:nrow(df.C14),10),] # sample
+ages <- BchronCalibrate(ages=df.C14.sample$C14Age, 
+                        ageSds=df.C14.sample$C14SD, 
+                        calCurves=rep(x = 'intcal13',nrow(df.C14.sample)))
+```
+
+The result of the `BchronCalibrate` function is a list where each calibrated dating (eg, `ages[[1]]`) is described by:
+
+* **ages**: an age (in uncal BP)
+* **ageSds**: a standard deviation (SD)
+* **calCurves**: the calibration curve used ('intcal13', etc.)
+* **ageGrid**: a vector with all the years present in the calibration range (in cal BP)
+* **densities**: the densities of each year present in the calibration range
+
+To illustrate this calibration, we only plot the first dating
+
+```{r dat.calib.BP.1, echo=TRUE, warning = F, fig.cap="Ten first radiocarbon dating calibration (cal BP)"}
+str(ages[[1]])
+```
+
+Datings are still in BP. In archaeology, a standardised way will be to present them in cal BC. Furthermore, our purpose is to calculate *terminus post quem* (tpq) and *terminus ante quem* (taq) limits of each radiocarbon dating in order to use these *termini* for subsetting the dataset in the [**EUROEVOL_R app**](https://neolithic.shinyapps.io/Euroevol_R/)
+
+```{r dat.calib.BC, echo=TRUE, fig.cap="Ten first radiocarbon dating calibration (cal BC)"}
+tpqs <- taqs <- c()
+for (i in 1:length(ages)){
+  tpqs <- c(tpqs, -max(ages[[i]]$ageGrid))
+  taqs <- c(taqs, -min(ages[[i]]$ageGrid))
+}
+# to bc
+df.C14.sample$tpq <- tpqs + 1950
+df.C14.sample$taq <- taqs + 1950
+kable(df.C14.sample,"html", row.names = F) %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=10)
+```
+
+Once calculated, the dataset can be saved and will be re-read in the RShiny app
+
+```{r dat.calib.BC.save, echo=TRUE, fig.cap="Ten first radiocarbon dating calibration (cal BC)"}
+## nor run
+# write.csv(df.C14.sample, file = "euroevol.csv", sep = ";")
+```
+
+## Final remarks
+
+Here, our purpose was calculate *tpq* and *taq* for the interactive subsetting of the dataset with the **slider tpq/taq** of the [**EUROEVOL_R app**](https://neolithic.shinyapps.io/Euroevol_R/) [**map** panel](https://zoometh.github.io/C14/neonet/#panel.map). But in the app, for each date selected, a such calibration will be performed on-the-fly and the whole density curve will be displayed on the [**calib** panel](https://zoometh.github.io/C14/neonet/#panel.calib)  
+
+# References
+
+
+

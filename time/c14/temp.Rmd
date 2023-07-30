@@ -1,0 +1,53 @@
+---
+title: | 
+  | **A *dated* review with R** 
+  | Apps, databases, calibrations and analysis
+  | for radiocarbon and dendrochronological data
+author: "Thomas Huet"
+runtime: shiny
+output: 
+  html_document:
+    # css: style.css
+    highlight: tango
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+---
+
+```{r, echo=FALSE}
+# htmltools::img(src = knitr::image_uri(file.path(R.home("doc"), "html", "logo.jpg")),
+url.root <- "https://raw.githubusercontent.com/zoometh/thomashuet/main/img/"
+htmltools::img(src = paste0(url.root, "prj_absolute_date.png"), 
+               alt = 'logo', 
+               width = '100px',
+               style = 'position:absolute; top:0; right:0; padding:10px;')
+```
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.width = 19, fig.height = 14)
+library(kableExtra) 
+library(dplyr)
+library(knitr)
+# library(magick)
+# library(c14bazAAR)
+# library(grDevices)
+# library(sp)
+# library(leaflet)
+# library(Bchron)
+mandat.fields <- c("labnr", "c14age", "c14std", "lon", "lat")
+# GHimgs <- "https://github.com/zoometh/C14/tree/main/docs/imgs/"
+# panel.map <- image_read("docs/imgs/panel_map.png")
+# panel.map.coords <- image_read("docs/imgs/panel_map_coords.png")
+# panel.calib <- image_read("docs/imgs/panel_calib.png")
+```
+
+# Dendrochronological data
+
+As radiocarbon data, dendrochronological open database can be retrieve from the web and mapped. For example, the database of the British [Archaeology Data Service](https://archaeologydataservice.ac.uk/archives/view/vag_dendro/index.cfm) can be download. Then, the database need to be cleaned. After what, the original British National Grid coordinates are converted to lat/long coordinates with the packages [rnrfa](https://cran.r-project.org/web/packages/rnrfa/index.html) and [sf](https://cran.r-project.org/web/packages/sf/index.html)
+
+Shiny and Leaflet allow, for example, to select data filtered on a year threshold, for example
+the year of the battle of Agincourt: 1415

@@ -1,0 +1,162 @@
+---
+title: "RShiny C14 dating interactive maps: the **NeoNet** and **EUROEVOL_R** apps"
+author: "Thomas Huet, Niccolo Mazzucco"
+date: "11/12/2020"
+header-includes:
+  - \usepackage{float}
+  - \floatplacement{figure}{H}  #make every figure with capti
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.width = 19, fig.height = 14)
+library(kableExtra)
+library(dplyr)
+library(knitr)
+library(magick)
+GHimgs <- "https://github.com/zoometh/C14/tree/main/docs/imgs/"
+c14.db.url <- c("http://telearchaeology.org/c14-databses/","http://www.britarch.ac.uk/info/c14.html","http://www.archeometrie.mom.fr/banadora/","http://discovery.ucl.ac.uk/1469811")
+c14.db.names <- c("telearchaeology","Archaeological Site Index to Radiocarbon Dates from Great Britain and Ireland","BANADORA","EUROEVOL")
+```
+
+# Radiocarbon chronicles, databases and data visualization
+
+Today exists a lot of databases or database portals for C14 datings
+
+```{r dat.db, echo=FALSE}
+c14.db.df <- data.frame(names=c14.db.names,
+                        url=c14.db.url,
+                        stringsAsFactors = F)
+kable(c14.db.df,"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
+```
+
+Online app also exist for C14 calibration: [OxCal](https://c14.arch.ox.ac.uk/oxcal/), [CalPal](http://www.calpal-online.de/), etc.
+
+But few solutions exist for data vizualisation, and specially selection of radiocarbon dating by location, chronology and material life duration. Since, the idea was to create an interactive web form map-based for selection of radiocarbon data. [R](https://www.r-project.org/) and [Leaflet](https://rstudio.github.io/leaflet/) offer easy programming solutions to create such interactive maps.
+
+## The **NeoNet** and **EUROEVOL_R** apps
+
+There is two RShiny apps with the more or less same options. Only the dataset changes:
+
+* [EUROEVOL_R](https://neolithic.shinyapps.io/Euroevol_R/) is based on the [EUROEVOL database](http://discovery.ucl.ac.uk/1469811/) and covers the Central, Western and Northern Europe from Paleolithic times to the end of Bronze Age (ca. 17,000 - 500 BC) with near to 13,000 C14 datations  
+
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_euroevol_thumbnail.png){width=70%}
+* [NeoNet](https://neolithic.shinyapps.io/NeoNet/) is the based on a Google Sheet and covers the Central Mediterranean for the Late Mesolithic and Middle Neolithic (ca. 8,000 - 4,500 BC) with near to 13,000 C14 datations. The database is still at its development stage  
+
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_thumbnail.png){width=70%}
+
+
+## How to use the apps
+
+For this short tutorial, we will choose the [NeoNet](https://neolithic.shinyapps.io/NeoNet/) app.  
+
+
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet.png){width=80%}
+
+The apps are divided into 4 panels:
+
+* map: region of interest with different possibilities to subset datations
+* calib: calibration on-the-fly of the selected datations
+* data: the whole dataset with search tools
+* credits: data source, data gathering and IT credits
+
+The two main panels are **map** and **calib**
+
+
+### **map** panel
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_map_idx.png){width=20%}
+
+
+The panel **map** is used for selection of radiocarbon dating by location, chronology and material life duration.
+
+* The top-left button **group c14 on map** (<span style="color:red">red</span> box) allows to cluster datations by spatial proximities (see [Marker Clusters](http://rstudio.github.io/leaflet/markers.html))
+* The bottom-left legend **periods** (<span style="color:orange">orange</span> box) is a dynamic list of periods which exist in the selection (see checkboxes  **periods**)
+* The bottom-left slider  **tpq-taq** (<span style="color:blue">blue</span> box) allows to subset a range of dating between a tpq and a taq (in cal BC) 
+* The bottom-right checkboxes and slider  **material life duration and max accepted SD** (<span style="color:purple">purple</span> box) allow to subset a range of dating relatively to the duration of their material (short to long-life material) and/or to determine the maximum threshold for standard errors (SD, or delta) for the datations. An hyperlink allows to understand the [classification of the material into the short life, long life and others](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/material_life.html) categories
+* The top-right checkboxes  **periods** (<span style="color:brown">brown</span> box) allows to select dataions by periods. An hyperlink allows to understand the [abrevations of the periods](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/period_abrev.html)
+* The table at the bottom (<span style="color:green">green</span> box) is a dynamic table which list all the datations within the map and in the selection (tpq/taq, material life duration, maximum SD, periods). A count of selected sites and selected datations is dynamically done above this table.
+
+
+```{r panel.map,echo=FALSE,message=FALSE, out.width = "200%"}
+# # A tibble: 1 x 7
+#   format width height colorspace matte filesize density
+#   <chr>  <int>  <int> <chr>      <lgl>    <int> <chr>  
+# 1 PNG     1664    886 sRGB       TRUE   1496175 118x118
+panel.map <- image_read("https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_map.png")
+map.group.c14 <- image_draw(panel.map)
+# xleft, ybottom, xright, ytop
+# Group button
+rect(20, 30, 200, 160,
+     border = "red", lty = "dashed", lwd = 4)
+# dynamic periods
+rect(20, 750, 130, 600,
+     border = "orange", lty = "dashed", lwd = 4)
+# slider
+rect(150, 720, 800, 650,
+     border = "blue", lty = "dashed", lwd = 4)
+# dynamic table
+rect(20, 886, 1650, 770,
+     border = "green", lty = "dashed", lwd = 4)
+# SDs
+rect(1300, 720, 1650, 600,
+     border = "purple", lty = "dashed", lwd = 4)
+# button periods
+rect(1450, 30, 1650, 550,
+     border = "brown", lty = "dashed", lwd = 4)
+invisible(dev.off())
+plot(map.group.c14)
+```
+
+### **calib** panel
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_calib_idx.png){width=20%}
+  
+  
+The panel **calib** is used for datation calibration on-the-fly with the R packages Bchron and radiocarbon. Calibrations are done on the whole dataset of datations displayed in the **map** panel.
+
+* The top-center radio button **c14 group by site and/or period** (<span style="color:red">red</span> box) allows to plot datations:
+  + by datation: each datation is plot separeltly (by default)
+  + by site and period: datation coming from the same site and having the same period are cumulated
+  + by period: datation having the same period are cumulated
+  + all C14: all datation are cumulated together
+* The graph area (<span style="color:orange">orange</span> box) shows dynamically the SPD of the cabibrated datations seriated on their weighted means.
+* The top-right  button **Download.** (<span style="color:green">green</span> box) allows to export the last plot in a PNG image.
+
+```{r panel.calib,echo=FALSE,message=FALSE, out.width = "200%"}
+# # A tibble: 1 x 7
+#   format width height colorspace matte filesize density
+#   <chr>  <int>  <int> <chr>      <lgl>    <int> <chr>  
+# 1 PNG     1664    886 sRGB       TRUE   1496175 118x118
+panel.map <- image_read("https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_calib.png")
+calib.group.c14 <- image_draw(panel.map)
+# > image_info(panel.map)
+# # A tibble: 1 x 7
+#   format width height colorspace matte filesize density
+#   <chr>  <int>  <int> <chr>      <lgl>    <int> <chr>  
+# 1 PNG     1518    702 sRGB       TRUE     63969 118x118
+# # xleft, ybottom, xright, ytop
+# Group button
+rect(1400, 0, 1500, 70,
+     border = "green", lty = "dashed", lwd = 4)
+# download
+rect(700, 0, 1300, 70,
+     border = "red", lty = "dashed", lwd = 4)
+# dynamic periods
+rect(20, 80, 1400, 700,
+     border = "orange", lty = "dashed", lwd = 4)
+# # slider
+# rect(150, 720, 800, 650,
+#      border = "blue", lty = "dashed", lwd = 4)
+# # dynamic table
+# rect(20, 886, 1650, 770,
+#      border = "green", lty = "dashed", lwd = 4)
+# # SDs
+# rect(1300, 720, 1650, 600,
+#      border = "purple", lty = "dashed", lwd = 4)
+# # button periods
+# rect(1450, 30, 1650, 550,
+#      border = "brown", lty = "dashed", lwd = 4)
+invisible(dev.off())
+plot(calib.group.c14)
+```
+
