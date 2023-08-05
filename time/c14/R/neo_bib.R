@@ -84,6 +84,7 @@ neo_bib <- function(df.c14 = NA,
   }
   # merge C14 data and references
   df.c14 <- merge(df.c14, uniq.refs, by.x="bib_url", by.y="key.or.doi", all.x = T)
+  df.c14$bib <- NULL
   colnames(df.c14)[which(names(df.c14) == "long.ref")] <- "bib"
   # colnames(df.c14)[which(names(df.c14) == "C14BP")] <- "C14Age"
   return(df.c14)

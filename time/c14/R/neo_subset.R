@@ -31,8 +31,9 @@ neo_subset <- function(df.c14,
                        verbose.C14Age = TRUE,
                        verbose.Period = TRUE,
                        verbose.Coords = TRUE){
+  all.dates <- nrow(df.c14)
   c14.err.time <- c("Country", "SiteName", "Period", "C14Age", "C14SD", "bib_url")
-  c14.err.spat <- c("Country", "SiteName", "Period", "Longitude", "Latitude", "bib_url")
+  c14.err.spat <- c("Country", "SiteName", "Period", "Latitude", "Longitude", "bib_url")
   `%>%` <- dplyr::`%>%` # used to not load dplyr
   df.c14 <- as.data.frame(apply(df.c14, 2, trimws))
   if(verbose){print(paste0("nb dates: ", nrow(df.c14)))}
@@ -61,7 +62,7 @@ neo_subset <- function(df.c14,
   if(verbose){
     print(paste0("removed ", nb.before - nrow(df.c14), " date(s) not between ", ref.c14age[1], " and ", ref.c14age[2],""))
   }
-  if(verbose.C14Age){print(C14.not.in.time.span[ order(C14.not.in.time.span$C14Age), c14.err.time])}
+  if(verbose.C14Age){print(C14.not.in.time.span[order(C14.not.in.time.span$C14Age), c14.err.time])}
   if(verbose){print(".. Periods")}
   periods.colors <- read.csv(ref.period, sep = "\t")
   not.ref <- setdiff(df.c14$Period, periods.colors$period)
@@ -78,9 +79,9 @@ neo_subset <- function(df.c14,
   if(verbose){print(".. Spatial coordinates")}
   sf::sf_use_s2(FALSE)
   roi <- sf::st_read(ref.spat, quiet = TRUE)
-  sf::st_crs(roi) <- "+init=epsg:4326"
+  sf::st_crs(roi) <- 4326
   df.c14 <- sf::st_as_sf(df.c14, coords = c("Longitude", "Latitude"))
-  sf::st_crs(df.c14) <- "+init=epsg:4326"
+  sf::st_crs(df.c14) <- 4326
 
   df.c14 <- df.c14 %>% dplyr::mutate(
     intersection = as.integer(sf::st_intersects(df.c14, roi)))
@@ -97,12 +98,13 @@ neo_subset <- function(df.c14,
     )
     # class(mbr.outside)
     roi.samp <- sf::st_intersection(roi, mbr.outside)
-    ggplot2::ggplot() +
+    map.out <- ggplot2::ggplot() +
       ggplot2::geom_sf(data = roi.samp) +
       ggplot2::geom_sf(data = df.c14.outside.roi, fill = 'red') +
       ggplot2::theme_bw()
+    print(map.out)
     df.c14.outside.roi <- as.data.frame(df.c14.outside.roi)
-    print(df.c14.outside.roi[ , c14.err.spat])
+    print(df.c14.outside.roi[order(c14.err.spat$SiteName), c14.err.spat])
   }
   # df.c14.outside.roi[ , c("Longitude", "Latitude")] <- sf::st_coordinates(df.c14.outside.roi)
   # save only intersection = 1
@@ -111,10 +113,12 @@ neo_subset <- function(df.c14,
   df.c14$geometry <- df.c14$intersection  <- NULL
   if(verbose){
     print("Intersection with ROI has been done")
-    print(paste0("nb dates: ", nrow(df.c14)))
+    print(paste0("nb dates: ", nrow(df.c14), " (initially: ", all.dates, " dates)"))
   }
   return(df.c14)
 }
+
+,
 
 # # read dataset
 # data.c14 <- paste0(path.data, "NeoNet_atl_ELR (1).xlsx")

@@ -14,6 +14,7 @@ source("R/neo_bib.R")
 source("R/neo_matlife.R")
 source("R/neo_calc.R")
 
+col.not.used <- c("Anatomical.part.(type)", "OBS", "Reliability")
 
 # c14
 data.c14 <- "neonet/NeoNet_atl_ELR (1).xlsx"
@@ -21,55 +22,11 @@ data.bib <- paste0(getwd(), "/neonet/NeoNet_atl_ELR.bib")
 df.c14 <- openxlsx::read.xlsx(data.c14)
 df.c14 <- df.c14[df.c14$Country == "France", ]
 df.c14 <- neo_subset(df.c14)
-
-# getwd()
-
-## - - - - - - - - - - - - - - - - - - - - - - -
-## Prepare data for Rshiny app data
-
-# setwd("C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/")
-
-# c14data.to.github <- T # from .xlsx, create c14data.tsv -> GitHub
-# c14ref.to.github <- T #
-# join.c14data.and.c14ref <- T
-
-# references.bib <- "references.bib"
-# references.bib <- "references_OK.bib"
-# references.bib <- "references_OK_2.bib"
-# references.bib <- "references_OK_4.bib"
-
-# verbose <- T
-
-
-# lcul_col <- list(# colors
-#   EM = "#0000CF", # BLUE
-#   MM = "#1D1DFF", #
-#   LM = "#3737FF", #
-#   LMEN = "#6A6AFF", #
-#   UM = "#8484FF", #
-#   EN = "#FF1B1B", # RED
-#   EMN = "#FF541B", #
-#   MN = "#FF8D1B", #
-#   LN = "#FFC04D", #
-#   UN = "#E7E700" # NEO UNDEF.
-# )
-
-
-# path.data <-"C:/Rprojects/Rdev/time/c14/neonet/"                  # work with C14/
-
-
-
-# bib
-
-# out
-# path.data.publi <- paste0(path.data, "publi/")
-# output.path <- paste0(path.data.publi, "publi/") # export to neonet/
-
-
 df.c14 <- neo_bib(df.c14, data.bib)
 # View(head(df.c14, 50))
-ref.mat.life <- read.csv(paste0(getwd(), '/neonet/publi/140_id00140_doc_thesaurus.tsv'), sep = "\t")
-df.c14 <- neo_matlife(df.c14, ref.mat.life)
+# ref.mat.life <- read.csv(paste0(getwd(), '/neonet/publi/140_id00140_doc_thesaurus.tsv'), sep = "\t")
+df.c14 <- neo_matlife(df.c14)
+df.c14[ , col.not.used] <- NULL
 View(df.c14)
 
 # references.bib <- "references_OK_7.bib"
