@@ -21,7 +21,7 @@ library(Bchron)
 # references.bib <- "references_OK_2.bib"
 # references.bib <- "references_OK_4.bib"
 
-
+verbose <- T
 
 
 lcul_col <- list(# colors
@@ -40,13 +40,18 @@ lcul_col <- list(# colors
 intCal <- 'intcal20'
 
 path.data <-"C:/Rprojects/Rdev/time/c14/neonet/"                  # work with C14/
+
+# c14
+data.c14 <- paste0(path.data,"NeoNet_atl_ELR (1).xlsx")
+df.c14 <- openxlsx::read.xlsx(data.c14)
+df.c14 <- df.c14[df.c14$Country == "France", ]
+df.c14 <- as.data.frame(apply(df.c14, 2, trimws))
+head(df.c14)
+# bib
+data.bib <- paste0(path.data,"NeoNet_atl_ELR.bib")
+# out
 path.data.publi <- paste0(path.data, "publi/")
 output.path <- paste0(path.data.publi, "publi/") # export to neonet/
-
-data.c14 <- paste0(path.data,"NeoNet_atl_ELR.xlsx")
-data.bib <- paste0(path.data,"NeoNet_atl_ELR.bib")
-
-df.c14 <- openxlsx::read.xlsx(data.c14)
 
 # references.bib <- "references_OK_7.bib"
 # gh.master <- 'https://raw.github.com/zoometh/C14/master/' # github 'C14' folder
@@ -62,22 +67,86 @@ df.c14 <- openxlsx::read.xlsx(data.c14)
 # fich <- "_NeoNet_BDAmissingLabCode_6.xlsx" # whith special characters
 # fich <- "_NeoNet_BDAmissingLabCode_9.xlsx" # whith special characters + Nicco data
 
-# c14doi.to.shinyapp <- T
 
-c14doi.to.shinyapp <- function(){
-  # get the published TSV and convert for the Shinyapp format
-  # read C14 dataset TSV
-  df <- read.csv(paste0(path.data.publi, "140_140_id00140_doc_elencoc14.tsv"),
-                            sep = '\t', header = TRUE)
-  # clean
-  df <- df[df$Period %in% names(lcul_col), ] # only selected periods
-  df <- df[!is.na(df$Period), ]
-  # read references BIB
-  c14.bibrefs <- paste0(path.data.publi, "id00140_doc_reference.bib")
-  bib <- bibtex::read.bib(c14.bibrefs)
-  return(bib)
-  # write.table(c14.dataset, paste0(path.data.publi,"c14data.tsv"), sep="\t", row.names=FALSE)
-}
+# bib.bibtex <- function(df.c14, data.bib){
+#   # convert the bibtex file '.bib' into long references
+#   # get a dataframe and export bibtex references from it as a "bibentry"
+#   # in a Mardown layout
+#   # ex: bib[1] = Delibrias G, Guillier M, Labeyrie J (1982). “Gif natural radiocarbon measurements IX.” _Radiocarbon_, *24*(3), 291-343.
+#   df <- df.c14
+#   df <- df[df$Period %in% names(lcul_col), ] # only selected periods
+#   df <- df[!is.na(df$Period), ]
+#   if(verbose){print(paste0(nrow(df), " radiocarbon dates"))}
+#   # c14.bibrefs <- data.bib
+#   df.bib <- bibtex::read.bib(data.bib)
+#   if(verbose){print("df.bib is OK")}
+#   return(df.bib)
+# }
+#
+# bib.doi <- function(df.c14, data.bib){
+#   # df <- df.c14
+#   #
+#   # a shorter df for uniques references
+#   df.bib <- bibtex::read.bib(data.bib)
+#
+#   uniq.refs <- unique(df.c14[c("bib", "bib_url")])
+#   names(uniq.refs) <- c("short.ref", "key.or.doi")
+#   uniq.refs$long.ref <- uniq.refs$key.or.doi
+#   uniq.refs <- uniq.refs[with(uniq.refs, order(key.or.doi)), ] # sort
+#   if(verbose){print(paste0("nb of unique references: ", nrow(uniq.refs)))}
+#   #
+#   for(i in 1:nrow(uniq.refs)){
+#     # i <- 1
+#     flag <- 0
+#     a.ref <- uniq.refs[i, "key.or.doi"]
+#     # a.ref <- "10.4312/dp.46.22"
+#     print(paste0("[", as.character(i), "] ", a.ref))
+#     # BibTex - - - - - - - - - - - - - - - - - -
+#     if(grepl("^[[:upper:]]", a.ref)){
+#       # reuse the bibentry
+#       a.bibref <- capture.output(print(df.bib[c(a.ref)]))
+#       a.citation <- paste0(a.bibref, collapse = " ")
+#       uniq.refs[i, "long.ref"] <- a.citation
+#       flag <- 1
+#     }
+#     # DOIs (all start with '10.' or 'https://doi.org/10') - - - - - - - -
+#     # a.ref <- "https://doi.org/10.1002/ajpa.23468"
+#     if(grepl("^10\\.", a.ref) | grepl("^https://doi.org", a.ref) | grepl("^https://dx.doi.org", a.ref)){
+#       a.ref <- gsub("https://doi.org/", "", a.ref)
+#       a.ref <- gsub("http://dx.doi.org/", "", a.ref)
+#       a.ref <- paste0("https://doi.org/", a.ref)
+#       Sys.sleep(.5)
+#       tryCatch(
+#         expr = {
+#           print("  - DOI OK")
+#           uniq.refs[i, "long.ref"] <- RefManageR::GetBibEntryWithDOI(a.ref)
+#           # uniq.refs[i, "long.ref"] <- as.character(RefManageR::GetBibEntryWithDOI(a.ref))
+#         },
+#         error = function(e){
+#           print("  - DOI error -> 'MISSING REF'")
+#           uniq.refs[i, "long.ref"] <- "MISSING REF"
+#         }
+#         # warning=function(cond) {
+#         #   # uniq.refs[i, "reference"] <- "a.ref" # not working
+#         #   print("  - DOI not recover")
+#         # }
+#         )
+#       flag <- 1
+#     }
+#     # others
+#     if(flag == 0){
+#       uniq.refs[i, "long.ref"] <- "MISSING REF"
+#       print("  - 'MISSING REF'")
+#     }
+#   }
+#   return(uniq.refs)
+# }
+#
+# # df.bib <- bib.bibtex(df.c14, data.bib)
+uniq.refs <- bib_doi(df.c14, data.bib)
+View(head(uniq.refs, 50))
+
+c <- RefManageR::GetBibEntryWithDOI("https://doi.org/10.1002/ajpa.23468")
 
 
 # fich <- "NeoNet_rvTH_9.xlsx" # whith special characters + Nicco data
@@ -125,63 +194,7 @@ if(c14data.select){
 #   write.table(df,"neonet/c14data.tsv", sep="\t", row.names=FALSE)
 # }
 
-# if(c14ref.to.github){
-c14ref.to.github <- function(df, bib){
-  # df <- df.c14 ;  bib <- data.bib
-  # recalcultate the "long.ref" value from DOIs for unique references if exists
-  # or BibTex entries (file 'references_xx.bib')
-  # a shorter df for uniques references
-  uniq.refs <- unique(df[c("bib", "bib_url")])
-  # rename fields
-  names(uniq.refs) <- c("short.ref", "key.or.doi")
-  # by default
-  uniq.refs$long.ref <- uniq.refs$key.or.doi
-  # with DOIs if exist
-  uniq.refs <- uniq.refs[with(uniq.refs, order(key.or.doi)), ]
-  #
-  for(i in 1:nrow(uniq.refs)){
-    # i <- 1
-    flag <- 0
-    a.ref <- uniq.refs[i, "key.or.doi"]
-    # a.ref <- "10.4312/dp.46.22"
-    print(paste0("[", as.character(i), "] ", a.ref))
-    # BibTex - - - - - - - - - - - - - - - - - -
-    if(grepl("^[[:upper:]]", a.ref)){
-      a.bibref <- capture.output(print(bib[c(a.ref)]))
-      a.citation <- paste0(a.bibref, collapse = " ")
-      uniq.refs[i, "long.ref"] <- a.citation
-      flag <- 1
-    }
-    # DOIs (all start with '10.') - - - - - - - -
-    # a.ref <- "10.1016/j.quaint.2017.05.027"
-    if(grepl("^10\\.", a.ref)){
-      tryCatch(
-        expr = {
-          # # OR
-          # uniq.refs[i, "long.ref"] <- cr_cn(a.ref, format = "text") %>%
-          #   map_chr(., pluck, 1)
-          # OR
-          uniq.refs[i, "long.ref"] <- as.character(GetBibEntryWithDOI(paste0("https://doi.org/",a.ref)))
-        },
-        error = function(e){
-          print("  - error -> 'MISSING REF'")
-          uniq.refs[i, "long.ref"] <- "MISSING REF"
-        },
-        warning=function(cond) {
-          # uniq.refs[i, "reference"] <- "a.ref" # not working
-          print("  - DOI not recover")
-        })
-      flag <- 1
-    }
-    # others
-    if(flag == 0){
-      uniq.refs[i, "long.ref"] <- "MISSING REF"
-    }
-  }
-  # print(getwd())
-  # # write
-  # write.table(uniq.refs, paste0(path.data.publi,"c14refs.tsv"), sep="\t", row.names=FALSE)
-}
+
 
 c14.material.life <- function(){
   mat.life.url <- '140_id00140_doc_thesaurus.tsv'
@@ -284,6 +297,8 @@ join.c14data.and.c14ref <- function(df, uniq.refs){
   # TODO: encode in UTF-8 ??
   # write.table(df.tot, paste0(getwd(),"/shinyapp/df_tot.csv"), fileEncoding = "UTF-8", sep="\t", row.names=FALSE)
 }
+
+
 View(df.tot[sample(1:nrow(df.tot),25), ])
 write.table(df.tot, paste0(output.path, "c14_dataset.tsv"),
             sep="\t",
