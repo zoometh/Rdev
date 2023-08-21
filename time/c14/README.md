@@ -1,5 +1,4 @@
 # Time modeling
-> <font size="2.5"> "*Le temps, c'est ce qui passe quand rien ne se passe*" (J. Giono) </font>
 
 ## Radiocarbon and dendrochronological data integration and visualization
 > [webpage](https://neolithic.shinyapps.io/AbsoluteDating/)

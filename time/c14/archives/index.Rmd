@@ -5,6 +5,7 @@ title: |
   | for radiocarbon and dendrochronological data
 author: "Thomas Huet"
 runtime: shiny
+bibliography: "D:/DocumentationArcheo/biblio12.bib"
 output: 
   html_document:
     highlight: tango
@@ -13,6 +14,16 @@ output:
     toc_float:
       collapsed: false
       smooth_scroll: false
+---
+
+```{r, echo=FALSE}
+url.root <- "https://raw.githubusercontent.com/zoometh/thomashuet/main/img/"
+htmltools::img(src = paste0(url.root, "prj_absolute_date.png"), 
+               alt = 'logo', 
+               width = '100px',
+               style = 'position:absolute; top:0; right:0; padding:10px;')
+```
+
 ---
 
 ```{r setup, include=FALSE}
@@ -95,21 +106,34 @@ server <- function(input, output) {
 shinyApp(ui, server)
 ```
 
-Beside [Bchron](https://cran.r-project.org/web/packages/Bchron/vignettes/Bchron.html), other R packages allows calibration and management of radiocarbon dates like  [rcarbon](https://cran.r-project.org/web/packages/rcarbon/index.html),  [OxcAAR](https://cran.r-project.org/web/packages/oxcAAR/index.html), [RChronoModel](https://cran.r-project.org/web/packages/RChronoModel/index.html), [stratigraphr](https://stratigraphr.joeroe.io/), [rbacon](https://cran.r-project.org/web/packages/rbacon/index.html), [ArchaeoPhases](https://cran.r-project.org/web/packages/ArchaeoPhases/index.html). The main dedicated apps for calibration are: [OxCal](https://c14.arch.ox.ac.uk/oxcal/), [CalPal](http://www.calpal-online.de/) and [Calib](http://calib.org/calib/), [BCal](https://bcal.shef.ac.uk/)
+Beside [Bchron](https://cran.r-project.org/web/packages/Bchron/vignettes/Bchron.html), other R packages allows calibration and management of radiocarbon dates like: 
 
-[c14bazAAR](https://github.com/ropensci/c14bazAAR) is a polyvalent package, allowing numerous operations. Using this package with [Leaflet](https://rstudio.github.io/leaflet/) allow to create interactive map of radiocarbon dates coming from different databases. 
+* [rcarbon](https://cran.r-project.org/web/packages/rcarbon/index.html)
+* [OxcAAR](https://cran.r-project.org/web/packages/oxcAAR/index.html)
+* [RChronoModel](https://cran.r-project.org/web/packages/RChronoModel/index.html)
+* [stratigraphr](https://stratigraphr.joeroe.io/)
+* [rbacon](https://cran.r-project.org/web/packages/rbacon/index.html)
+* [ArchaeoPhases](https://cran.r-project.org/web/packages/ArchaeoPhases/index.html). 
+
+  
+The main dedicated apps for calibration are: [OxCal](https://c14.arch.ox.ac.uk/oxcal/), [CalPal](http://www.calpal-online.de/) and [Calib](http://calib.org/calib/), [BCal](https://bcal.shef.ac.uk/)
+
+[c14bazAAR](https://github.com/ropensci/c14bazAAR) is a polyvalent package, allowing numerous operations. Using this package with [Leaflet](https://rstudio.github.io/leaflet/) allow to create interactive map of radiocarbon dates coming from different databases, starting -- for example -- from the "BDA" database [@Perrin21]
 
 > <font size="2">At first, we read the list of available database stored in a csv file on GitHub (`DBs.list.url <- 'https://raw.github.com...`), then we create a Shiny app with a selection menu for the databases (`selectInput("c14.db", ...`) and a reactive map (`output$map <- ...`)</font>
+
+<!-- # DBs <- DBs[! DBs %in% c("adrac","austarch")]# sic -->
+<!-- # choices = "katsianis", selected = "katsianis", width = "25%"), -->
 
 ```{r echo = TRUE, warning=FALSE}
 library(shiny)
 library(c14bazAAR)
 library(leaflet)
-DBs.list.url <- 'https://raw.github.com/ropensci/c14bazAAR/master/data-raw/url_reference.csv'
+DBs.list.url <-'https://raw.githubusercontent.com/ropensci/c14bazAAR/master/data-raw/db_info_table.csv'
 DBs.list <- read.csv(DBs.list.url)
-DBs <- DBs.list$db
-ui <- fluidPage(selectInput("c14.db", label = "c14bazAAR c14 databases",
-                            choices = DBs, selected = DBs[2], width = "25%"),
+DBs <- sort(DBs.list$db)
+ui <- fluidPage(selectInput("c14.db", label = "c14 databases",
+                            choices = DBs, selected = "bda", width = "25%"),
                 leafletOutput("map", height=300)
 )
 server <- function(input, output) {
@@ -164,14 +188,14 @@ As radiocarbon data, dendrochronological open database can be retrieve from the 
 > <font size="2"> Once read, the database need to be cleaned. After what, the original British National Grid coordinates are converted to lat/long coordinates with the packages [rnrfa](https://cran.r-project.org/web/packages/rnrfa/index.html) and [sf](https://cran.r-project.org/web/packages/sf/index.html) </font>
 
 ```{r echo = TRUE, warning=FALSE}
-url.root <- 'https://archaeologydataservice.ac.uk/catalogue/adsdata/arch-282-11/'
-dendro.list.url <- paste0(url.root, 'dissemination/csv/ind_ful_to50.csv&hs=true')
+url.root <- 'https://archaeologydataservice.ac.uk/catalogue/adsdata/arch-282-12/'
+dendro.list.url <- paste0(url.root, 'dissemination/csv/VA_Dend_2021_ADS-IND_FUL_TO51.csv&hs=true')
 dendro.list <- read.csv(dendro.list.url, stringsAsFactors = F)
-dendro <- dendro.list[nchar(dendro.list$GRID_LETTE) == 2, ]
-dendro <- dendro[nchar(dendro$EASTING) == 3, ]
-dendro <- dendro[nchar(dendro$NORTHING) == 3, ]
-dendro <- dendro[!is.na(dendro$YEAR_SHORT), ]
-dendro$GEO <- paste0(dendro$GRID_LETTE, dendro$EASTING, dendro$NORTHING)
+dendro <- dendro.list[nchar(dendro.list$Grid.letter) == 2, ]
+dendro <- dendro[nchar(dendro$Easting) == 3, ]
+dendro <- dendro[nchar(dendro$Northing) == 3, ]
+dendro <- dendro[!is.na(dendro$Year_short), ]
+dendro$GEO <- paste0(dendro$Grid.letter, dendro$Easting, dendro$Northing)
 dendro.coords <- rnrfa::osg_parse(dendro$GEO)
 dendro$lon = dendro.coords[[1]]
 dendro$lat = dendro.coords[[2]]
@@ -181,8 +205,8 @@ nDB <- dendro %>%
   sf::st_coordinates() %>%
   as_tibble()
 dendro.cln <- cbind(dendro, nDB)
-dendro.sample <- head(dendro.cln[, c("LIST_SEQ", "LOCATION",
-                                     "YEAR_SHORT", "PERIOD", "X", "Y")])
+dendro.sample <- head(dendro.cln[, c("List_seq", "Location",
+                                     "Year_short", "Period", "X", "Y")])
 kable(dendro.sample, "html", row.names = F) %>%
   kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
@@ -202,20 +226,20 @@ ui <- fluidPage(
 )
 server <- function(input, output) {
   output$map <- renderLeaflet({
-    dendro.dec <- dendro.cln[dendro.cln$YEAR_SHORT < input$dend.thrs, ]
-    colpal <- colorBin("RdYlGn", dendro.dec$YEAR_SHORT, bins  = 10)
-    dendro.dec$lbl <- paste("numero:", dendro.dec$LIST_SEQ, '<br>',
-                            "year:", dendro.dec$YEAR_SHORT)
+    dendro.dec <- dendro.cln[dendro.cln$Year_short < input$dend.thrs, ]
+    colpal <- colorBin("RdYlGn", dendro.dec$Year_short, bins  = 10)
+    dendro.dec$lbl <- paste("numero:", dendro.dec$List_seq, '<br>',
+                            "year:", dendro.dec$Year_short)
     leaflet() %>%
       addProviderTiles(providers$Stamen.Toner) %>%
       addCircleMarkers(data = dendro.dec,
                        lng = ~X,
                        lat = ~Y,
                        popup = ~lbl,
-                       color = ~colpal(YEAR_SHORT),
+                       color = ~colpal(Year_short),
                        radius = 0.3,
                        opacity = 1) %>%
-      addLegend('topright', pal = colpal, values = dendro.dec$YEAR_SHORT,
+      addLegend('topright', pal = colpal, values = dendro.dec$Year_short,
                 title = 'Calendar Year <br> Ranges',
                 opacity = 1)
   })

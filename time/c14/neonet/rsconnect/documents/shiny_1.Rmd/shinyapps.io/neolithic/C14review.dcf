@@ -1,0 +1,12 @@
+name: C14review
+title: C14review
+username:
+account: neolithic
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3501216
+bundleId: 4125861
+url: https://neolithic.shinyapps.io/C14review/
+when: 1611239767.98619
+asMultiple: FALSE
+asStatic: FALSE

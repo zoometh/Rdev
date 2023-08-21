@@ -1,0 +1,10 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/716644/7509432f8b444e84b5cf572df4bde08f
+bundleId: https://api.rpubs.com/api/v1/document/716644/7509432f8b444e84b5cf572df4bde08f
+url: http://rpubs.com/zoometh/716644
+when: 1611441162.88639
