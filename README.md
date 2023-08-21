@@ -1,5 +1,11 @@
 # Rdev
 
+## News
+
+- [EAA23 Kharaysin](https://github.com/zoometh/Rdev/tree/master/gmm/kharaysin)
+
+## Folder structure
+
 Miscellaneous of test files and functions for R, Python, JavaScript, HTML, etc. 
 
 * [GMM](#GMM)
