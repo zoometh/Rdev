@@ -23,7 +23,7 @@ On individual lithics
 
 <p align="center">
   <img alt="img-name" src="./out/1_panel.jpg" width="800"><br>
-  <em>Panel on lithics</em>
+  <em>Panel on lithics, colored according to their archaeological site</em>
 </p>
 
 ### Stack
