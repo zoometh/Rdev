@@ -139,7 +139,7 @@ if(elbow.sickles){
   pc1.2 <- sickles.p$x[ , c(1, 2)] # first dim
   nb.clust <- NbClust(data = pc1.2,
                       min.nc = 3,
-                      distance = "euclidian",
+                      distance = "euclidean",
                       method = "ward.D2",
                       index = c("gap", "silhouette"))
   nbclust.sickles.opt <- nb.clust$Best.nc[1] # best nb of cluster
@@ -157,7 +157,7 @@ if(elbow.sickles){
 
 # Blue, red, green, pink, orange, purple
 my.colors <- c("#0000ff", "#ff0000", "#00FF00", "#FFC0CB", "#FFA500", "#800080")
-my.colors.select <- my.colors[1:nbclust.sickles.opt]
+my.colors.select <- my.colors[1 : nbclust.sickles.opt]
 my.color.ramp <- colorRampPalette(my.colors.select)
 
 # clustering
@@ -172,7 +172,7 @@ dev.off()
 # KMEANS
 # TODO: colors
 nb.centers <- nbclust.sickles.opt
-kmeans.out <- paste0(path.data, "/out/5_kmeans.jpg")
+kmeans.out <- paste0(path.data, "/out/5_kmeans_1.jpg")
 jpeg(kmeans.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
 KMEANS(sickles.p,
        centers = nb.centers)
@@ -202,6 +202,15 @@ spat.mbr(df.sickles.spat.grp, "/out/6_map_sickles.jpg")
 # site analysis
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# export site clusterin as XLSX
+df.coords.xlsx <- df.coords
+df.melt.xlsx <- df.sickles.mbr.spat[ , c("code", "membership")]
+df.melt.xlsx$membership <- paste0("clust_", df.melt.xlsx$membership)
+df.unmelt.xlsx <- dcast(df.melt.xlsx, code ~ membership)
+df.clustered.sites.xlsx <- merge(df.unmelt.xlsx, df.coords.xlsx, by = "code", all.x = T)
+df.clustered.sites.xlsx <- df.clustered.sites.xlsx[, c(8, 1, 2, 3, 4, 5, 6, 7)]
+write.xlsx(df.clustered.sites.xlsx, paste0(path.data, "/out/7_sites__clustered_shapes.xlsx"))
+
 # CA on sites
 df.melt <- df.sickles.mbr.spat[ , c("code", "membership")]
 df.unmelt <- dcast(df.melt, code ~ membership)
@@ -212,6 +221,28 @@ jpeg(site.ca.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 6
 res.sites.ca <- FactoMineR::CA(df.unmelt, graph = F)
 plot(res.sites.ca)
 dev.off()
+
+# optimal number of clusters - sites
+# if(elbow.sites){
+#   pc1.2 <- res.sites.ca$row$coord[ , c(1, 2)] # first dim
+#   nb.clust <- NbClust(data = pc1.2,
+#                       min.nc = 3,
+#                       distance = "euclidean",
+#                       method = "ward.D2",
+#                       index = c("gap", "silhouette"))
+#   nbclust.sites.opt <- nb.clust$Best.nc[1] # best nb of cluster
+#   wss <- sapply(1:k.max,
+#                 function(k){kmeans(res.sites.ca$row$coord, k, nstart = 50, iter.max = 15)$tot.withinss})
+#   clus.best.out <- paste0(path.data, "/out/7_1_clust.jpg")
+#   jpeg(clus.best.out, height = fig.full.h, width = fig.full.w, units = "cm", res = 600)
+#   plot(1:k.max, wss,
+#        type="b", pch = 19, frame = FALSE,
+#        xlab="Number of clusters K (red line: best number)",
+#        ylab="Total within-clusters sum of squares")
+#   abline(v = nbclust.sites.opt, col = "red", lwd = 2)
+#   dev.off()
+# }
+
 
 # HCLUST on sites
 site.hclust.out <- paste0(path.data, "/out/8_sites_hclust.jpg")
