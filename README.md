@@ -2,7 +2,7 @@
 
 ## News
 
-- [EAA23 Kharaysin](https://github.com/zoometh/Rdev/tree/master/gmm/kharaysin)
+- [EAA23 Kharaysin](https://github.com/zoometh/Rdev/tree/master/gmm/kharaysin#readme)
 
 ## Folder structure
 
