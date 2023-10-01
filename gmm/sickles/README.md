@@ -2,12 +2,12 @@
 
 
 <p align="center">
-  <img alt="img-name" src="./img/ACH-1745a" width="150">
+  <img alt="img-name" src="./img/ACH-1745a.jpg" width="150">
   <img alt="img-name" src="./img/ACH-112.jpg" width="150">
   <img alt="img-name" src="./img/BAQ-64.18.jpg" width="150">
   <img alt="img-name" src="./img/MCA-2849.ST2.jpg" width="150">
   <img alt="img-name" src="./img/REV-454.jpg" width="150">
-  <img alt="img-name" src="./img/CAS-493.171" width="150">
+  <img alt="img-name" src="./img/CAS-493.171.jpg" width="150">
   <img alt="img-name" src="./img/KNO-5080.jpg" width="150">
   <img alt="img-name" src="./img/FCA-5331.jpg" width="150">
   <img alt="img-name" src="./img/EPG-51.jpg" width="150"><br>
@@ -29,7 +29,7 @@ On individual lithics
 ### Stack
 
 <p align="center">
-  <img alt="img-name" src="./out/2_stack.jpg" width="800"><br>
+  <img alt="img-name" src="./out/2_stack.jpg" width="600"><br>
   <em>Stack on lithics</em>
 </p>
 
