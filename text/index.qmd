@@ -1,10 +1,10 @@
 ---
-title: "Use of 'R' at the School of Archaeology"
+title: "Use of <img src='https://raw.githubusercontent.com/zoometh/thomashuet/master/img/app-prg-r.png' style='height: 100px;vertical-align: middle;'> at the<br> School of Archaeology"
 # subtitle: "Create beautiful interactive slide decks with Reveal.js"
 author: "Thomas Huet (University of Oxford, EAMENA project)"
 title-slide-attributes:
     data-background-image: "https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-oxford-research-areas.png"
-    data-background-size: "90%"
+    data-background-size: "80%"
     data-background-opacity: "0.3"
 format:
   revealjs: 
@@ -12,7 +12,7 @@ format:
     code-fold: true
     code-summary: "<small>Code</small>"
     slide-number: true
-    # chalkboard: true
+    chalkboard: true
     scrollable: true
     preview-links: auto
     reference-location: document
@@ -20,40 +20,56 @@ format:
     # self-contained: true
     # embed-resources: true
     logo: https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-eamena.png
-    footer: "<em>Workshop on the use of 'R' at the School of Archaeology</em> <img src='https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-oxford.png' style='height: 35px;vertical-align: middle;'> Univesity of Oxford, School of Archaeology, 5 December 2023 - Thomas Huet"
+    footer: "<em>Workshop on the use of 'R' at the School of Archaeology</em> <img src='https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-oxford.png' style='height: 50px;vertical-align: middle;'> Univesity of Oxford, School of Archaeology, 5 December 2023 - Thomas Huet"
     margin: 0
     width: 1200
 ---
 
- 
-## Introduction
+
+## {}
 
 ```{r, echo=FALSE}
-library(shiny)
-library(rmarkdown)
-library(knitr)
-library(kableExtra)
-library(plotly)
-library(archdata)
-library(ggtern)
-library(ggplot2)
-library(DT)
-library(dplyr)
-library(FactoMineR)
-library(spatstat)
-library(spatialEco)
-library(sf)
-library(sp)
-library(reshape2)
-
-# library(Factoshiny)
-
-data(OxfordPots)
 ```
+
+::: {.panel-tabset}
+
+### list
+
+| Host 	| URL 	|
+|------	|-----	|
+| ![](https://raw.githubusercontent.com/zoometh/thomashuet/master/img/src-archeo-prog-openarchaeo.png){width=350px} 	| <https://open-archaeo.info/>    	|
+| ![](https://raw.githubusercontent.com/zoometh/thomashuet/master/img/src-archeo-prog-ssl-map-comput.png){width=350px}  	| <https://sslarch.github.io/>    	|
+
+### open-archaeo
+
+```{=html}
+<iframe width="1200" height="500" src="https://open-archaeo.info/" title="research-themes"></iframe>
+```
+
+
+### SSLA
+
+```{=html}
+<iframe width="1100" height="500" src="https://sslarch.github.io/MapofComputationalArchaeology/" title="research-themes"></iframe>
+```
+
+:::
+
 
 ## Research areas
 
-![](https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-oxford-research-areas.png)
+```{r }
+#| echo: false
+#| eval: true
+#| code-fold: true
+
+devtools::source_url("https://raw.githubusercontent.com/zoometh/Rdev/master/text/soa_cloudword_1.R")
+soa.url <- 'https://www.arch.ox.ac.uk/'
+soa.research.areas <- list('bioarchaeology', 'chronology', 'eurasian-prehistory', 'historical-and-classical', 'materials-and-technology', 'palaeolithic')
+research.soa(soa.url, soa.research.areas)
+```
+
+![](https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-oxford-research-areas.png){width=350px} 
 
 
 ## Bioarchaeology <img src='https://www.arch.ox.ac.uk/sites/default/files/archit/images/media/bannergrasses1.jpg' style='height: 60px;vertical-align: middle;'>
@@ -125,22 +141,19 @@ data(OxfordPots)
 </div>
 
 
-## The tale of the 3 outputs
+## {}
 
 ::: {.panel-tabset}
 
-### JPG, PNG
+### JPG/PNG
 
+How: <img src='https://raw.githubusercontent.com/zoometh/thomashuet/master/img/r-pkg-ggplot.png' style='height: 50px;vertical-align: middle;'>, Where: <img src='https://raw.githubusercontent.com/zoometh/thomashuet/master/img/app-github.png' style='height: 50px;vertical-align: middle;'>
 
 ![](https://raw.githubusercontent.com/eamena-project/eamenaR/master/results/map_path_profile.png){height=500px}
-ggplot
-
-
-
 
 ### HTML
 
-static HTML, GitHub
+How: <img src='https://raw.githubusercontent.com/zoometh/thomashuet/master/img/app-prg-js-geo-leaflet.png' style='height: 50px;vertical-align: middle;'> <img src='https://raw.githubusercontent.com/zoometh/thomashuet/master/img/app-prg-js-plotly.png' style='height: 50px;vertical-align: middle;'>, Where: <img src='https://raw.githubusercontent.com/zoometh/thomashuet/master/img/app-github.png' style='height: 50px;vertical-align: middle;'>
 
 ```{=html}
 <iframe width="780" height="500" src="https://eamena-project.github.io/reveal.js/caravanserail#/1" title="research-themes"></iframe>
@@ -149,31 +162,12 @@ static HTML, GitHub
 
 ### JavaScript
 
-Shiny, IDN
+How: <img src='https://raw.githubusercontent.com/zoometh/thomashuet/master/img/app-prg-js-geo-leaflet.png' style='height: 50px;vertical-align: middle;'> <img src='https://raw.githubusercontent.com/zoometh/thomashuet/master/img/app-prg-js-plotly.png' style='height: 50px;vertical-align: middle;'> + <img src='https://raw.githubusercontent.com/zoometh/thomashuet/master/img/app-prg-r-pkg-shiny.png' style='height: 50px;vertical-align: middle;'>, Interactive Data Network <https://idn.it.ox.ac.uk/home>
 
 ```{=html}
-<iframe width="780" height="500" src="https://trainingidn.shinyapps.io/togo/" title="research-themes"></iframe>
+<iframe width="1100" height="700" src="https://trainingidn.shinyapps.io/togo/" title="research-themes"></iframe>
 ```
 
 
-::::
+:::
 
-
-## XXXX
-
-
-```{r}
-#| echo: true
-#| code-fold: true
-#| code-summary: "<small>Code</small>"
-
-library(dplyr)
-library(tibble)
-
-df <- data.frame(patient = c("Mal.1", "Mal.2", "Mal.3"),
-                 virus.A = c(12, 19, 13),
-                 virus.B = c(7, 7, 10),
-                 virus.C = c(11, 4, 5))
-kable(df) %>%
-  kable_styling(full_width = FALSE, position = "center", font_size = 24)
-```
