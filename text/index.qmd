@@ -53,9 +53,7 @@ data(OxfordPots)
 
 ## Research areas
 
-```{=html}
-<iframe width="780" height="500" src="https://www.arch.ox.ac.uk/research-themes" title="research-themes"></iframe>
-```
+![](https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-oxford-research-areas.png)
 
 
 ## Bioarchaeology <img src='https://www.arch.ox.ac.uk/sites/default/files/archit/images/media/bannergrasses1.jpg' style='height: 60px;vertical-align: middle;'>
@@ -110,7 +108,7 @@ data(OxfordPots)
 <div class="column33">![](https://raw.githubusercontent.com/zoometh/Rdev/master/text/img/materials-and-technology.png){height=500px}</div>
 <div class="column66">
 ```{=html}
-<iframe width="780" height="500" src="https://open-archaeo.info/tags/shape-recognition/" title="research-themes"></iframe>
+<iframe width="780" height="500" src="https://open-archaeo.info/tags/instrumental-neutron-activation-analysis/" title="research-themes"></iframe>
 ```
 </div>
 </div>
@@ -121,12 +119,44 @@ data(OxfordPots)
 <div class="column33">![](https://raw.githubusercontent.com/zoometh/Rdev/master/text/img/palaeolithic.png){height=500px}</div>
 <div class="column66">
 ```{=html}
-<iframe width="780" height="500" src="https://open-archaeo.info/tags/shape-recognition/" title="research-themes"></iframe>
+<iframe width="780" height="500" src="https://open-archaeo.info/tags/cultural-evolution/" title="research-themes"></iframe>
 ```
 </div>
 </div>
 
-## IDN
+
+## The tale of the 3 outputs
+
+::: {.panel-tabset}
+
+### JPG, PNG
+
+
+![](https://raw.githubusercontent.com/eamena-project/eamenaR/master/results/map_path_profile.png){height=500px}
+ggplot
+
+
+
+
+### HTML
+
+static HTML, GitHub
+
+```{=html}
+<iframe width="780" height="500" src="https://eamena-project.github.io/reveal.js/caravanserail#/1" title="research-themes"></iframe>
+```
+
+
+### JavaScript
+
+Shiny, IDN
+
+```{=html}
+<iframe width="780" height="500" src="https://trainingidn.shinyapps.io/togo/" title="research-themes"></iframe>
+```
+
+
+::::
 
 
 ## XXXX
