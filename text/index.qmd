@@ -1,0 +1,83 @@
+---
+title: "Use of 'R' at the School of Archaeology"
+# subtitle: "Create beautiful interactive slide decks with Reveal.js"
+author: "Thomas Huet (University of Oxford, EAMENA project)"
+title-slide-attributes:
+    data-background-image: "https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-oxford-research-areas.png"
+    data-background-size: "20%"
+    data-background-opacity: "0.2"
+format:
+  revealjs: 
+    css: https://zoometh.github.io/thomashuet/css/quarto.css
+    code-fold: true
+    code-summary: "<small>Code</small>"
+    slide-number: true
+    # chalkboard: true
+    scrollable: true
+    preview-links: auto
+    reference-location: document
+    footnotes-hover: true
+    # self-contained: true
+    # embed-resources: true
+    logo: https://raw.githubusercontent.com/zoometh/thomashuet/master/teach/stats/images/inst-uni-oxford_.png
+    footer: "<em>Statistics in Archaeology</em> <img src='https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-asm-cnrs.png' style='height: 35px;vertical-align: middle;'> Université Paul-Valéry, Feb 2023 - Thomas Huet"
+    margin: 0
+    width: 1200
+---
+
+ 
+## Introduction
+
+```{r, echo=FALSE}
+library(shiny)
+library(rmarkdown)
+library(knitr)
+library(kableExtra)
+library(plotly)
+library(archdata)
+library(ggtern)
+library(ggplot2)
+library(DT)
+library(dplyr)
+library(FactoMineR)
+library(spatstat)
+library(spatialEco)
+library(sf)
+library(sp)
+library(reshape2)
+
+# library(Factoshiny)
+
+data(OxfordPots)
+```
+
+## Research areas
+
+```{=html}
+<iframe width="780" height="500" src="https://www.arch.ox.ac.uk/research-themes" title="research-themes"></iframe>
+```
+
+
+## Bioarchaeology
+
+<div class="row">
+<div class="column33">![](https://raw.githubusercontent.com/zoometh/thomashuet/master/teach/stats/images/stat-fa.png){height=350px}</div>
+<div class="column66">**Clustering** method, we move from a description to a modelling identifying central tendencies</div>
+</div>
+
+
+```{r}
+#| echo: true
+#| code-fold: true
+#| code-summary: "<small>Code</small>"
+
+library(dplyr)
+library(tibble)
+
+df <- data.frame(patient = c("Mal.1", "Mal.2", "Mal.3"),
+                 virus.A = c(12, 19, 13),
+                 virus.B = c(7, 7, 10),
+                 virus.C = c(11, 4, 5))
+kable(df) %>%
+  kable_styling(full_width = FALSE, position = "center", font_size = 24)
+```

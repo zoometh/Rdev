@@ -67,7 +67,7 @@ k.max <- 15 # iterations
 #
 spat.mbr <- function(df, name.out){
   # create a map facetted with menberships
-  # df <- df.sickles.spat.grp ; name.out <- "/9_map_sites.jpg"
+  # df <- df.sites.mbr.spat ; name.out <- "/9_map_sites.jpg"
   # bbox
   buff <- .5
   xmin <- min(df$long) - buff
@@ -84,7 +84,7 @@ spat.mbr <- function(df, name.out){
   gg.out <- ggplot(df) +
     facet_grid(membership ~ .) +
     geom_sf(data = bck_admin.roi) +
-    geom_point(data = df, aes (x = long, y = lat, size = n)) +
+    geom_point(data = df, aes (x = long, y = lat, size = num)) +
     geom_text_repel(data = df, aes(x = long, y = lat, label = code)) +
     theme_bw()
   ggsave(spat.out, gg.out, width = 8, height = 21)
