@@ -6,6 +6,7 @@ library(tibble)
 
 research.soa <- function(soa.url = NA, soa.research.areas = NA, soa.stopwords = NA){
   for(research.area in soa.research.areas){
+    # research.area <- 'historical-and-classical'
     url <- paste0(soa.url, research.area)
     html_content <- read_html(url)
     paragraphs <- html_nodes(html_content, "p")
@@ -34,6 +35,6 @@ research.soa <- function(soa.url = NA, soa.research.areas = NA, soa.stopwords = 
 
 soa.url <- 'https://www.arch.ox.ac.uk/'
 soa.research.areas <- list('bioarchaeology', 'chronology', 'eurasian-prehistory', 'historical-and-classical', 'materials-and-technology', 'palaeolithic')
-soa.stopwords <- c("oxford", "school", "archaeology","archaeological", "research", "study", "well", "provided", "listed")
+soa.stopwords <- c("oxford", "school", "archaeology","archaeological", "research", "study", "seminar", "discussion", "projects", "periods", "forum", "collaborations", "well", "provided", "listed", "many", "including")
 research.soa(soa.url, soa.research.areas, soa.stopwords)
 

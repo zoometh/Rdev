@@ -4,8 +4,8 @@ title: "Use of 'R' at the School of Archaeology"
 author: "Thomas Huet (University of Oxford, EAMENA project)"
 title-slide-attributes:
     data-background-image: "https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-oxford-research-areas.png"
-    data-background-size: "20%"
-    data-background-opacity: "0.2"
+    data-background-size: "90%"
+    data-background-opacity: "0.3"
 format:
   revealjs: 
     css: https://zoometh.github.io/thomashuet/css/quarto.css
@@ -19,8 +19,8 @@ format:
     footnotes-hover: true
     # self-contained: true
     # embed-resources: true
-    logo: https://raw.githubusercontent.com/zoometh/thomashuet/master/teach/stats/images/inst-uni-oxford_.png
-    footer: "<em>Statistics in Archaeology</em> <img src='https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-asm-cnrs.png' style='height: 35px;vertical-align: middle;'> Université Paul-Valéry, Feb 2023 - Thomas Huet"
+    logo: https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-eamena.png
+    footer: "<em>Workshop on the use of 'R' at the School of Archaeology</em> <img src='https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-oxford.png' style='height: 35px;vertical-align: middle;'> Univesity of Oxford, School of Archaeology, 5 December 2023 - Thomas Huet"
     margin: 0
     width: 1200
 ---
@@ -58,12 +58,78 @@ data(OxfordPots)
 ```
 
 
-## Bioarchaeology
+## Bioarchaeology <img src='https://www.arch.ox.ac.uk/sites/default/files/archit/images/media/bannergrasses1.jpg' style='height: 60px;vertical-align: middle;'>
 
 <div class="row">
-<div class="column33">![](https://raw.githubusercontent.com/zoometh/thomashuet/master/teach/stats/images/stat-fa.png){height=350px}</div>
-<div class="column66">**Clustering** method, we move from a description to a modelling identifying central tendencies</div>
+<div class="column33">![](https://raw.githubusercontent.com/zoometh/Rdev/master/text/img/bioarchaeology.png){height=500px}</div>
+<div class="column66">
+```{=html}
+<iframe width="780" height="500" src="https://open-archaeo.info/tags/biological-anthropology/" title="research-themes"></iframe>
+```
 </div>
+</div>
+
+
+
+## Chronology <img src='https://www.arch.ox.ac.uk/sites/default/files/archit/images/media/bannerlab1jpg.jpg' style='height: 60px;vertical-align: middle;'>
+
+<div class="row">
+<div class="column33">![](https://raw.githubusercontent.com/zoometh/Rdev/master/text/img/chronology.png){height=500px}</div>
+<div class="column66">
+```{=html}
+<iframe width="780" height="500" src="https://open-archaeo.info/tags/chronological-modelling/" title="research-themes"></iframe>
+```
+</div>
+</div>
+
+## Eurasian Prehistory <img src='https://www.arch.ox.ac.uk/sites/default/files/archit/images/media/bannercave.jpg' style='height: 60px;vertical-align: middle;'>
+
+<div class="row">
+<div class="column33">![](https://raw.githubusercontent.com/zoometh/Rdev/master/text/img/eurasian-prehistory.png){height=500px}</div>
+<div class="column66">
+```{=html}
+<iframe width="780" height="500" src="https://open-archaeo.info/tags/palaeoenvironment-and-palaeobotany/" title="research-themes"></iframe>
+```
+</div>
+</div>
+
+## Historical and Classical <img src='https://www.arch.ox.ac.uk/sites/default/files/archit/images/media/bannerdig1.jpg' style='height: 60px;vertical-align: middle;'>
+
+<div class="row">
+<div class="column33">![](https://raw.githubusercontent.com/zoometh/Rdev/master/text/img/historical-and-classical.png){height=500px}</div>
+<div class="column66">
+```{=html}
+<iframe width="780" height="500" src="https://open-archaeo.info/tags/shape-recognition/" title="research-themes"></iframe>
+```
+</div>
+</div>
+
+## Materials and Technology <img src='https://www.arch.ox.ac.uk/sites/default/files/archit/images/media/bannermaterials.jpg' style='height: 60px;vertical-align: middle;'>
+
+<div class="row">
+<div class="column33">![](https://raw.githubusercontent.com/zoometh/Rdev/master/text/img/materials-and-technology.png){height=500px}</div>
+<div class="column66">
+```{=html}
+<iframe width="780" height="500" src="https://open-archaeo.info/tags/shape-recognition/" title="research-themes"></iframe>
+```
+</div>
+</div>
+
+## Palaeolithic <img src='https://www.arch.ox.ac.uk/sites/default/files/archit/images/media/bannerpalaeo.jpg' style='height: 60px;vertical-align: middle;'>
+
+<div class="row">
+<div class="column33">![](https://raw.githubusercontent.com/zoometh/Rdev/master/text/img/palaeolithic.png){height=500px}</div>
+<div class="column66">
+```{=html}
+<iframe width="780" height="500" src="https://open-archaeo.info/tags/shape-recognition/" title="research-themes"></iframe>
+```
+</div>
+</div>
+
+## IDN
+
+
+## XXXX
 
 
 ```{r}
