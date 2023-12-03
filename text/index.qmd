@@ -26,28 +26,33 @@ format:
 ---
 
 
-## {}
+## Why <img src='https://raw.githubusercontent.com/zoometh/thomashuet/master/img/app-prg-r.png' style='height: 50px;vertical-align: middle;'> ?
 
-```{r, echo=FALSE}
+<span class="captiontext">"*anything that can be automated, should be automated*" -- Hadley Wickham</span>
+
+```{=html}
+<iframe width="1200" height="500" src="https://www.tiobe.com/tiobe-index/" title="research-themes"></iframe>
 ```
+
+## {}
 
 ::: {.panel-tabset}
 
-### list
+### resources
 
 | Host 	| URL 	|
 |------	|-----	|
 | ![](https://raw.githubusercontent.com/zoometh/thomashuet/master/img/src-archeo-prog-openarchaeo.png){width=350px} 	| <https://open-archaeo.info/>    	|
 | ![](https://raw.githubusercontent.com/zoometh/thomashuet/master/img/src-archeo-prog-ssl-map-comput.png){width=350px}  	| <https://sslarch.github.io/>    	|
 
-### open-archaeo
+### `open-archaeo`
 
 ```{=html}
 <iframe width="1200" height="500" src="https://open-archaeo.info/" title="research-themes"></iframe>
 ```
 
 
-### SSLA
+### `SSLA`
 
 ```{=html}
 <iframe width="1100" height="500" src="https://sslarch.github.io/MapofComputationalArchaeology/" title="research-themes"></iframe>
@@ -59,17 +64,16 @@ format:
 ## Research areas
 
 ```{r }
-#| echo: false
-#| eval: true
+#| echo: true
+#| eval: false
 #| code-fold: true
 
 devtools::source_url("https://raw.githubusercontent.com/zoometh/Rdev/master/text/soa_cloudword_1.R")
-soa.url <- 'https://www.arch.ox.ac.uk/'
-soa.research.areas <- list('bioarchaeology', 'chronology', 'eurasian-prehistory', 'historical-and-classical', 'materials-and-technology', 'palaeolithic')
-research.soa(soa.url, soa.research.areas)
+research.soa(soa.url = 'https://www.arch.ox.ac.uk/', 
+             soa.research.areas = list('bioarchaeology', 'chronology', 'eurasian-prehistory', 'historical-and-classical', 'materials-and-technology', 'palaeolithic'))
 ```
 
-![](https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-oxford-research-areas.png){width=350px} 
+![](https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-oxford-research-areas-large.png){width=350px} 
 
 
 ## Bioarchaeology <img src='https://www.arch.ox.ac.uk/sites/default/files/archit/images/media/bannergrasses1.jpg' style='height: 60px;vertical-align: middle;'>
@@ -170,4 +174,8 @@ How: <img src='https://raw.githubusercontent.com/zoometh/thomashuet/master/img/a
 
 
 :::
+
+## At the University of Oxford <img src='https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-oxford.png' style='height: 50px;vertical-align: middle;'>
+
+
 
