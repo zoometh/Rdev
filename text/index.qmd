@@ -226,23 +226,20 @@ How: <img src='https://raw.githubusercontent.com/zoometh/thomashuet/master/img/a
 
 ### IT services
 
-```{=html}
-<iframe width="1200" height="500" src="https://www.it.ox.ac.uk/home
-" title="research-themes"></iframe>
-```
+<small><https://www.it.ox.ac.uk/home></small>
+![](https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-oxford-itservices.png){height=500px}
 
 
 ### ARC
 
-```{=html}
-<iframe width="1200" height="500" src="https://www.arc.ox.ac.uk/" title="research-themes"></iframe>
-```
+<small><https://www.arc.ox.ac.uk/></small>
+![](https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-oxford-arc.png){height=500px}
+
 
 ### IDN
 
-```{=html}
-<iframe width="1200" height="500" src="https://idn.it.ox.ac.uk/home" title="research-themes"></iframe>
-```
+<small><https://idn.it.ox.ac.uk/home></small>
+![](https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-oxford-idn.png){height=500px}
 
 :::
 
