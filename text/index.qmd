@@ -227,19 +227,19 @@ How: <img src='https://raw.githubusercontent.com/zoometh/thomashuet/master/img/a
 ### IT services
 
 <small><https://www.it.ox.ac.uk/home></small>
-![](https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-oxford-itservices.png){height=500px}
+![](https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-oxford-itservices.png){height=600px}
 
 
 ### ARC
 
 <small><https://www.arc.ox.ac.uk/></small>
-![](https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-oxford-arc.png){height=500px}
+![](https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-oxford-arc.png){height=600px}
 
 
 ### IDN
 
 <small><https://idn.it.ox.ac.uk/home></small>
-![](https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-oxford-idn.png){height=500px}
+![](https://raw.githubusercontent.com/zoometh/thomashuet/master/img/inst-uni-oxford-idn.png){height=600px}
 
 :::
 

@@ -1,0 +1,5 @@
+# install.package("remotes")
+remotes::install_github("joeroe/rintchron")
+library(rintchron)
+intchron_hosts()
+intchron(c("oxa", "nrcf"), countries = "Jordan")
