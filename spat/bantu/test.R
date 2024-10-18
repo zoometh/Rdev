@@ -3,7 +3,7 @@ library(sf)
 # library(geojsonio)
 
 # Define the file path
-file_path <- "C:/Users/Thomas Huet/Desktop/temp/Book1.xlsx"
+file_path <- "C:/Rprojects/Rdev/spat/bantu/Book1.xlsx"
 
 # Read the specific columns (F and H) from the first row in the 'MAIN' sheet
 df <- openxlsx::read.xlsx(file_path, sheet = "MAIN", colNames = TRUE)
@@ -19,7 +19,7 @@ lat_lon <- st_coordinates(geo_sf)
 geojson_obj <- geojsonio::geojson_json(geo_sf)
 
 # Define the output file path
-output_file <- "C:/Users/Thomas Huet/Desktop/temp/first_row.geojson"
+output_file <- "C:/Rprojects/Rdev/spat/bantu/first_row.geojson"
 
 # Write the GeoJSON to a file
 geojsonio::geojson_write(geojson_obj, file = output_file)
