@@ -5,13 +5,12 @@
 		"type": "Feature",
 		"properties": {},
 		"geometry": {
-		  "type": "Point",
 		  "coordinates": [
 			29.298320453621614,
 			-17.65089320737377
-		  ]
+		  ],
+		  "type": "Point"
 		}
 	  }
 	]
   }
-}
