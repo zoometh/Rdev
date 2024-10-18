@@ -4,6 +4,7 @@ import pandas as pd
 # read XLSX file, read folder ans images files (JPG)
 # run different magick-image filters 
 # to extract the sickle blades
+# see: https://github.com/eamena-project/eamena-arches-dev/blob/main/projects/apaame/convert_from_dng.py
 
 # cd C:/Rprojects/_coll/LaMarmotta/
 diroot = "c:\\Rprojects\\_coll\\LaMarmotta\\01_Geometricos_Marmotta\\"
