@@ -1,0 +1,384 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#"
+     xml:base="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+     xmlns:crm-dig="https://www.ontscidoc3d.hs-mainz.de/crm-dig/">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52">
+        <owl:imports rdf:resource="https://www.ontscidoc3d.hs-mainz.de/crm-dig/"/>
+        <owl:imports rdf:resource="https://www.ontscidoc3d.hs-mainz.de/ontology/"/>
+        <rdfs:comment xml:lang="en">Changelog: https://github.com/igorbajena/OntPreHer3D</rdfs:comment>
+        <rdfs:comment xml:lang="en">Ontology for Preservation of cultural Heritage 3D models
+
+Compatibale with:
+ECRM 211015 (CIDOC CRM 7.1.1.)
+CRMdig version 3.2.1.
+OntSciDoc3D version 2.0
+
+It was created as part of PhD thesis of Igor Bajena at Unveristy of Bologna in cooperation with Hochschule Mainz-University of Applied Sciences for needs development of 3D repository for EU funded project of Computer-based Visualization of Architectural Cultural Heritage (CoVHer, https://covher.eu/). The process was supported by Mark Fichtner, Peggy Große and Robert Nasarek.</rdfs:comment>
+        <rdfs:label xml:lang="en">OntPreHer3D version 1.0</rdfs:label>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#R1_published -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#R1_published">
+        <rdfs:subPropertyOf rdf:resource="http://erlangen-crm.org/211015/P92_brought_into_existence"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#R1_was_published_by"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M5_Web_Publication"/>
+        <rdfs:range rdf:resource="https://www.ontscidoc3d.hs-mainz.de/crm-dig/D1_Digital_Object"/>
+        <rdfs:label xml:lang="en">R1 published</rdfs:label>
+        <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">R1</skos:notation>
+        <skos:notation xml:lang="en">This property describes the process of a publication of a digital object (picture, document, video, 3D model, etc.) on the web resulting in creation of URI.</skos:notation>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#R1_was_published_by -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#R1_was_published_by">
+        <rdfs:subPropertyOf rdf:resource="http://erlangen-crm.org/211015/P92i_was_brought_into_existence_by"/>
+        <rdfs:domain rdf:resource="https://www.ontscidoc3d.hs-mainz.de/crm-dig/D1_Digital_Object"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M5_Web_Publication"/>
+        <rdfs:label xml:lang="en">R1 was published by</rdfs:label>
+        <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">R1i</skos:notation>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M10_Area -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M10_Area">
+        <rdfs:subClassOf rdf:resource="http://erlangen-crm.org/211015/E27_Site"/>
+        <rdfs:subClassOf rdf:resource="https://www.ontscidoc3d.hs-mainz.de/ontology/osd_53a_Place"/>
+        <rdfs:comment xml:lang="en">Scope note:
+This class comprises places or areas, both inhabited and natural. They have to be distinguished as individuals, identified by their own name and specific boundaries on the map.
+
+Examples:
+- City of Mainz
+- Jewish Cemetery of Altona Königstraße, in Hamburg
+- Kew Garden in London
+-  Piazza Maggiore in Bologna</rdfs:comment>
+        <rdfs:label xml:lang="en">M10 Area</rdfs:label>
+        <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M10</skos:notation>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M11_Single_Built_Work -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M11_Single_Built_Work">
+        <rdfs:subClassOf rdf:resource="http://erlangen-crm.org/211015/E22_Human-Made_Object"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M12_Furnishing_and_equipment"/>
+        <rdfs:label xml:lang="en">M11 Single Built Work</rdfs:label>
+        <rdfs:label xml:lang="en">Scope note:
+This class comprises freestanding buildings and other structures commonly considered individual built works or architectural types. It covers a range from complex buildings to minimal accessory structures, including also constructions providing no enclosure or shelter. Some structures from this class may be relatively small and exist as accessories to other built works.
+
+Examples:
+- The Palace of Culture and Science in Warsaw
+- Trevi Fountain in Rome
+- “David” sculpture by Michelangelo 
+- signal tower
+- cow shed</rdfs:label>
+        <rdfs:seeAlso xml:lang="en">Single Built Works (hierarchy name) in Getty Art &amp; Architecture Thesaurus (http://vocab.getty.edu/page/aat/300004789)</rdfs:seeAlso>
+        <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M11</skos:notation>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M12_Furnishing_and_equipment -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M12_Furnishing_and_equipment">
+        <rdfs:subClassOf rdf:resource="http://erlangen-crm.org/211015/E22_Human-Made_Object"/>
+        <rdfs:comment xml:lang="en">Scope note:
+This class comprises objects that are primarily movable that provide comfort, convenience, or protection in dwellings, places or business, or other public or private spaces. They may be useful or ornamental and may be used in indoor or outdoor spaces.
+
+Examples:
+- Chair of estate used at the coronation of Queen Elizabeth II (1953)
+- Altar in St Peter&apos;s Basilica in Rome
+- 18th century oil lamp
+- Valve steam engine ”Sulzer”</rdfs:comment>
+        <rdfs:label xml:lang="en">M12 Furnishing and equipment</rdfs:label>
+        <rdfs:seeAlso xml:lang="en">Furnishings and Equipment (hierarchy name)  in Getty Art &amp; Architecture Thesaurus (http://vocab.getty.edu/page/aat/300264551)</rdfs:seeAlso>
+        <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M12</skos:notation>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M13_Component -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M13_Component">
+        <rdfs:subClassOf rdf:resource="http://erlangen-crm.org/211015/E22_Human-Made_Object"/>
+        <rdfs:comment xml:lang="en">Scope note:
+This class comprises constituent parts or elements of objects, including areas, buildings, structures, or items. Typically, it cannot or does not stand alone. 
+
+Examples:
+- Dome of the Cathedral of Santa Maria del Fiore in Florence
+- Front façade of Casa Batlló by Gaudi in Barcelona
+- Imperial Hall in the Neue Residenz in Bamberg
+- Square segment of the city subdivision grid</rdfs:comment>
+        <rdfs:label xml:lang="en">M13 Component</rdfs:label>
+        <rdfs:seeAlso xml:lang="en">Components (hierarchy name)  in Getty Art &amp; Architecture Thesaurus (http://vocab.getty.edu/page/aat/300241490)</rdfs:seeAlso>
+        <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M13</skos:notation>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M14_Research_Project -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M14_Research_Project">
+        <rdfs:subClassOf rdf:resource="https://www.ontscidoc3d.hs-mainz.de/ontology/osd_7a_Research_Activity"/>
+        <rdfs:comment xml:lang="en">Scope note:
+This class comprises activities aimed at finding answers to scientific questions, requiring external funding and often interdisciplinary consultation.
+
+Examples:
+- Project of source-based digital 3D reconstruction of the New Synagogue in Wroclaw (https://www.new-synagogue-breslau-3d.hs-mainz.de/)
+- Project of digital documentation of the Synagogue in Przysucha based on laser scanning</rdfs:comment>
+        <rdfs:label xml:lang="en">M14 Research Project</rdfs:label>
+        <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M14</skos:notation>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M15_3D_Geometry -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M15_3D_Geometry">
+        <rdfs:subClassOf rdf:resource="http://erlangen-crm.org/211015/E55_Type"/>
+        <rdfs:comment xml:lang="en">Scope note:
+Used only for classification of instances of M1 Digital Model in terms of geometry representation regards its continuity, completeness, segmentation an volumetric plausibility. 
+
+Examples:
+- NURBS, Mesh, Point cloud [representation method]
+- Boundary representation (BREP), Closed solid representation [space configuration]</rdfs:comment>
+        <rdfs:label xml:lang="en">M15 3D Geometry</rdfs:label>
+        <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M15</skos:notation>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M16_3D_Material -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M16_3D_Material">
+        <rdfs:subClassOf rdf:resource="http://erlangen-crm.org/211015/E55_Type"/>
+        <rdfs:comment xml:lang="en">Scope note:
+Used only for classification of instances of M1 Digital Model in terms of material representation on the surfaces of the model. 
+
+Examples:
+- realistic, abstract [representation]
+- untextured, partially textured, textured [coverage]
+- seamless tiles, randomized, UV mapped [mapping onto the model]
+- monochromatic, colourful, black-white [colors]</rdfs:comment>
+        <rdfs:label xml:lang="en">M16 3D Material</rdfs:label>
+        <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M16</skos:notation>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M1_Digital_Model -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M1_Digital_Model">
+        <rdfs:subClassOf rdf:resource="https://www.ontscidoc3d.hs-mainz.de/crm-dig/D1_Digital_Object"/>
+        <rdfs:comment xml:lang="en">Scope note:
+This class comprise a virtual three-dimensional representations of E71 Mad-Made Thing of conceptual or physical nature that can be displayed in 3D digital space and are documented as single units. 
+A M1 Digital Model does not depend on a specific physical carrier, and it can exist on one or more carriers simultaneously.
+
+Examples:
+- 3D model
+- Laser scan
+- Point cloud</rdfs:comment>
+        <rdfs:label xml:lang="en">M1 Digital Model</rdfs:label>
+        <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M1</skos:notation>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M2_Versioning -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M2_Versioning">
+        <rdfs:subClassOf rdf:resource="https://www.ontscidoc3d.hs-mainz.de/crm-dig/D7_Digital_Machine_Event"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M3_Variation"/>
+        <rdfs:comment xml:lang="en">Scope note:
+This class comprises events that result in the creation of digital model documenting one specific state. It  also includes digital model update activities in the case of new research findings that reveal information that was not originally included in the digital model.
+
+Examples:
+- Changing the roof geometry of the building on a digital reconstruction model based on newly discovered aerial photographs 
+- Applying textures to the model 
+- Adding interior design elements to a 3D model</rdfs:comment>
+        <rdfs:label xml:lang="en">M2 Versioning</rdfs:label>
+        <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M2</skos:notation>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M3_Variation -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M3_Variation">
+        <rdfs:subClassOf rdf:resource="https://www.ontscidoc3d.hs-mainz.de/crm-dig/D7_Digital_Machine_Event"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M4_Division"/>
+        <rdfs:comment xml:lang="en">Scope note:
+This class comprises events that result in the creation of digital model documenting a certain state of knowledge. Depending on the collected source materials, it can result in alternative variations showing possible interpretation of gaps in knowledge. A 3D model of a variation can consist of different versions representing different stages of work.
+
+Examples:
+- Variations in the position of buildings in the settlement reconstruction model
+- Variations in the geometry of the roof of the temple reconstruction based on available analogies</rdfs:comment>
+        <rdfs:label xml:lang="en">M3 Variation</rdfs:label>
+        <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M3</skos:notation>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M4_Division -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M4_Division">
+        <rdfs:subClassOf rdf:resource="https://www.ontscidoc3d.hs-mainz.de/crm-dig/D7_Digital_Machine_Event"/>
+        <rdfs:comment xml:lang="en">Scope note:
+This class comprises the events of dividing the original digital model into smaller parts for reasons of technical constraint, resulting in creation of new digital models that should not be considered as individual parts. These partial models should not be documented, as independent units, but only as elements that contribute to a collective entity.
+
+Examples:
+- Division of the model into segments corresponding to the working space of the 3D printer
+- Division of the model into parts meeting the requirements for publication in the web-viewer</rdfs:comment>
+        <rdfs:label xml:lang="en">M4 Division</rdfs:label>
+        <skos:notation xml:lang="en">M4</skos:notation>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M5_Web_Publication -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M5_Web_Publication">
+        <rdfs:subClassOf rdf:resource="https://www.ontscidoc3d.hs-mainz.de/crm-dig/D7_Digital_Machine_Event"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#R1_published"/>
+                <owl:someValuesFrom rdf:resource="https://www.ontscidoc3d.hs-mainz.de/crm-dig/D1_Digital_Object"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en">Scope note:
+This class comprises events of publishing any D1 Digital Object on the web, resulting in creation of M6 Web-based Entry with its own Uniform Resource Identifier (URI).
+
+Examples:
+- Publication of the article in Wikipedia
+- Uploading the 3D model to Sketchfab repository
+- Publication of the photo on social media</rdfs:comment>
+        <rdfs:label xml:lang="en">M5 Web Publication</rdfs:label>
+        <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M5</skos:notation>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M6_Web-based_Record -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M6_Web-based_Record">
+        <rdfs:subClassOf rdf:resource="https://www.ontscidoc3d.hs-mainz.de/crm-dig/D1_Digital_Object"/>
+        <rdfs:comment xml:lang="en">Scope note:
+This class comprises a digital record on the web regarding D1 Digital Object. M6 Web-based Entry should have its own URI, under which a set of metadata about the published resource and its preview can be found.
+
+Examples:
+- Wikipedia article
+- Sketchfab repository entry with a view of the 3D model
+- A record in the museum&apos;s digital archive
+- Blog entry</rdfs:comment>
+        <rdfs:label xml:lang="en">M6 Web-based Record</rdfs:label>
+        <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M6</skos:notation>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M7_Web-based_Visualization -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M7_Web-based_Visualization">
+        <rdfs:subClassOf rdf:resource="http://erlangen-crm.org/211015/E36_Visual_Item"/>
+        <rdfs:subClassOf rdf:resource="https://www.ontscidoc3d.hs-mainz.de/crm-dig/D1_Digital_Object"/>
+        <rdfs:comment xml:lang="en">Scope note:
+This class comprises the visual representation of the M1 Digital Model on the 3D viewer canvas, allowing the user to interact with the model via a web browser without the need to install additional software. Due to the limitations of browser viewers, this visualisation is often a simplified version of the original after a process of exporting, converting and compressing the model.
+
+Examples:
+- Canvas with displayed 3D viewer in the Sketchfab repository
+- Interactive digital 3D museum</rdfs:comment>
+        <rdfs:label xml:lang="en">M7 Web-based Visualization</rdfs:label>
+        <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M7</skos:notation>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M8_Web_Document -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M8_Web_Document">
+        <rdfs:subClassOf rdf:resource="http://erlangen-crm.org/211015/E31_Document"/>
+        <rdfs:subClassOf rdf:resource="http://erlangen-crm.org/211015/E33_Linguistic_Object"/>
+        <rdfs:subClassOf rdf:resource="https://www.ontscidoc3d.hs-mainz.de/crm-dig/D1_Digital_Object"/>
+        <rdfs:comment xml:lang="en">Scope note:
+This class comprises the identifiable immaterial records in web-based services that describe single individual component of reality. Although those record use textual expressions as a basic communication medium, they may also contain information in the form of other media such as images, videos, animations, 3D models, spatial coordinates and others. Elements of this class are publicly available knowledge resources that are identified by their Uniform Resource Identifier (URI).
+ 
+Examples:
+- Wikipedia entry on “Synagogue in Volpa”, identified by https://en.wikipedia.org/wiki/Wo%C5%82pa_Synagogue 
+- Europeana record on “New Gate Bastion, Derry City Walls (3D Model)”, identified by  https://www.europeana.eu/en/item/2048705/object_HA_175
+- ORCID record on “Piotr Kuroczyński”, identified by https://orcid.org/0000-0001-9847-8368</rdfs:comment>
+        <rdfs:label xml:lang="en">M8 Web Document</rdfs:label>
+        <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">M8</skos:notation>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M9_Research_Publication -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M9_Research_Publication">
+        <rdfs:subClassOf rdf:resource="http://erlangen-crm.org/211015/E31_Document"/>
+        <rdfs:subClassOf rdf:resource="http://erlangen-crm.org/211015/E33_Linguistic_Object"/>
+        <rdfs:comment xml:lang="en">Scope note:
+This class comprises the identifiable textual work containing information about conducted scientific research and which is publicly available. There are various types of publications like Scholarly Journals, Professional or Trade Publications, Popular and General Interest Magazines. Research publications have their own identity, place and necessity and in most cases they are preceded by a peer review which checks novelty, applicability and advancement in a given field of knowledge.
+
+Examples:
+- Conference proceedings: Kuroczyński, P., Bajena, I., Große, P., Jara, K., Wnęk, K.: Digital Reconstruction of the New Synagogue in Breslau: New Approaches to Object-Oriented Research. In: Niebling, F., Münster, S., and Messemer, H. (eds.) Research and Education in Urban History in the Age of Digital Libraries. pp. 25–45. Springer International Publishing, Cham (2021), https://doi.org/10.1007/978-3-030-93186-5_2. 
+- Book: Moore, J., Rountrey, A., Kettler, H., S.: 3D Data Creation to Curation: Community Standards for 3D Data Preservation. ACRL, Chicago, Illinois (2022).
+- PhD Thesis: Murphy, M.: Historic Building Information Modelling (HBIM) for Recording and Documenting Classical Architecture in Dublin 1700 to 1830, (2012).
+- Journal article: Champion, E., Rahaman, H.: Survey of 3D digital heritage repositories and platforms. Virtual Archaeology Review. 11, 1–15 (2020). https://doi.org/10.4995/var.2020.13226.</rdfs:comment>
+        <rdfs:label xml:lang="en">M9 Research Publication</rdfs:label>
+        <skos:notation xml:lang="en">M9</skos:notation>
+    </owl:Class>
+    
+
+
+    <!-- https://www.ontscidoc3d.hs-mainz.de/crm-dig/D1_Digital_Object -->
+
+    <rdf:Description rdf:about="https://www.ontscidoc3d.hs-mainz.de/crm-dig/D1_Digital_Object">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#R1_was_published_by"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/igorb/ontologies/2023/5/untitled-ontology-52#M5_Web_Publication"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
